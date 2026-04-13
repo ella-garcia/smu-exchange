@@ -1,0 +1,3020 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Singapore Places Explorer</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .subtitle {
+            font-size: 1.2em;
+            opacity: 0.95;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+
+        .stat {
+            background: rgba(255,255,255,0.2);
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+
+        .controls {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            margin-bottom: 30px;
+        }
+
+        .search-bar {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .search-input {
+            flex: 1;
+            min-width: 250px;
+            padding: 12px 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 25px;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .filter-section {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .filter-group {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .filter-label {
+            font-weight: 600;
+            color: #555;
+        }
+
+        select {
+            padding: 8px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 20px;
+            font-size: 14px;
+            cursor: pointer;
+            background: white;
+            transition: all 0.3s;
+        }
+
+        select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .admin-toggle {
+            background: #764ba2;
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            margin-left: auto;
+        }
+
+        .admin-toggle:hover {
+            background: #6a4291;
+            transform: translateY(-2px);
+        }
+
+        .admin-toggle.active {
+            background: #ff6b6b;
+        }
+
+        .tags {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-top: 15px;
+        }
+
+        .tag {
+            padding: 6px 15px;
+            background: #f0f0f0;
+            border-radius: 15px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+
+        .tag:hover {
+            background: #e0e0e0;
+        }
+
+        .tag.active {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 12px;
+        }
+
+        .place-code {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 12px;
+        }
+
+        .place-name {
+            font-size: 1.3em;
+            font-weight: 700;
+            color: #222;
+            margin-bottom: 8px;
+            line-height: 1.3;
+        }
+
+        .area-name {
+            color: #667eea;
+            font-weight: 600;
+            font-size: 0.9em;
+            margin-bottom: 12px;
+        }
+
+        .description {
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 12px;
+        }
+
+        .categories {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+            margin-bottom: 12px;
+        }
+
+        .category-tag {
+            background: #f0f0f0;
+            padding: 4px 10px;
+            border-radius: 10px;
+            font-size: 12px;
+            color: #555;
+        }
+
+        .youtube-container {
+            margin: 15px 0;
+            border-radius: 12px;
+            overflow: hidden;
+            background: #000;
+        }
+
+        .youtube-container iframe {
+            width: 100%;
+            aspect-ratio: 9/16;
+            border: none;
+            display: block;
+        }
+
+        .youtube-placeholder {
+            background: #f8f8f8;
+            border: 2px dashed #ddd;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            color: #999;
+            margin: 15px 0;
+        }
+
+        .youtube-edit {
+            margin: 15px 0;
+            padding: 15px;
+            background: #f8f8f8;
+            border-radius: 12px;
+        }
+
+        .youtube-edit label {
+            display: block;
+            font-weight: 600;
+            color: #555;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .youtube-edit input {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .youtube-edit input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .youtube-edit-buttons {
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn-save, .btn-remove {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 13px;
+            transition: all 0.3s;
+        }
+
+        .btn-save {
+            background: #667eea;
+            color: white;
+            flex: 1;
+        }
+
+        .btn-save:hover {
+            background: #5568d3;
+        }
+
+        .btn-remove {
+            background: #ff6b6b;
+            color: white;
+        }
+
+        .btn-remove:hover {
+            background: #ee5a5a;
+        }
+
+        .add-youtube-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 13px;
+            margin-top: 10px;
+            transition: all 0.3s;
+        }
+
+        .add-youtube-btn:hover {
+            background: #5568d3;
+        }
+
+        .website-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            margin-top: 8px;
+        }
+
+        .website-link:hover {
+            text-decoration: underline;
+        }
+
+        .new-indicator {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: #ff6b6b;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 11px;
+            text-transform: uppercase;
+            box-shadow: 0 2px 8px rgba(255, 107, 107, 0.3);
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 60px 20px;
+            background: white;
+            border-radius: 12px;
+            color: #888;
+        }
+
+        .no-results-icon {
+            font-size: 4em;
+            margin-bottom: 15px;
+        }
+
+        .clear-filters {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .clear-filters:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+        }
+
+        .export-btn {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            margin-left: 10px;
+        }
+
+        .export-btn:hover {
+            background: #218838;
+            transform: translateY(-2px);
+        }
+
+        .youtube-hint {
+            font-size: 12px;
+            color: #888;
+            margin-top: 5px;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2em;
+            }
+
+            .grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stats {
+                font-size: 0.9em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🇸🇬 Singapore Places Explorer</h1>
+            <div class="subtitle">Discover 194 amazing places across the Lion City</div>
+            <div class="stats">
+                <div class="stat">📍 <span id="total-places">194</span> Places</div>
+                <div class="stat">🗺️ <span id="total-areas">17</span> Areas</div>
+                <div class="stat">✨ <span id="total-new">0</span> New</div>
+                <div class="stat">🎥 <span id="total-videos">0</span> Videos</div>
+                <div class="stat">📊 <span id="showing-count">194</span> Showing</div>
+            </div>
+        </header>
+
+        <div class="controls">
+            <div class="search-bar">
+                <input 
+                    type="text" 
+                    id="search" 
+                    class="search-input" 
+                    placeholder="🔍 Search places by name, description, or category..."
+                >
+            </div>
+
+            <div class="filter-section">
+                <div class="filter-group">
+                    <span class="filter-label">Area:</span>
+                    <select id="area-filter">
+                        <option value="">All Areas</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <span class="filter-label">Show:</span>
+                    <select id="new-filter">
+                        <option value="">All Places</option>
+                        <option value="new">New Places Only</option>
+                        <option value="existing">Existing Places</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <span class="filter-label">Videos:</span>
+                    <select id="video-filter">
+                        <option value="">All</option>
+                        <option value="with-video">With Video</option>
+                        <option value="no-video">No Video</option>
+                    </select>
+                </div>
+
+                <button class="clear-filters" id="clear-filters">Clear Filters</button>
+                <button class="admin-toggle" id="admin-toggle">🎬 Edit Mode</button>
+                <button class="export-btn" id="export-btn">💾 Export Data</button>
+            </div>
+
+            <div class="tags" id="category-tags"></div>
+        </div>
+
+        <div class="grid" id="places-grid"></div>
+    </div>
+
+    <script>
+        const placesData = [
+        {
+                "Code": "A1",
+                "Place Name": "Sentosa Island (Fort Siloso)",
+                "Area": "A",
+                "Area Name": "Southern Islands",
+                "Categories": "Heritage",
+                "New?": null,
+                "Website": "https://www.sentosa.com.sg/en/things-to-do/attractions/fort-siloso/",
+                "Description": "WWII coastal fort and museum on Sentosa's western tip. Free entry.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "A2",
+                "Place Name": "Lazarus Island",
+                "Area": "A",
+                "Area Name": "Southern Islands",
+                "Categories": "Nature",
+                "New?": null,
+                "Website": "https://www.sla.gov.sg/properties/management-of-state-land-and-properties/visiting-the-sla-managed-islands/",
+                "Description": "Pristine crescent beach, connected to St. John's Island by causeway.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "A3",
+                "Place Name": "St. John Island",
+                "Area": "A",
+                "Area Name": "Southern Islands",
+                "Categories": "Nature",
+                "New?": null,
+                "Website": "https://www.sla.gov.sg/properties/management-of-state-land-and-properties/visiting-the-sla-managed-islands/",
+                "Description": "Tranquil island with beaches, lagoons and heritage trails.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "A4",
+                "Place Name": "Kusu Island",
+                "Area": "A",
+                "Area Name": "Southern Islands",
+                "Categories": "Heritage",
+                "New?": null,
+                "Website": "https://www.sla.gov.sg/properties/management-of-state-land-and-properties/visiting-the-sla-managed-islands/",
+                "Description": "Tortoise Island with Chinese temple and Malay shrines.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "A5",
+                "Place Name": "Sisters' Islands",
+                "Area": "A",
+                "Area Name": "Southern Islands",
+                "Categories": "Nature",
+                "New?": null,
+                "Website": "https://www.nparks.gov.sg/visit/parks/park-detail/sisters-islands-marine-park/",
+                "Description": "Singapore's first marine park with rich coral reefs.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "A6",
+                "Place Name": "Minion Land at USS",
+                "Area": "A",
+                "Area Name": "Southern Islands",
+                "Categories": "Leisure",
+                "New?": "NEW",
+                "Website": "https://www.rwsentosa.com/en/play/universal-studios-singapore",
+                "Description": "Despicable Me themed zone at USS. Opened Feb 2025.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "A7",
+                "Place Name": "Singapore Oceanarium",
+                "Area": "A",
+                "Area Name": "Southern Islands",
+                "Categories": "Wildlife, Museum",
+                "New?": "NEW",
+                "Website": "https://www.singaporeoceanarium.com/en.html",
+                "Description": "Revamped S.E.A. Aquarium, 3x larger with 22 zones. Opened Jul 2025.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "A8",
+                "Place Name": "WEAVE at RWS",
+                "Area": "A",
+                "Area Name": "Southern Islands",
+                "Categories": "Leisure, Food",
+                "New?": "NEW",
+                "Website": "https://www.rwsentosa.com/en/dine-and-shop/weave",
+                "Description": "20,000 sqm lifestyle hub with Asia-exclusive stores and dining.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "A9",
+                "Place Name": "The Laurus Hotel",
+                "Area": "A",
+                "Area Name": "Southern Islands",
+                "Categories": "Architecture",
+                "New?": "NEW",
+                "Website": "https://www.rwsentosa.com/en/hotels/the-laurus",
+                "Description": "Singapore's first Luxury Collection all-suite hotel. Opened Oct 2025.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "B1",
+                "Place Name": "Kent Ridge Park",
+                "Area": "B",
+                "Area Name": "Kent Ridge\u2013Mount Faber",
+                "Categories": "Nature, Heritage",
+                "New?": null,
+                "Website": "https://www.nparks.gov.sg/visit/parks/park-detail/kent-ridge-park/",
+                "Description": "47-hectare park with WWII history, canopy walk, and panoramic views.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "B2",
+                "Place Name": "Canopy Walk",
+                "Area": "B",
+                "Area Name": "Kent Ridge\u2013Mount Faber",
+                "Categories": "Nature",
+                "New?": null,
+                "Website": "https://www.nparks.gov.sg/visit/parks/park-detail/kent-ridge-park/",
+                "Description": "280m elevated boardwalk through secondary forest canopy.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "B3",
+                "Place Name": "Bukit Chandu War Memorial",
+                "Area": "B",
+                "Area Name": "Kent Ridge\u2013Mount Faber",
+                "Categories": "Heritage, Museum",
+                "New?": null,
+                "Website": "https://www.nhb.gov.sg/reflections-at-bukit-chandu/",
+                "Description": "WWII interpretive centre honouring the Malay Regiment.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "B4",
+                "Place Name": "Prototype Glasshouse",
+                "Area": "B",
+                "Area Name": "Kent Ridge\u2013Mount Faber",
+                "Categories": "Nature",
+                "New?": null,
+                "Website": "https://www.nparks.gov.sg/visit/parks/park-detail/hortpark/",
+                "Description": "Experimental glasshouse at HortPark.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "B5",
+                "Place Name": "Pasir Panjang Nursery",
+                "Area": "B",
+                "Area Name": "Kent Ridge\u2013Mount Faber",
+                "Categories": "Nature",
+                "New?": null,
+                "Website": "https://www.nparks.gov.sg/",
+                "Description": "NParks plant nursery visible from the canopy walk.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "B6",
+                "Place Name": "Hort Park",
+                "Area": "B",
+                "Area Name": "Kent Ridge\u2013Mount Faber",
+                "Categories": "Nature",
+                "New?": null,
+                "Website": "https://www.nparks.gov.sg/visit/parks/park-detail/hortpark/",
+                "Description": "Gardening hub with themed gardens and dining.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "B7",
+                "Place Name": "Alexandra Arch Bridge",
+                "Area": "B",
+                "Area Name": "Kent Ridge\u2013Mount Faber",
+                "Categories": "Architecture",
+                "New?": null,
+                "Website": "https://www.nparks.gov.sg/visit/parks/southern-ridges/",
+                "Description": "Striking curved pedestrian bridge on Southern Ridges.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "B8",
+                "Place Name": "Southern Ridges",
+                "Area": "B",
+                "Area Name": "Kent Ridge\u2013Mount Faber",
+                "Categories": "Nature",
+                "New?": null,
+                "Website": "https://www.nparks.gov.sg/visit/parks/southern-ridges/",
+                "Description": "10km green corridor connecting Kent Ridge to Mount Faber.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "B9",
+                "Place Name": "Telok Blangah Hill Park",
+                "Area": "B",
+                "Area Name": "Kent Ridge\u2013Mount Faber",
+                "Categories": "Nature",
+                "New?": null,
+                "Website": "https://www.nparks.gov.sg/visit/parks/park-detail/telok-blangah-hill-park/",
+                "Description": "Hilltop park with terraced gardens along the Southern Ridges.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "B10",
+                "Place Name": "Alkaff Mansion",
+                "Area": "B",
+                "Area Name": "Kent Ridge\u2013Mount Faber",
+                "Categories": "Food, Heritage",
+                "New?": null,
+                "Website": "https://www.thealkaffmansion.sg/",
+                "Description": "Restored colonial mansion turned restaurant.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "B11",
+                "Place Name": "Henderson Waves",
+                "Area": "B",
+                "Area Name": "Kent Ridge\u2013Mount Faber",
+                "Categories": "Architecture",
+                "New?": null,
+                "Website": "https://www.nparks.gov.sg/visit/parks/southern-ridges/",
+                "Description": "Iconic undulating bridge, 36m above Henderson Road.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "B12",
+                "Place Name": "Mount Faber Park",
+                "Area": "B",
+                "Area Name": "Kent Ridge\u2013Mount Faber",
+                "Categories": "Nature",
+                "New?": null,
+                "Website": "https://www.mountfaberleisure.com/",
+                "Description": "Hilltop park with cable car and harbour views.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "B13",
+                "Place Name": "Japanese Tomb",
+                "Area": "B",
+                "Area Name": "Kent Ridge\u2013Mount Faber",
+                "Categories": "Heritage",
+                "New?": null,
+                "Website": "https://www.roots.gov.sg/places/places-landing/Places/national-monuments/japanese-cemetery-park",
+                "Description": "Historic Japanese cemetery park from the early 1900s.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "B14",
+                "Place Name": "Seah Im Bunker",
+                "Area": "B",
+                "Area Name": "Kent Ridge\u2013Mount Faber",
+                "Categories": "Heritage",
+                "New?": null,
+                "Website": "https://www.roots.gov.sg/",
+                "Description": "Hidden WWII bunker near HarbourFront.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "B15",
+                "Place Name": "Keppel Hill Reservoir",
+                "Area": "B",
+                "Area Name": "Kent Ridge\u2013Mount Faber",
+                "Categories": "Heritage, Nature",
+                "New?": null,
+                "Website": null,
+                "Description": "Hidden heritage reservoir rediscovered in the forest.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "B16",
+                "Place Name": "Marang Trail",
+                "Area": "B",
+                "Area Name": "Kent Ridge\u2013Mount Faber",
+                "Categories": "Nature",
+                "New?": null,
+                "Website": "https://www.nparks.gov.sg/visit/parks/park-detail/hortpark/",
+                "Description": "Forest trail connecting HortPark to Marang Road.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "C1",
+                "Place Name": "Keppel Bay Bridge",
+                "Area": "C",
+                "Area Name": "Keppel Bay\u2013Labrador",
+                "Categories": "Architecture",
+                "New?": null,
+                "Website": "https://www.keppelbay.com.sg/",
+                "Description": "Pedestrian bridge with marina views connecting to Sentosa.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "C2",
+                "Place Name": "Keppel Island",
+                "Area": "C",
+                "Area Name": "Keppel Bay\u2013Labrador",
+                "Categories": "Nature",
+                "New?": null,
+                "Website": null,
+                "Description": "Small island accessible from Keppel Bay area.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "C3",
+                "Place Name": "Reflections at Keppel Bay",
+                "Area": "C",
+                "Area Name": "Keppel Bay\u2013Labrador",
+                "Categories": "Architecture",
+                "New?": null,
+                "Website": "https://www.keppelbay.com.sg/",
+                "Description": "Daniel Libeskind-designed waterfront condominiums.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "C4",
+                "Place Name": "Bukit Chermin Boardwalk",
+                "Area": "C",
+                "Area Name": "Keppel Bay\u2013Labrador",
+                "Categories": "Nature",
+                "New?": null,
+                "Website": "https://www.nparks.gov.sg/visit/parks/labrador-nature-reserve/",
+                "Description": "300m boardwalk over water at Labrador Nature Reserve.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "C5",
+                "Place Name": "Labrador Park",
+                "Area": "C",
+                "Area Name": "Keppel Bay\u2013Labrador",
+                "Categories": "Nature, Heritage",
+                "New?": null,
+                "Website": "https://www.nparks.gov.sg/visit/parks/labrador-nature-reserve/",
+                "Description": "Coastal nature reserve with WWII relics and rocky shore habitat.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "C6",
+                "Place Name": "Berlayer Creek Boardwalk",
+                "Area": "C",
+                "Area Name": "Keppel Bay\u2013Labrador",
+                "Categories": "Nature",
+                "New?": null,
+                "Website": "https://www.nparks.gov.sg/visit/parks/labrador-nature-reserve/",
+                "Description": "Mangrove boardwalk showcasing coastal ecosystem.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "C7",
+                "Place Name": "Dragon's Teeth Gate",
+                "Area": "C",
+                "Area Name": "Keppel Bay\u2013Labrador",
+                "Categories": "Heritage",
+                "New?": null,
+                "Website": "https://www.roots.gov.sg/",
+                "Description": "Replica of historic maritime landmark at Labrador Park.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "C8",
+                "Place Name": "Labrador Battery",
+                "Area": "C",
+                "Area Name": "Keppel Bay\u2013Labrador",
+                "Categories": "Heritage",
+                "New?": null,
+                "Website": "https://www.nparks.gov.sg/visit/parks/labrador-nature-reserve/",
+                "Description": "Preserved WWII gun emplacement.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "C9",
+                "Place Name": "Labrador Jetty",
+                "Area": "C",
+                "Area Name": "Keppel Bay\u2013Labrador",
+                "Categories": "Nature",
+                "New?": null,
+                "Website": "https://www.nparks.gov.sg/visit/parks/labrador-nature-reserve/",
+                "Description": "Waterfront jetty with views of Sentosa and passing ships.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "C10",
+                "Place Name": "Gunners of Labrador",
+                "Area": "C",
+                "Area Name": "Keppel Bay\u2013Labrador",
+                "Categories": "Heritage",
+                "New?": null,
+                "Website": "https://www.nparks.gov.sg/visit/parks/labrador-nature-reserve/",
+                "Description": "WWII artillery heritage display.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "C11",
+                "Place Name": "The Casemate",
+                "Area": "C",
+                "Area Name": "Keppel Bay\u2013Labrador",
+                "Categories": "Heritage",
+                "New?": null,
+                "Website": "https://www.nparks.gov.sg/visit/parks/labrador-nature-reserve/",
+                "Description": "Underground WWII ammunition storage.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "C12",
+                "Place Name": "Tamarind Hill",
+                "Area": "C",
+                "Area Name": "Keppel Bay\u2013Labrador",
+                "Categories": "Food",
+                "New?": null,
+                "Website": "https://www.tamarindhill.com.sg/",
+                "Description": "Thai restaurant in restored colonial bungalow.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "C13",
+                "Place Name": "Gillman Barracks",
+                "Area": "C",
+                "Area Name": "Keppel Bay\u2013Labrador",
+                "Categories": "Museum, Heritage",
+                "New?": null,
+                "Website": "https://www.gillmanbarracks.com/",
+                "Description": "Former military barracks turned contemporary art enclave.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "C14",
+                "Place Name": "Interlace",
+                "Area": "C",
+                "Area Name": "Keppel Bay\u2013Labrador",
+                "Categories": "Architecture",
+                "New?": null,
+                "Website": null,
+                "Description": "Award-winning stacked residential complex by OMA.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "C15",
+                "Place Name": "Mapletree Business City",
+                "Area": "C",
+                "Area Name": "Keppel Bay\u2013Labrador",
+                "Categories": "Architecture",
+                "New?": null,
+                "Website": "https://www.mapletree.com.sg/",
+                "Description": "Major business park near Labrador Park MRT.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "C16",
+                "Place Name": "Pasir Panjang Power Station",
+                "Area": "C",
+                "Area Name": "Keppel Bay\u2013Labrador",
+                "Categories": "Heritage, Architecture",
+                "New?": null,
+                "Website": null,
+                "Description": "Heritage red-brick power station. Future lifestyle hub.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "C17",
+                "Place Name": "Keppel Coastal Trail",
+                "Area": "C",
+                "Area Name": "Keppel Bay\u2013Labrador",
+                "Categories": "Nature",
+                "New?": "NEW",
+                "Website": "https://www.nparks.gov.sg/visit/parks/labrador-nature-reserve/special-features/keppel-coastal-trail",
+                "Description": "340m scenic trail with elevated boardwalk. Opened Jan 2025.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "D1",
+                "Place Name": "Clementi Woods Park",
+                "Area": "D",
+                "Area Name": "Clementi\u2013NUS\u2013West Coast",
+                "Categories": "Nature",
+                "New?": null,
+                "Website": "https://www.nparks.gov.sg/",
+                "Description": "Secondary forest near Clementi.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "D2",
+                "Place Name": "NUS School of Design Net Zero Building",
+                "Area": "D",
+                "Area Name": "Clementi\u2013NUS\u2013West Coast",
+                "Categories": "Architecture",
+                "New?": null,
+                "Website": "https://www.sde.nus.edu.sg/",
+                "Description": "Sustainable architecture showcase at NUS.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "D3",
+                "Place Name": "Lee Kong Chian Natural Museum",
+                "Area": "D",
+                "Area Name": "Clementi\u2013NUS\u2013West Coast",
+                "Categories": "Museum",
+                "New?": null,
+                "Website": "https://lkcnhm.nus.edu.sg/",
+                "Description": "Natural history museum with three diplodocid dinosaur fossils.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "D4",
+                "Place Name": "University Town",
+                "Area": "D",
+                "Area Name": "Clementi\u2013NUS\u2013West Coast",
+                "Categories": "Architecture",
+                "New?": null,
+                "Website": "https://utown.nus.edu.sg/",
+                "Description": "NUS residential and learning hub with dining and green spaces.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "D5",
+                "Place Name": "Ayer Rajah Telephone Exchange",
+                "Area": "D",
+                "Area Name": "Clementi\u2013NUS\u2013West Coast",
+                "Categories": "Heritage",
+                "New?": null,
+                "Website": null,
+                "Description": "Heritage telecommunications building.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "D6",
+                "Place Name": "West Coast Park",
+                "Area": "D",
+                "Area Name": "Clementi\u2013NUS\u2013West Coast",
+                "Categories": "Nature, Leisure",
+                "New?": null,
+                "Website": "https://www.nparks.gov.sg/visit/parks/park-detail/west-coast-park/",
+                "Description": "Family-friendly coastal park with adventure playground.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "D7",
+                "Place Name": "West Coast Park Look-out Deck",
+                "Area": "D",
+                "Area Name": "Clementi\u2013NUS\u2013West Coast",
+                "Categories": "Nature",
+                "New?": null,
+                "Website": "https://www.nparks.gov.sg/visit/parks/park-detail/west-coast-park/",
+                "Description": "Observation deck with shipping lane views.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "E1",
+                "Place Name": "Metropolis",
+                "Area": "E",
+                "Area Name": "One North\u2013Portsdown",
+                "Categories": "Architecture",
+                "New?": null,
+                "Website": "https://www.capitaland.com/",
+                "Description": "Twin-tower office development at one-north.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "E2",
+                "Place Name": "The Star Vista",
+                "Area": "E",
+                "Area Name": "One North\u2013Portsdown",
+                "Categories": "Architecture, Leisure",
+                "New?": null,
+                "Website": "https://www.thestarvista.com/",
+                "Description": "Naturally ventilated mall with performing arts centre.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "E3",
+                "Place Name": "GSK Asia House",
+                "Area": "E",
+                "Area Name": "One North\u2013Portsdown",
+                "Categories": "Architecture",
+                "New?": null,
+                "Website": null,
+                "Description": "Notable corporate architecture at one-north.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "E4",
+                "Place Name": "Rochester Park",
+                "Area": "E",
+                "Area Name": "One North\u2013Portsdown",
+                "Categories": "Food, Heritage",
+                "New?": null,
+                "Website": null,
+                "Description": "Heritage black-and-white bungalow dining enclave.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "E5",
+                "Place Name": "One North Park",
+                "Area": "E",
+                "Area Name": "One North\u2013Portsdown",
+                "Categories": "Nature",
+                "New?": null,
+                "Website": "https://www.jtc.gov.sg/about-jtc/our-developments/one-north",
+                "Description": "Green space within JTC's one-north innovation district.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "E6",
+                "Place Name": "Sandcrawler Building",
+                "Area": "E",
+                "Area Name": "One North\u2013Portsdown",
+                "Categories": "Architecture",
+                "New?": null,
+                "Website": "https://www.lucasfilm.com/",
+                "Description": "Lucasfilm Singapore HQ \u2014 Star Wars Sandcrawler design.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "E7",
+                "Place Name": "Fusionopolis",
+                "Area": "E",
+                "Area Name": "One North\u2013Portsdown",
+                "Categories": "Architecture",
+                "New?": null,
+                "Website": "https://www.jtc.gov.sg/about-jtc/our-developments/one-north",
+                "Description": "R&D hub within one-north innovation district.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "E8",
+                "Place Name": "Solaris",
+                "Area": "E",
+                "Area Name": "One North\u2013Portsdown",
+                "Categories": "Architecture",
+                "New?": null,
+                "Website": "https://www.jtc.gov.sg/",
+                "Description": "Green-wrapped office building at one-north.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "E9",
+                "Place Name": "Mediacorp Campus",
+                "Area": "E",
+                "Area Name": "One North\u2013Portsdown",
+                "Categories": "Architecture",
+                "New?": null,
+                "Website": "https://www.mediacorp.sg/",
+                "Description": "National media broadcaster headquarters.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "E10",
+                "Place Name": "Timber+",
+                "Area": "E",
+                "Area Name": "One North\u2013Portsdown",
+                "Categories": "Food",
+                "New?": null,
+                "Website": "https://www.timberplus.sg/",
+                "Description": "Hawker-style food village in timber-framed setting.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "E11",
+                "Place Name": "Portsdown Road",
+                "Area": "E",
+                "Area Name": "One North\u2013Portsdown",
+                "Categories": "Heritage",
+                "New?": null,
+                "Website": null,
+                "Description": "Heritage enclave with colonial buildings and eateries.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "E12",
+                "Place Name": "Colbar",
+                "Area": "E",
+                "Area Name": "One North\u2013Portsdown",
+                "Categories": "Food, Heritage",
+                "New?": null,
+                "Website": "https://www.colbar.com.sg/",
+                "Description": "Nostalgic colonial bar and restaurant on Portsdown Road.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "E13",
+                "Place Name": "Tanglin Halt Food Centre",
+                "Area": "E",
+                "Area Name": "One North\u2013Portsdown",
+                "Categories": "Food",
+                "New?": null,
+                "Website": null,
+                "Description": "Heritage hawker centre in Tanglin Halt estate.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "F1",
+                "Place Name": "Sky Habitat",
+                "Area": "F",
+                "Area Name": "Bishan\u2013MacRitchie\u2013Botanic",
+                "Categories": "Architecture",
+                "New?": null,
+                "Website": null,
+                "Description": "Moshe Safdie-designed residential with sky bridges.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "F2",
+                "Place Name": "Bishan-Ang Mo Kio Park",
+                "Area": "F",
+                "Area Name": "Bishan\u2013MacRitchie\u2013Botanic",
+                "Categories": "Nature",
+                "New?": null,
+                "Website": "https://www.nparks.gov.sg/visit/parks/park-detail/bishan-ang-mo-kio-park/",
+                "Description": "62-hectare park with naturalised river and playgrounds.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "F3",
+                "Place Name": "MacRitchie Trail",
+                "Area": "F",
+                "Area Name": "Bishan\u2013MacRitchie\u2013Botanic",
+                "Categories": "Nature",
+                "New?": null,
+                "Website": "https://www.nparks.gov.sg/visit/parks/park-detail/macritchie-reservoir-park/",
+                "Description": "Iconic trail with TreeTop Walk suspension bridge.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "F4",
+                "Place Name": "Bukit Brown Cemetery",
+                "Area": "F",
+                "Area Name": "Bishan\u2013MacRitchie\u2013Botanic",
+                "Categories": "Heritage, Nature",
+                "New?": null,
+                "Website": "https://www.bukitbrown.org/",
+                "Description": "Largest Chinese cemetery outside China. Rich biodiversity.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "F5",
+                "Place Name": "Singapore Botanic Gardens",
+                "Area": "F",
+                "Area Name": "Bishan\u2013MacRitchie\u2013Botanic",
+                "Categories": "Nature, Heritage",
+                "New?": null,
+                "Website": "https://www.nparks.gov.sg/sbg",
+                "Description": "UNESCO World Heritage Site with National Orchid Garden.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "F6",
+                "Place Name": "Dempsey Hill",
+                "Area": "F",
+                "Area Name": "Bishan\u2013MacRitchie\u2013Botanic",
+                "Categories": "Food, Heritage",
+                "New?": null,
+                "Website": "https://www.dempseyhill.com/",
+                "Description": "Former barracks turned dining and lifestyle enclave.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "F7",
+                "Place Name": "Holland Village",
+                "Area": "F",
+                "Area Name": "Bishan\u2013MacRitchie\u2013Botanic",
+                "Categories": "Food, Leisure",
+                "New?": null,
+                "Website": "https://www.visitsingapore.com/see-do-singapore/places-to-see/holland-village/",
+                "Description": "Eclectic neighbourhood with dining and boutiques.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "G1",
+                "Place Name": "Skyville Dawson",
+                "Area": "G",
+                "Area Name": "River\u2013Orchard\u2013Newton",
+                "Categories": "Architecture",
+                "New?": null,
+                "Website": null,
+                "Description": "Award-winning public housing with sky gardens.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "G2",
+                "Place Name": "Zion Riverside Food Centre",
+                "Area": "G",
+                "Area Name": "River\u2013Orchard\u2013Newton",
+                "Categories": "Food",
+                "New?": null,
+                "Website": null,
+                "Description": "Popular hawker centre along the Singapore River.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "G3",
+                "Place Name": "Robertson Quay",
+                "Area": "G",
+                "Area Name": "River\u2013Orchard\u2013Newton",
+                "Categories": "Food, Leisure",
+                "New?": null,
+                "Website": "https://www.visitsingapore.com/see-do-singapore/places-to-see/robertson-quay/",
+                "Description": "Riverside dining and nightlife precinct.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "G4",
+                "Place Name": "Clarke Quay",
+                "Area": "G",
+                "Area Name": "River\u2013Orchard\u2013Newton",
+                "Categories": "Food, Leisure",
+                "New?": null,
+                "Website": "https://www.clarkequay.com.sg/",
+                "Description": "Colourful riverside entertainment hub.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "G5",
+                "Place Name": "Fort Canning Park",
+                "Area": "G",
+                "Area Name": "River\u2013Orchard\u2013Newton",
+                "Categories": "Nature, Heritage",
+                "New?": null,
+                "Website": "https://www.nparks.gov.sg/visit/parks/park-detail/fort-canning-park/",
+                "Description": "Historic hilltop park with 14th-century archaeological site.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "G6",
+                "Place Name": "Fort Canning Tree Tunnel",
+                "Area": "G",
+                "Area Name": "River\u2013Orchard\u2013Newton",
+                "Categories": "Nature",
+                "New?": null,
+                "Website": "https://www.nparks.gov.sg/visit/parks/park-detail/fort-canning-park/",
+                "Description": "Instagrammable spiral staircase framed by trees.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "G7",
+                "Place Name": "Dhoby Ghaut Green",
+                "Area": "G",
+                "Area Name": "River\u2013Orchard\u2013Newton",
+                "Categories": "Nature",
+                "New?": null,
+                "Website": "https://www.nparks.gov.sg/",
+                "Description": "Urban green space near Dhoby Ghaut MRT.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "G8",
+                "Place Name": "Emerald Hill",
+                "Area": "G",
+                "Area Name": "River\u2013Orchard\u2013Newton",
+                "Categories": "Heritage, Architecture",
+                "New?": null,
+                "Website": "https://www.roots.gov.sg/places/places-landing/Places/historic-sites/emerald-hill",
+                "Description": "Well-preserved Peranakan terrace houses off Orchard Road.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "G9",
+                "Place Name": "Orchard Road",
+                "Area": "G",
+                "Area Name": "River\u2013Orchard\u2013Newton",
+                "Categories": "Leisure",
+                "New?": null,
+                "Website": "https://www.orchardroad.org/",
+                "Description": "Singapore's premier shopping boulevard.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "G10",
+                "Place Name": "Newton Food Centre",
+                "Area": "G",
+                "Area Name": "River\u2013Orchard\u2013Newton",
+                "Categories": "Food",
+                "New?": null,
+                "Website": null,
+                "Description": "Famous hawker centre from Crazy Rich Asians.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "G11",
+                "Place Name": "Chinatown Heritage Centre",
+                "Area": "G",
+                "Area Name": "River\u2013Orchard\u2013Newton",
+                "Categories": "Museum, Heritage",
+                "New?": "NEW",
+                "Website": "https://www.chinatownheritagecentre.com.sg/",
+                "Description": "Immersive 1950s shophouse museum. Reopened Jan 2025.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "H1",
+                "Place Name": "Trade Association Hub",
+                "Area": "H",
+                "Area Name": "Jurong\u2013NTU\u2013Lighthouse",
+                "Categories": "Architecture",
+                "New?": null,
+                "Website": "https://www.tah.sg/",
+                "Description": "Hub for trade associations at Jurong Town Hall.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "H2",
+                "Place Name": "Science Centre Observatory",
+                "Area": "H",
+                "Area Name": "Jurong\u2013NTU\u2013Lighthouse",
+                "Categories": "Museum",
+                "New?": null,
+                "Website": "https://www.science.edu.sg/",
+                "Description": "Public observatory and science museum.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "H3",
+                "Place Name": "Chinese Garden",
+                "Area": "H",
+                "Area Name": "Jurong\u2013NTU\u2013Lighthouse",
+                "Categories": "Nature",
+                "New?": null,
+                "Website": "https://www.nparks.gov.sg/visit/parks/park-detail/jurong-lake-gardens/",
+                "Description": "Classical Chinese garden within Jurong Lake Gardens.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "H4",
+                "Place Name": "Japanese Garden",
+                "Area": "H",
+                "Area Name": "Jurong\u2013NTU\u2013Lighthouse",
+                "Categories": "Nature",
+                "New?": null,
+                "Website": "https://www.nparks.gov.sg/visit/parks/park-detail/jurong-lake-gardens/",
+                "Description": "Tranquil Japanese-style garden on Jurong Lake island.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "H5",
+                "Place Name": "Jurong Lake Gardens",
+                "Area": "H",
+                "Area Name": "Jurong\u2013NTU\u2013Lighthouse",
+                "Categories": "Nature",
+                "New?": null,
+                "Website": "https://www.nparks.gov.sg/visit/parks/park-detail/jurong-lake-gardens/",
+                "Description": "National gardens in the heartlands with play areas.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "H6",
+                "Place Name": "Jurong Central Park",
+                "Area": "H",
+                "Area Name": "Jurong\u2013NTU\u2013Lighthouse",
+                "Categories": "Nature",
+                "New?": null,
+                "Website": "https://www.nparks.gov.sg/",
+                "Description": "Neighbourhood park in Jurong.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "H7",
+                "Place Name": "Jurong Bird Park (Bird Paradise)",
+                "Area": "H",
+                "Area Name": "Jurong\u2013NTU\u2013Lighthouse",
+                "Categories": "Wildlife",
+                "New?": null,
+                "Website": "https://www.mandai.com/en/bird-paradise.html",
+                "Description": "Now relocated to Mandai as Bird Paradise.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "H8",
+                "Place Name": "Jurong Hill Park",
+                "Area": "H",
+                "Area Name": "Jurong\u2013NTU\u2013Lighthouse",
+                "Categories": "Nature",
+                "New?": null,
+                "Website": "https://www.nparks.gov.sg/",
+                "Description": "Hilltop lookout near the former bird park.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "H9",
+                "Place Name": "Garden of Fame",
+                "Area": "H",
+                "Area Name": "Jurong\u2013NTU\u2013Lighthouse",
+                "Categories": "Heritage",
+                "New?": null,
+                "Website": null,
+                "Description": "Heritage trees and garden on Jurong Hill.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "H10",
+                "Place Name": "NTU School of Art Design & Media",
+                "Area": "H",
+                "Area Name": "Jurong\u2013NTU\u2013Lighthouse",
+                "Categories": "Architecture",
+                "New?": null,
+                "Website": "https://www.ntu.edu.sg/adm",
+                "Description": "Green-roofed building, iconic NTU architecture.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "H11",
+                "Place Name": "The Hive NTU",
+                "Area": "H",
+                "Area Name": "Jurong\u2013NTU\u2013Lighthouse",
+                "Categories": "Architecture",
+                "New?": null,
+                "Website": "https://www.ntu.edu.sg/",
+                "Description": "Heatherwick-designed learning hub at NTU.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "H12",
+                "Place Name": "Singapore Discovery Centre",
+                "Area": "H",
+                "Area Name": "Jurong\u2013NTU\u2013Lighthouse",
+                "Categories": "Museum",
+                "New?": null,
+                "Website": "https://www.sdc.com.sg/",
+                "Description": "Interactive exhibition on Singapore's defence and national story.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "H13",
+                "Place Name": "Tiger Brewery",
+                "Area": "H",
+                "Area Name": "Jurong\u2013NTU\u2013Lighthouse",
+                "Categories": "Food, Leisure",
+                "New?": null,
+                "Website": "https://www.tigerbrewerytour.com.sg/",
+                "Description": "Brewery tour experience for Tiger Beer.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "H14",
+                "Place Name": "Former Tuas TV World Site",
+                "Area": "H",
+                "Area Name": "Jurong\u2013NTU\u2013Lighthouse",
+                "Categories": "Heritage",
+                "New?": null,
+                "Website": null,
+                "Description": "Abandoned former theme park site.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "H15",
+                "Place Name": "Raffles Marina Lighthouse",
+                "Area": "H",
+                "Area Name": "Jurong\u2013NTU\u2013Lighthouse",
+                "Categories": "Heritage",
+                "New?": null,
+                "Website": "https://www.rafflesmarina.com.sg/",
+                "Description": "Westernmost point of mainland Singapore with lighthouse.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "H16",
+                "Place Name": "Choa Chu Kang Cemetery",
+                "Area": "H",
+                "Area Name": "Jurong\u2013NTU\u2013Lighthouse",
+                "Categories": "Heritage",
+                "New?": null,
+                "Website": null,
+                "Description": "Large public cemetery.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "H17",
+                "Place Name": "Dinosaurs | Extinctions | Us",
+                "Area": "H",
+                "Area Name": "Jurong\u2013NTU\u2013Lighthouse",
+                "Categories": "Museum",
+                "New?": "NEW",
+                "Website": "https://www.science.edu.sg/",
+                "Description": "3,000 sqm exhibition with 40m Patagotitan cast at Science Centre.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "H18",
+                "Place Name": "Snow City (renovated)",
+                "Area": "H",
+                "Area Name": "Jurong\u2013NTU\u2013Lighthouse",
+                "Categories": "Leisure",
+                "New?": "NEW",
+                "Website": "https://www.snowcity.com.sg/",
+                "Description": "Renovated indoor snow centre with Glacier Luge and bumper cars on ice.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "I1",
+                "Place Name": "Kranji War Memorial",
+                "Area": "I",
+                "Area Name": "Kranji\u2013Sungei Buloh",
+                "Categories": "Heritage",
+                "New?": null,
+                "Website": "https://www.cwgc.org/visit-us/find-us/find-a-cemetery-or-memorial/kranji-war-cemetery/",
+                "Description": "Commonwealth war cemetery honouring WWII soldiers.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "I2",
+                "Place Name": "Rainbow Bridge",
+                "Area": "I",
+                "Area Name": "Kranji\u2013Sungei Buloh",
+                "Categories": "Nature",
+                "New?": null,
+                "Website": null,
+                "Description": "Colourful bridge near Kranji Reservoir.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "I3",
+                "Place Name": "Kranji Close",
+                "Area": "I",
+                "Area Name": "Kranji\u2013Sungei Buloh",
+                "Categories": "Heritage",
+                "New?": null,
+                "Website": null,
+                "Description": "Rural heritage area near Kranji.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "I4",
+                "Place Name": "Kranji Dam",
+                "Area": "I",
+                "Area Name": "Kranji\u2013Sungei Buloh",
+                "Categories": "Nature",
+                "New?": null,
+                "Website": "https://www.pub.gov.sg/",
+                "Description": "Reservoir dam with views of Johor.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "I5",
+                "Place Name": "Sungei Buloh Wetland Reserve",
+                "Area": "I",
+                "Area Name": "Kranji\u2013Sungei Buloh",
+                "Categories": "Nature, Wildlife",
+                "New?": null,
+                "Website": "https://www.nparks.gov.sg/visit/parks/park-detail/sungei-buloh-wetland-reserve/",
+                "Description": "ASEAN Heritage Park with mangroves and migratory birds.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "I6",
+                "Place Name": "Kranji Marshes",
+                "Area": "I",
+                "Area Name": "Kranji\u2013Sungei Buloh",
+                "Categories": "Nature, Wildlife",
+                "New?": null,
+                "Website": "https://www.nparks.gov.sg/visit/parks/park-detail/kranji-marshes/",
+                "Description": "56.8-hectare freshwater marshland. Bird watching paradise.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "I7",
+                "Place Name": "Bollywood Veggies",
+                "Area": "I",
+                "Area Name": "Kranji\u2013Sungei Buloh",
+                "Categories": "Food, Nature",
+                "New?": null,
+                "Website": "https://www.bollywoodveggies.com/",
+                "Description": "Farm-to-table experience with organic farming tours.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "I8",
+                "Place Name": "Cashin House",
+                "Area": "I",
+                "Area Name": "Kranji\u2013Sungei Buloh",
+                "Categories": "Heritage",
+                "New?": null,
+                "Website": null,
+                "Description": "Heritage colonial bungalow near Kranji.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "J1",
+                "Place Name": "Green Corridor (Rail Corridor)",
+                "Area": "J",
+                "Area Name": "Green Corridor\u2013Bukit Timah",
+                "Categories": "Nature, Heritage",
+                "New?": null,
+                "Website": "https://www.nparks.gov.sg/gardens-parks-and-nature/parks-and-nature-reserves/rail-corridor",
+                "Description": "24km former railway line turned nature corridor.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "J2",
+                "Place Name": "Bukit Timah Diversion Canal",
+                "Area": "J",
+                "Area Name": "Green Corridor\u2013Bukit Timah",
+                "Categories": "Nature",
+                "New?": null,
+                "Website": "https://www.nparks.gov.sg/gardens-parks-and-nature/parks-and-nature-reserves/rail-corridor",
+                "Description": "Scenic canal section along the Rail Corridor.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "J3",
+                "Place Name": "Clementi Forest",
+                "Area": "J",
+                "Area Name": "Green Corridor\u2013Bukit Timah",
+                "Categories": "Nature",
+                "New?": null,
+                "Website": "https://www.nparks.gov.sg/",
+                "Description": "Secondary forest with tall canopy near Rail Corridor.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "J4",
+                "Place Name": "Old Bukit Timah Railway Station",
+                "Area": "J",
+                "Area Name": "Green Corridor\u2013Bukit Timah",
+                "Categories": "Heritage",
+                "New?": null,
+                "Website": "https://www.nparks.gov.sg/gardens-parks-and-nature/parks-and-nature-reserves/rail-corridor",
+                "Description": "Restored heritage railway station along Rail Corridor.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "J5",
+                "Place Name": "Bukit Timah Nature Reserve",
+                "Area": "J",
+                "Area Name": "Green Corridor\u2013Bukit Timah",
+                "Categories": "Nature",
+                "New?": null,
+                "Website": "https://www.nparks.gov.sg/visit/parks/park-detail/bukit-timah-nature-reserve/",
+                "Description": "163-hectare primary rainforest within the city.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "J6",
+                "Place Name": "Bukit Timah Hill",
+                "Area": "J",
+                "Area Name": "Green Corridor\u2013Bukit Timah",
+                "Categories": "Nature",
+                "New?": null,
+                "Website": "https://www.nparks.gov.sg/visit/parks/park-detail/bukit-timah-nature-reserve/",
+                "Description": "Singapore's highest natural point at 163.63m.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "J7",
+                "Place Name": "Wallace Trail",
+                "Area": "J",
+                "Area Name": "Green Corridor\u2013Bukit Timah",
+                "Categories": "Nature",
+                "New?": null,
+                "Website": "https://www.nparks.gov.sg/visit/parks/park-detail/dairy-farm-nature-park/",
+                "Description": "Trail named after Alfred Russel Wallace near Dairy Farm.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "J8",
+                "Place Name": "Dairy Farm Nature Park",
+                "Area": "J",
+                "Area Name": "Green Corridor\u2013Bukit Timah",
+                "Categories": "Nature",
+                "New?": null,
+                "Website": "https://www.nparks.gov.sg/visit/parks/park-detail/dairy-farm-nature-park/",
+                "Description": "Nature park with quarry, Wallace Centre and forest trails.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "J9",
+                "Place Name": "Rail Corridor End Point",
+                "Area": "J",
+                "Area Name": "Green Corridor\u2013Bukit Timah",
+                "Categories": "Nature",
+                "New?": null,
+                "Website": "https://www.nparks.gov.sg/gardens-parks-and-nature/parks-and-nature-reserves/rail-corridor",
+                "Description": "Northern terminus of the Rail Corridor trail.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "J10",
+                "Place Name": "Hindhede Quarry",
+                "Area": "J",
+                "Area Name": "Green Corridor\u2013Bukit Timah",
+                "Categories": "Nature",
+                "New?": null,
+                "Website": "https://www.nparks.gov.sg/visit/parks/park-detail/bukit-timah-nature-reserve/",
+                "Description": "Scenic former quarry with emerald-green waters.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "J11",
+                "Place Name": "Former Ford Factory",
+                "Area": "J",
+                "Area Name": "Green Corridor\u2013Bukit Timah",
+                "Categories": "Heritage, Museum",
+                "New?": null,
+                "Website": "https://www.nhb.gov.sg/former-ford-factory/",
+                "Description": "WWII museum at the British surrender site.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "J12",
+                "Place Name": "Bukit Batok Nature Park",
+                "Area": "J",
+                "Area Name": "Green Corridor\u2013Bukit Timah",
+                "Categories": "Nature, Heritage",
+                "New?": null,
+                "Website": "https://www.nparks.gov.sg/visit/parks/park-detail/bukit-batok-nature-park/",
+                "Description": "Forest park with WWII memorial and trails.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "J13",
+                "Place Name": "Bukit Batok WWII Memorial",
+                "Area": "J",
+                "Area Name": "Green Corridor\u2013Bukit Timah",
+                "Categories": "Heritage",
+                "New?": null,
+                "Website": "https://www.roots.gov.sg/",
+                "Description": "Site of former Japanese Syonan Jinja shrine.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "J14",
+                "Place Name": "Little Guilin",
+                "Area": "J",
+                "Area Name": "Green Corridor\u2013Bukit Timah",
+                "Categories": "Nature",
+                "New?": null,
+                "Website": "https://www.nparks.gov.sg/visit/parks/park-detail/bukit-batok-town-park/",
+                "Description": "Dramatic granite rock face rising from a lake.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "J15",
+                "Place Name": "Rifle Range Nature Park",
+                "Area": "J",
+                "Area Name": "Green Corridor\u2013Bukit Timah",
+                "Categories": "Nature",
+                "New?": "NEW",
+                "Website": "https://www.nparks.gov.sg/visit/parks/park-detail/rifle-range-nature-park",
+                "Description": "66-hectare park, Singapore's first net positive energy nature park.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "K1",
+                "Place Name": "Senja-Cashew Community Club",
+                "Area": "K",
+                "Area Name": "Northwest\u2013Northeast",
+                "Categories": "Leisure",
+                "New?": null,
+                "Website": "https://www.onepa.gov.sg/",
+                "Description": "Community club in Bukit Panjang.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "K2",
+                "Place Name": "Zhenghua Park",
+                "Area": "K",
+                "Area Name": "Northwest\u2013Northeast",
+                "Categories": "Nature",
+                "New?": null,
+                "Website": "https://www.nparks.gov.sg/visit/parks/park-detail/zhenghua-park/",
+                "Description": "Nature park bordering the Central Catchment.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "K3",
+                "Place Name": "Chestnut Nature Park",
+                "Area": "K",
+                "Area Name": "Northwest\u2013Northeast",
+                "Categories": "Nature",
+                "New?": null,
+                "Website": "https://www.nparks.gov.sg/visit/parks/park-detail/chestnut-nature-park/",
+                "Description": "Mountain biking and hiking trails in northern forest.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "K4",
+                "Place Name": "Singapore Zoo",
+                "Area": "K",
+                "Area Name": "Northwest\u2013Northeast",
+                "Categories": "Wildlife",
+                "New?": null,
+                "Website": "https://www.mandai.com/en/singapore-zoo.html",
+                "Description": "World-renowned open-concept zoo at Mandai.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "K5",
+                "Place Name": "Bird Paradise",
+                "Area": "K",
+                "Area Name": "Northwest\u2013Northeast",
+                "Categories": "Wildlife",
+                "New?": null,
+                "Website": "https://www.mandai.com/en/bird-paradise.html",
+                "Description": "Asia's largest bird park at Mandai.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "K6",
+                "Place Name": "Marisiling Park",
+                "Area": "K",
+                "Area Name": "Northwest\u2013Northeast",
+                "Categories": "Nature",
+                "New?": null,
+                "Website": "https://www.nparks.gov.sg/",
+                "Description": "Neighbourhood park in Woodlands.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "K7",
+                "Place Name": "Woodlands Jetty",
+                "Area": "K",
+                "Area Name": "Northwest\u2013Northeast",
+                "Categories": "Nature",
+                "New?": null,
+                "Website": null,
+                "Description": "Waterfront jetty with views of Johor Bahru.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "K8",
+                "Place Name": "Rasa Istimewa Waterfront",
+                "Area": "K",
+                "Area Name": "Northwest\u2013Northeast",
+                "Categories": "Food",
+                "New?": null,
+                "Website": null,
+                "Description": "Seafood restaurant on Woodlands waterfront.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "K9",
+                "Place Name": "Admiralty Park",
+                "Area": "K",
+                "Area Name": "Northwest\u2013Northeast",
+                "Categories": "Nature, Leisure",
+                "New?": null,
+                "Website": "https://www.nparks.gov.sg/visit/parks/park-detail/admiralty-park/",
+                "Description": "Destination park with Singapore's longest slide.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "K10",
+                "Place Name": "Marisiling Tunnel",
+                "Area": "K",
+                "Area Name": "Northwest\u2013Northeast",
+                "Categories": "Heritage",
+                "New?": null,
+                "Website": null,
+                "Description": "Historic railway tunnel in Woodlands.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "K11",
+                "Place Name": "SFA Senoko Fishery Port",
+                "Area": "K",
+                "Area Name": "Northwest\u2013Northeast",
+                "Categories": "Heritage",
+                "New?": null,
+                "Website": "https://www.sfa.gov.sg/",
+                "Description": "Working fishery port in northern Singapore.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "K12",
+                "Place Name": "Sembawang Park Fishing Pier",
+                "Area": "K",
+                "Area Name": "Northwest\u2013Northeast",
+                "Categories": "Nature",
+                "New?": null,
+                "Website": "https://www.nparks.gov.sg/visit/parks/park-detail/sembawang-park/",
+                "Description": "Seaside park with fishing pier and heritage trees.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "K13",
+                "Place Name": "The Japanese Theater",
+                "Area": "K",
+                "Area Name": "Northwest\u2013Northeast",
+                "Categories": "Heritage",
+                "New?": null,
+                "Website": null,
+                "Description": "Historical marker of former Japanese settlement.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "K14",
+                "Place Name": "Sembawang Hot Spring Park",
+                "Area": "K",
+                "Area Name": "Northwest\u2013Northeast",
+                "Categories": "Nature",
+                "New?": null,
+                "Website": "https://www.nparks.gov.sg/visit/parks/park-detail/sembawang-hot-spring-park/",
+                "Description": "Singapore's only natural hot spring with cascading pools.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "K15",
+                "Place Name": "Lower Seletar Reservoir Park",
+                "Area": "K",
+                "Area Name": "Northwest\u2013Northeast",
+                "Categories": "Nature",
+                "New?": null,
+                "Website": "https://www.nparks.gov.sg/visit/parks/park-detail/lower-seletar-reservoir-park/",
+                "Description": "Waterfront park with rocket-shaped observation tower.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "K16",
+                "Place Name": "Yishun Dam",
+                "Area": "K",
+                "Area Name": "Northwest\u2013Northeast",
+                "Categories": "Nature",
+                "New?": null,
+                "Website": "https://www.pub.gov.sg/",
+                "Description": "Dam across Lower Seletar Reservoir. Sunset spot.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "K17",
+                "Place Name": "Singapore Last Fishing Village",
+                "Area": "K",
+                "Area Name": "Northwest\u2013Northeast",
+                "Categories": "Heritage",
+                "New?": null,
+                "Website": null,
+                "Description": "Last surviving fishing village at Lim Chu Kang.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "K18",
+                "Place Name": "Rower's Bay Park",
+                "Area": "K",
+                "Area Name": "Northwest\u2013Northeast",
+                "Categories": "Nature",
+                "New?": null,
+                "Website": "https://www.nparks.gov.sg/",
+                "Description": "Waterfront park at Lower Seletar Reservoir.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "K19",
+                "Place Name": "Wheeler's Estate",
+                "Area": "K",
+                "Area Name": "Northwest\u2013Northeast",
+                "Categories": "Food, Heritage",
+                "New?": null,
+                "Website": "https://www.wheelersestate.com/",
+                "Description": "Heritage dining venue in restored colonial building.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "K20",
+                "Place Name": "Rainforest Wild Asia",
+                "Area": "K",
+                "Area Name": "Northwest\u2013Northeast",
+                "Categories": "Wildlife",
+                "New?": "NEW",
+                "Website": "https://www.mandai.com/en/rainforest-wild-asia.html",
+                "Description": "Adventure wildlife park with Malayan tigers. Opened Mar 2025.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "K21",
+                "Place Name": "Mandai Boardwalk",
+                "Area": "K",
+                "Area Name": "Northwest\u2013Northeast",
+                "Categories": "Nature",
+                "New?": "NEW",
+                "Website": "https://www.mandai.com/",
+                "Description": "Scenic waterfront trail along Upper Seletar Reservoir.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "K22",
+                "Place Name": "Mandai Rainforest Resort",
+                "Area": "K",
+                "Area Name": "Northwest\u2013Northeast",
+                "Categories": "Leisure, Nature",
+                "New?": "NEW",
+                "Website": "https://www.mandai.com/en/mandai-rainforest-resort.html",
+                "Description": "Banyan Tree eco-resort with 24 treehouses. Opened Apr 2025.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "K23",
+                "Place Name": "Colugo Camp",
+                "Area": "K",
+                "Area Name": "Northwest\u2013Northeast",
+                "Categories": "Leisure, Nature",
+                "New?": "NEW",
+                "Website": "https://www.mandai.com/en/colugo-camp.html",
+                "Description": "Safari-style glamping at Mandai. Opened Aug 2025.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "K24",
+                "Place Name": "Exploria",
+                "Area": "K",
+                "Area Name": "Northwest\u2013Northeast",
+                "Categories": "Museum, Wildlife",
+                "New?": "NEW",
+                "Website": "https://www.mandai.com/en/exploria.html",
+                "Description": "10,000 sqm indoor nature multimedia attraction. Opened Mar 2026.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "K25",
+                "Place Name": "Curiosity Cove",
+                "Area": "K",
+                "Area Name": "Northwest\u2013Northeast",
+                "Categories": "Leisure, Wildlife",
+                "New?": "NEW",
+                "Website": "https://www.mandai.com/en/curiosity-cove.html",
+                "Description": "4,600 sqm nature playground for ages 3\u201312. Opened Nov 2025.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "L1",
+                "Place Name": "Geylang Road",
+                "Area": "L",
+                "Area Name": "Geylang\u2013Joo Chiat\u2013Katong",
+                "Categories": "Food, Heritage",
+                "New?": null,
+                "Website": "https://www.visitsingapore.com/see-do-singapore/places-to-see/geylang-serai/",
+                "Description": "Cultural corridor with temples, mosques, and street food.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "L2",
+                "Place Name": "Joo Chiat Road",
+                "Area": "L",
+                "Area Name": "Geylang\u2013Joo Chiat\u2013Katong",
+                "Categories": "Heritage, Food",
+                "New?": null,
+                "Website": "https://www.visitsingapore.com/see-do-singapore/places-to-see/joo-chiat/",
+                "Description": "Heritage Peranakan streetscape with colourful shophouses.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "L3",
+                "Place Name": "The Intan Peranakan Museum",
+                "Area": "L",
+                "Area Name": "Geylang\u2013Joo Chiat\u2013Katong",
+                "Categories": "Museum, Heritage",
+                "New?": null,
+                "Website": "https://www.the-intan.com/",
+                "Description": "Private Peranakan home-museum with guided tours by appointment.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "L4",
+                "Place Name": "Lotus at Joo Chiat",
+                "Area": "L",
+                "Area Name": "Geylang\u2013Joo Chiat\u2013Katong",
+                "Categories": "Heritage",
+                "New?": null,
+                "Website": null,
+                "Description": "Heritage spot on Joo Chiat Road.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "L5",
+                "Place Name": "Peranakan Houses @ Koong Seng Rd",
+                "Area": "L",
+                "Area Name": "Geylang\u2013Joo Chiat\u2013Katong",
+                "Categories": "Heritage, Architecture",
+                "New?": null,
+                "Website": null,
+                "Description": "Row of ornate Peranakan terrace houses.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "L6",
+                "Place Name": "Sinpopo Brand",
+                "Area": "L",
+                "Area Name": "Geylang\u2013Joo Chiat\u2013Katong",
+                "Categories": "Food",
+                "New?": null,
+                "Website": "https://www.sinpopo.com/",
+                "Description": "Nostalgic Singaporean cafe with retro vibes.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "L7",
+                "Place Name": "Sri Senpaga Vinayagar Temple",
+                "Area": "L",
+                "Area Name": "Geylang\u2013Joo Chiat\u2013Katong",
+                "Categories": "Heritage",
+                "New?": null,
+                "Website": "https://www.srisenpaga.org.sg/",
+                "Description": "Beautiful Hindu temple in the Katong area.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "L8",
+                "Place Name": "Old Airport Road Food Centre",
+                "Area": "L",
+                "Area Name": "Geylang\u2013Joo Chiat\u2013Katong",
+                "Categories": "Food",
+                "New?": null,
+                "Website": null,
+                "Description": "Legendary hawker centre with some of Singapore's best stalls.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "L9",
+                "Place Name": "Tanjong Pagar Heritage Area",
+                "Area": "L",
+                "Area Name": "Geylang\u2013Joo Chiat\u2013Katong",
+                "Categories": "Heritage, Food, Architecture",
+                "New?": "NEW",
+                "Website": "https://www.visitsingapore.com/see-do-singapore/places-to-see/tanjong-pagar/",
+                "Description": "Heritage shophouses, street art, and vibrant dining in CBD.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "M1",
+                "Place Name": "Jewel @ Changi",
+                "Area": "M",
+                "Area Name": "Changi\u2013Pasir Ris\u2013Bedok",
+                "Categories": "Architecture, Leisure",
+                "New?": null,
+                "Website": "https://www.jewelchangiairport.com/",
+                "Description": "Nature-themed hub with Rain Vortex waterfall.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "M2",
+                "Place Name": "Changi Business Park",
+                "Area": "M",
+                "Area Name": "Changi\u2013Pasir Ris\u2013Bedok",
+                "Categories": "Architecture",
+                "New?": null,
+                "Website": "https://www.capitaland.com/",
+                "Description": "Business park precinct near Changi.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "M3",
+                "Place Name": "Changi Village Hawker Centre",
+                "Area": "M",
+                "Area Name": "Changi\u2013Pasir Ris\u2013Bedok",
+                "Categories": "Food",
+                "New?": null,
+                "Website": null,
+                "Description": "Beloved hawker centre near Changi Beach.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "M4",
+                "Place Name": "Changi Beach Park",
+                "Area": "M",
+                "Area Name": "Changi\u2013Pasir Ris\u2013Bedok",
+                "Categories": "Nature, Heritage",
+                "New?": null,
+                "Website": "https://www.nparks.gov.sg/visit/parks/park-detail/changi-beach-park/",
+                "Description": "Coastal park with WWII history and Ubin views.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "M5",
+                "Place Name": "Changi Point Coastal Walk",
+                "Area": "M",
+                "Area Name": "Changi\u2013Pasir Ris\u2013Bedok",
+                "Categories": "Nature",
+                "New?": null,
+                "Website": "https://www.nparks.gov.sg/visit/parks/park-detail/changi-beach-park/",
+                "Description": "Scenic boardwalk along Changi coast.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "M6",
+                "Place Name": "Changi Boardwalk",
+                "Area": "M",
+                "Area Name": "Changi\u2013Pasir Ris\u2013Bedok",
+                "Categories": "Nature",
+                "New?": null,
+                "Website": "https://www.nparks.gov.sg/visit/parks/park-detail/changi-beach-park/",
+                "Description": "2.2km boardwalk connecting Changi Beach to ferry terminal.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "M7",
+                "Place Name": "Old Changi Hospital",
+                "Area": "M",
+                "Area Name": "Changi\u2013Pasir Ris\u2013Bedok",
+                "Categories": "Heritage",
+                "New?": null,
+                "Website": null,
+                "Description": "Abandoned WWII hospital known for its eerie atmosphere.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "M8",
+                "Place Name": "Pasir Ris Beach",
+                "Area": "M",
+                "Area Name": "Changi\u2013Pasir Ris\u2013Bedok",
+                "Categories": "Nature",
+                "New?": null,
+                "Website": "https://www.nparks.gov.sg/visit/parks/park-detail/pasir-ris-park/",
+                "Description": "Family beach with mangrove boardwalk and playground.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "M9",
+                "Place Name": "Pasir Ris Town Park",
+                "Area": "M",
+                "Area Name": "Changi\u2013Pasir Ris\u2013Bedok",
+                "Categories": "Nature",
+                "New?": null,
+                "Website": "https://www.nparks.gov.sg/visit/parks/park-detail/pasir-ris-town-park/",
+                "Description": "Neighbourhood park in Pasir Ris.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "M10",
+                "Place Name": "Tampines Eco Green",
+                "Area": "M",
+                "Area Name": "Changi\u2013Pasir Ris\u2013Bedok",
+                "Categories": "Nature",
+                "New?": null,
+                "Website": "https://www.nparks.gov.sg/visit/parks/park-detail/tampines-eco-green/",
+                "Description": "Ecological park with grasslands and open habitats.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "M11",
+                "Place Name": "Sun Plaza Park",
+                "Area": "M",
+                "Area Name": "Changi\u2013Pasir Ris\u2013Bedok",
+                "Categories": "Nature",
+                "New?": null,
+                "Website": "https://www.nparks.gov.sg/",
+                "Description": "Park in Tampines with themed gardens.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "M12",
+                "Place Name": "Bedok Reservoir Park",
+                "Area": "M",
+                "Area Name": "Changi\u2013Pasir Ris\u2013Bedok",
+                "Categories": "Nature",
+                "New?": null,
+                "Website": "https://www.nparks.gov.sg/visit/parks/park-detail/bedok-reservoir-park/",
+                "Description": "Popular reservoir park for running and kayaking.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "M13",
+                "Place Name": "Bedok Town Park",
+                "Area": "M",
+                "Area Name": "Changi\u2013Pasir Ris\u2013Bedok",
+                "Categories": "Nature",
+                "New?": null,
+                "Website": "https://www.nparks.gov.sg/visit/parks/park-detail/bedok-town-park/",
+                "Description": "Neighbourhood park in Bedok.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "M14",
+                "Place Name": "The Carbon Gallery",
+                "Area": "M",
+                "Area Name": "Changi\u2013Pasir Ris\u2013Bedok",
+                "Categories": "Museum",
+                "New?": "NEW",
+                "Website": "https://www.terrasg.com/",
+                "Description": "Asia's first carbon-focused experiential hub at Pasir Ris.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "N1",
+                "Place Name": "Pulau Ubin",
+                "Area": "N",
+                "Area Name": "Pulau Ubin",
+                "Categories": "Nature, Heritage",
+                "New?": null,
+                "Website": "https://www.nparks.gov.sg/visit/parks/park-detail/pulau-ubin/",
+                "Description": "Offshore island with kampong heritage and Chek Jawa wetlands.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "O1",
+                "Place Name": "Waterway Point @ Punggol",
+                "Area": "O",
+                "Area Name": "Punggol\u2013Coney Island",
+                "Categories": "Leisure",
+                "New?": null,
+                "Website": "https://www.waterwaypoint.com.sg/",
+                "Description": "Shopping mall by Punggol Waterway.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "O2",
+                "Place Name": "Lorong Halus Bridge",
+                "Area": "O",
+                "Area Name": "Punggol\u2013Coney Island",
+                "Categories": "Nature",
+                "New?": null,
+                "Website": "https://www.nparks.gov.sg/",
+                "Description": "Red bridge over Serangoon Reservoir.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "O3",
+                "Place Name": "Lorong Halus Wetland",
+                "Area": "O",
+                "Area Name": "Punggol\u2013Coney Island",
+                "Categories": "Nature",
+                "New?": null,
+                "Website": "https://www.pub.gov.sg/",
+                "Description": "Constructed wetland for water treatment and nature walks.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "O4",
+                "Place Name": "Serangoon Reservoir Dam",
+                "Area": "O",
+                "Area Name": "Punggol\u2013Coney Island",
+                "Categories": "Nature",
+                "New?": null,
+                "Website": "https://www.pub.gov.sg/",
+                "Description": "Dam with views of Serangoon Reservoir.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "O5",
+                "Place Name": "Coney Island",
+                "Area": "O",
+                "Area Name": "Punggol\u2013Coney Island",
+                "Categories": "Nature",
+                "New?": null,
+                "Website": "https://www.nparks.gov.sg/visit/parks/park-detail/coney-island-park/",
+                "Description": "Rustic island park with beaches and casuarina woodland.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "O6",
+                "Place Name": "The Punggol Settlement",
+                "Area": "O",
+                "Area Name": "Punggol\u2013Coney Island",
+                "Categories": "Food",
+                "New?": null,
+                "Website": "https://www.thepunggolsettlement.com/",
+                "Description": "Waterfront dining village at Punggol Point.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "O7",
+                "Place Name": "Jewel Bridge",
+                "Area": "O",
+                "Area Name": "Punggol\u2013Coney Island",
+                "Categories": "Architecture",
+                "New?": null,
+                "Website": null,
+                "Description": "Pedestrian bridge at Punggol Waterway.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "O8",
+                "Place Name": "Sengkang Riverside Park",
+                "Area": "O",
+                "Area Name": "Punggol\u2013Coney Island",
+                "Categories": "Nature",
+                "New?": null,
+                "Website": "https://www.nparks.gov.sg/visit/parks/park-detail/sengkang-riverside-park/",
+                "Description": "Riverside park with wetland and boardwalks.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "O9",
+                "Place Name": "Kampong Lorong Buangkok",
+                "Area": "O",
+                "Area Name": "Punggol\u2013Coney Island",
+                "Categories": "Heritage",
+                "New?": null,
+                "Website": null,
+                "Description": "Singapore's last surviving kampong (village).",
+                "YouTube Short": null
+        },
+        {
+                "Code": "O10",
+                "Place Name": "Compassvale Walk Park",
+                "Area": "O",
+                "Area Name": "Punggol\u2013Coney Island",
+                "Categories": "Nature",
+                "New?": "NEW",
+                "Website": "https://www.nparks.gov.sg/",
+                "Description": "Therapeutic garden with play mounds. Opened Jun 2025.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "P1",
+                "Place Name": "East Coast Park",
+                "Area": "P",
+                "Area Name": "East Coast\u2013Marina Bay",
+                "Categories": "Nature, Leisure",
+                "New?": null,
+                "Website": "https://www.nparks.gov.sg/visit/parks/park-detail/east-coast-park/",
+                "Description": "15km coastal park for cycling, skating, and beach.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "P2",
+                "Place Name": "Keppel Desalination Park",
+                "Area": "P",
+                "Area Name": "East Coast\u2013Marina Bay",
+                "Categories": "Nature",
+                "New?": null,
+                "Website": null,
+                "Description": "Educational park about water desalination.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "P3",
+                "Place Name": "Founders Memorial (under construction)",
+                "Area": "P",
+                "Area Name": "East Coast\u2013Marina Bay",
+                "Categories": "Heritage",
+                "New?": null,
+                "Website": "https://www.foundersmemorial.gov.sg/",
+                "Description": "Future national memorial at Bay East Garden. Opening 2028.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "P4",
+                "Place Name": "Bay East Garden",
+                "Area": "P",
+                "Area Name": "East Coast\u2013Marina Bay",
+                "Categories": "Nature",
+                "New?": null,
+                "Website": "https://www.gardensbythebay.com.sg/",
+                "Description": "Waterfront garden with city skyline views across Marina Bay.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "P5",
+                "Place Name": "Marina Barrage",
+                "Area": "P",
+                "Area Name": "East Coast\u2013Marina Bay",
+                "Categories": "Architecture, Nature",
+                "New?": null,
+                "Website": "https://www.pub.gov.sg/marinabarrage",
+                "Description": "Dam, green roof, and kite-flying spot with city views.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "P6",
+                "Place Name": "Gardens by the Bay",
+                "Area": "P",
+                "Area Name": "East Coast\u2013Marina Bay",
+                "Categories": "Nature, Architecture",
+                "New?": null,
+                "Website": "https://www.gardensbythebay.com.sg/",
+                "Description": "Iconic gardens with Supertrees, Cloud Forest, and Flower Dome.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "P7",
+                "Place Name": "ArtScience Museum",
+                "Area": "P",
+                "Area Name": "East Coast\u2013Marina Bay",
+                "Categories": "Museum, Architecture",
+                "New?": null,
+                "Website": "https://www.marinabaysands.com/museum.html",
+                "Description": "Lotus-shaped museum with rotating exhibitions.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "P8",
+                "Place Name": "Marina Bay Sands",
+                "Area": "P",
+                "Area Name": "East Coast\u2013Marina Bay",
+                "Categories": "Architecture, Leisure",
+                "New?": null,
+                "Website": "https://www.marinabaysands.com/",
+                "Description": "Iconic resort with SkyPark observation deck.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "P9",
+                "Place Name": "Jurassic World: The Experience",
+                "Area": "P",
+                "Area Name": "East Coast\u2013Marina Bay",
+                "Categories": "Leisure, Museum",
+                "New?": "NEW",
+                "Website": "https://www.gardensbythebay.com.sg/",
+                "Description": "Animatronic dinosaur exhibition in Cloud Forest.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "P10",
+                "Place Name": "Gardens by the Bay Family Zone",
+                "Area": "P",
+                "Area Name": "East Coast\u2013Marina Bay",
+                "Categories": "Nature, Leisure",
+                "New?": "NEW",
+                "Website": "https://www.gardensbythebay.com.sg/",
+                "Description": "New outdoor playground in the Active Garden area.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "X1",
+                "Place Name": "National Museum of Singapore",
+                "Area": "X",
+                "Area Name": "Cultural Cluster",
+                "Categories": "Museum, Heritage",
+                "New?": null,
+                "Website": "https://www.nhb.gov.sg/nationalmuseum/",
+                "Description": "Singapore's oldest museum with immersive history galleries.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "X2",
+                "Place Name": "Singapore Art Museum",
+                "Area": "X",
+                "Area Name": "Cultural Cluster",
+                "Categories": "Museum",
+                "New?": null,
+                "Website": "https://www.singaporeartmuseum.sg/",
+                "Description": "Contemporary art museum focused on Southeast Asian art.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "X3",
+                "Place Name": "National Gallery Singapore",
+                "Area": "X",
+                "Area Name": "Cultural Cluster",
+                "Categories": "Museum, Architecture, Heritage",
+                "New?": null,
+                "Website": "https://www.nationalgallery.sg/",
+                "Description": "Largest visual arts institution in Southeast Asia.",
+                "YouTube Short": null
+        },
+        {
+                "Code": "X4",
+                "Place Name": "Asian Civilisations Museum",
+                "Area": "X",
+                "Area Name": "Cultural Cluster",
+                "Categories": "Museum, Heritage",
+                "New?": null,
+                "Website": "https://www.nhb.gov.sg/acm/",
+                "Description": "Pan-Asian cultures and civilisations on the Singapore River.",
+                "YouTube Short": null
+        }
+];
+
+        let allPlaces = placesData;
+        let filteredPlaces = [...allPlaces];
+        let selectedCategories = new Set();
+        let adminMode = false;
+
+        // Load saved YouTube data from localStorage
+        function loadYouTubeData() {
+            const saved = localStorage.getItem('singaporePlacesYouTube');
+            if (saved) {
+                try {
+                    const youtubeData = JSON.parse(saved);
+                    allPlaces.forEach(place => {
+                        if (youtubeData[place.Code]) {
+                            place['YouTube Short'] = youtubeData[place.Code];
+                        }
+                    });
+                } catch (e) {
+                    console.error('Error loading YouTube data:', e);
+                }
+            }
+        }
+
+        // Save YouTube data to localStorage
+        function saveYouTubeData() {
+            const youtubeData = {};
+            allPlaces.forEach(place => {
+                if (place['YouTube Short']) {
+                    youtubeData[place.Code] = place['YouTube Short'];
+                }
+            });
+            localStorage.setItem('singaporePlacesYouTube', JSON.stringify(youtubeData));
+        }
+
+        // Extract YouTube video ID from URL or embed code
+        function extractYouTubeID(input) {
+            if (!input) return null;
+            
+            // Clean up the input
+            input = input.trim();
+            
+            // Check if it's an embed code (contains iframe)
+            if (input.includes('<iframe') || input.includes('iframe')) {
+                const embedMatch = input.match(/src=["']([^"']+)["']/);
+                if (embedMatch) {
+                    input = embedMatch[1];
+                }
+            }
+            
+            // YouTube URL patterns
+            const patterns = [
+                /youtube\.com\/shorts\/([a-zA-Z0-9_-]+)/,
+                /youtu\.be\/([a-zA-Z0-9_-]+)/,
+                /youtube\.com\/watch\?v=([a-zA-Z0-9_-]+)/,
+                /youtube\.com\/embed\/([a-zA-Z0-9_-]+)/,
+                /v=([a-zA-Z0-9_-]+)/  // Catch any v= parameter
+            ];
+            
+            for (const pattern of patterns) {
+                const match = input.match(pattern);
+                if (match && match[1]) return match[1];
+            }
+            
+            // If it's just the ID (11 characters)
+            if (/^[a-zA-Z0-9_-]{11}$/.test(input)) {
+                return input;
+            }
+            
+            return null;
+        }
+
+        // Update YouTube video for a place
+        function updateYouTube(placeCode, url) {
+            const place = allPlaces.find(p => p.Code === placeCode);
+            if (place) {
+                const videoId = extractYouTubeID(url);
+                place['YouTube Short'] = videoId;
+                saveYouTubeData();
+                updateStats();
+                renderPlaces();
+            }
+        }
+
+        // Remove YouTube video
+        function removeYouTube(placeCode) {
+            const place = allPlaces.find(p => p.Code === placeCode);
+            if (place) {
+                place['YouTube Short'] = null;
+                saveYouTubeData();
+                updateStats();
+                renderPlaces();
+            }
+        }
+
+        // Update statistics
+        function updateStats() {
+            const videoCount = allPlaces.filter(p => p['YouTube Short']).length;
+            document.getElementById('total-videos').textContent = videoCount;
+        }
+
+        // Extract unique areas and categories
+        const areas = [...new Set(allPlaces.map(p => p['Area Name']))].sort();
+        const allCategories = new Set();
+        allPlaces.forEach(place => {
+            if (place.Categories) {
+                place.Categories.split(',').forEach(cat => {
+                    allCategories.add(cat.trim());
+                });
+            }
+        });
+        const categories = [...allCategories].sort();
+
+        // Count new places
+        const newPlacesCount = allPlaces.filter(p => p['New?'] === 'NEW').length;
+        document.getElementById('total-new').textContent = newPlacesCount;
+        document.getElementById('total-areas').textContent = areas.length;
+
+        // Load saved YouTube data
+        loadYouTubeData();
+        updateStats();
+
+        // Populate area filter
+        const areaFilter = document.getElementById('area-filter');
+        areas.forEach(area => {
+            const option = document.createElement('option');
+            option.value = area;
+            option.textContent = area;
+            areaFilter.appendChild(option);
+        });
+
+        // Create category tags
+        const categoryTagsContainer = document.getElementById('category-tags');
+        categories.forEach(category => {
+            const tag = document.createElement('div');
+            tag.className = 'tag';
+            tag.textContent = category;
+            tag.onclick = () => toggleCategory(category);
+            categoryTagsContainer.appendChild(tag);
+        });
+
+        function toggleCategory(category) {
+            if (selectedCategories.has(category)) {
+                selectedCategories.delete(category);
+            } else {
+                selectedCategories.add(category);
+            }
+            updateCategoryTags();
+            filterPlaces();
+        }
+
+        function updateCategoryTags() {
+            const tags = categoryTagsContainer.querySelectorAll('.tag');
+            tags.forEach(tag => {
+                if (selectedCategories.has(tag.textContent)) {
+                    tag.classList.add('active');
+                } else {
+                    tag.classList.remove('active');
+                }
+            });
+        }
+
+        function filterPlaces() {
+            const searchTerm = document.getElementById('search').value.toLowerCase();
+            const selectedArea = document.getElementById('area-filter').value;
+            const newFilter = document.getElementById('new-filter').value;
+            const videoFilter = document.getElementById('video-filter').value;
+
+            filteredPlaces = allPlaces.filter(place => {
+                const matchesSearch = !searchTerm || 
+                    place['Place Name'].toLowerCase().includes(searchTerm) ||
+                    (place.Description && place.Description.toLowerCase().includes(searchTerm)) ||
+                    (place.Categories && place.Categories.toLowerCase().includes(searchTerm)) ||
+                    (place['Area Name'] && place['Area Name'].toLowerCase().includes(searchTerm));
+
+                const matchesArea = !selectedArea || place['Area Name'] === selectedArea;
+
+                const matchesNew = !newFilter || 
+                    (newFilter === 'new' && place['New?'] === 'NEW') ||
+                    (newFilter === 'existing' && place['New?'] !== 'NEW');
+
+                const matchesVideo = !videoFilter ||
+                    (videoFilter === 'with-video' && place['YouTube Short']) ||
+                    (videoFilter === 'no-video' && !place['YouTube Short']);
+
+                const matchesCategory = selectedCategories.size === 0 || 
+                    (place.Categories && [...selectedCategories].some(cat => 
+                        place.Categories.split(',').map(c => c.trim()).includes(cat)
+                    ));
+
+                return matchesSearch && matchesArea && matchesNew && matchesVideo && matchesCategory;
+            });
+
+            renderPlaces();
+        }
+
+        function renderYouTubeSection(place) {
+            if (adminMode) {
+                // Edit mode
+                if (place['YouTube Short']) {
+                    return `
+                        <div class="youtube-container">
+                            <iframe 
+                                src="https://www.youtube-nocookie.com/embed/${place['YouTube Short']}?rel=0&modestbranding=1&enablejsapi=1" 
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                referrerpolicy="strict-origin-when-cross-origin"
+                                allowfullscreen
+                                loading="lazy"
+                            ></iframe>
+                        </div>
+                        <div class="youtube-edit">
+                            <label>YouTube Short URL, ID, or Embed Code:</label>
+                            <input 
+                                type="text" 
+                                class="youtube-input" 
+                                data-code="${place.Code}"
+                                value="${place['YouTube Short']}"
+                                placeholder="Paste URL, embed code, or video ID"
+                            >
+                            <div class="youtube-hint">Accepts: URL, embed code (iframe), or just the video ID</div>
+                            <div class="youtube-edit-buttons">
+                                <button class="btn-save" onclick="saveYouTube('${place.Code}')">💾 Update</button>
+                                <button class="btn-remove" onclick="removeYouTube('${place.Code}')">🗑️ Remove</button>
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    return `
+                        <div class="youtube-placeholder">
+                            📹 No video added yet
+                        </div>
+                        <div class="youtube-edit">
+                            <label>YouTube Short URL, ID, or Embed Code:</label>
+                            <input 
+                                type="text" 
+                                class="youtube-input" 
+                                data-code="${place.Code}"
+                                placeholder="Paste URL, embed code, or video ID"
+                            >
+                            <div class="youtube-hint">Accepts: URL, embed code (iframe), or just the video ID</div>
+                            <div class="youtube-edit-buttons">
+                                <button class="btn-save" onclick="saveYouTube('${place.Code}')">💾 Save Video</button>
+                            </div>
+                        </div>
+                    `;
+                }
+            } else {
+                // View mode
+                if (place['YouTube Short']) {
+                    return `
+                        <div class="youtube-container">
+                            <iframe 
+                                src="https://www.youtube-nocookie.com/embed/${place['YouTube Short']}?rel=0&modestbranding=1&enablejsapi=1" 
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                referrerpolicy="strict-origin-when-cross-origin"
+                                allowfullscreen
+                                loading="lazy"
+                            ></iframe>
+                        </div>
+                    `;
+                }
+                return '';
+            }
+        }
+
+        function renderPlaces() {
+            const grid = document.getElementById('places-grid');
+            document.getElementById('showing-count').textContent = filteredPlaces.length;
+
+            if (filteredPlaces.length === 0) {
+                grid.innerHTML = `
+                    <div class="no-results">
+                        <div class="no-results-icon">🔍</div>
+                        <h2>No places found</h2>
+                        <p>Try adjusting your filters or search terms</p>
+                    </div>
+                `;
+                return;
+            }
+
+            grid.innerHTML = filteredPlaces.map(place => {
+                const categories = place.Categories ? 
+                    place.Categories.split(',').map(c => c.trim()) : [];
+                
+                return `
+                    <div class="card">
+                        ${place['New?'] === 'NEW' ? '<div class="new-indicator">New</div>' : ''}
+                        <div class="card-header">
+                            <div class="place-code">${place.Code}</div>
+                        </div>
+                        <div class="place-name">${place['Place Name']}</div>
+                        <div class="area-name">📍 ${place['Area Name']}</div>
+                        ${place.Description ? `<div class="description">${place.Description}</div>` : ''}
+                        ${categories.length > 0 ? `
+                            <div class="categories">
+                                ${categories.map(cat => `
+                                    <span class="category-tag">${cat}</span>
+                                `).join('')}
+                            </div>
+                        ` : ''}
+                        ${renderYouTubeSection(place)}
+                        ${place.Website ? `
+                            <a href="${place.Website}" target="_blank" class="website-link">
+                                🔗 Visit Website →
+                            </a>
+                        ` : ''}
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Save YouTube URL from input
+        window.saveYouTube = function(placeCode) {
+            const input = document.querySelector(`.youtube-input[data-code="${placeCode}"]`);
+            if (input && input.value.trim()) {
+                updateYouTube(placeCode, input.value.trim());
+            }
+        };
+
+        // Remove YouTube video
+        window.removeYouTube = function(placeCode) {
+            if (confirm('Remove this video?')) {
+                removeYouTube(placeCode);
+            }
+        };
+
+        // Toggle admin mode
+        document.getElementById('admin-toggle').addEventListener('click', function() {
+            adminMode = !adminMode;
+            this.classList.toggle('active');
+            this.textContent = adminMode ? '👁️ View Mode' : '🎬 Edit Mode';
+            renderPlaces();
+        });
+
+        // Export data
+        document.getElementById('export-btn').addEventListener('click', function() {
+            const youtubeData = {};
+            allPlaces.forEach(place => {
+                if (place['YouTube Short']) {
+                    youtubeData[place.Code] = {
+                        name: place['Place Name'],
+                        videoId: place['YouTube Short'],
+                        url: `https://youtube.com/shorts/${place['YouTube Short']}`
+                    };
+                }
+            });
+            
+            const dataStr = JSON.stringify(youtubeData, null, 2);
+            const dataBlob = new Blob([dataStr], {type: 'application/json'});
+            const url = URL.createObjectURL(dataBlob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = 'singapore_places_youtube.json';
+            link.click();
+            URL.revokeObjectURL(url);
+        });
+
+        // Event listeners
+        document.getElementById('search').addEventListener('input', filterPlaces);
+        document.getElementById('area-filter').addEventListener('change', filterPlaces);
+        document.getElementById('new-filter').addEventListener('change', filterPlaces);
+        document.getElementById('video-filter').addEventListener('change', filterPlaces);
+        document.getElementById('clear-filters').addEventListener('click', () => {
+            document.getElementById('search').value = '';
+            document.getElementById('area-filter').value = '';
+            document.getElementById('new-filter').value = '';
+            document.getElementById('video-filter').value = '';
+            selectedCategories.clear();
+            updateCategoryTags();
+            filterPlaces();
+        });
+
+        // Initial render
+        renderPlaces();
+    </script>
+</body>
+</html>
