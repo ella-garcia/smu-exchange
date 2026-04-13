@@ -241,9 +241,105 @@
             color: #555;
         }
 
-        .youtube-container {
+        /* Video Card Styles */
+        .video-card {
             margin: 15px 0;
+            border: 2px solid #e0e0e0;
             border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+
+        .video-card.expanded {
+            border-color: #667eea;
+        }
+
+        .video-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 15px;
+            background: #f8f8f8;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .video-card-header:hover {
+            background: #f0f0f0;
+        }
+
+        .video-card-title {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .video-count {
+            background: #667eea;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 12px;
+        }
+
+        .expand-icon {
+            transition: transform 0.3s;
+            font-size: 18px;
+            color: #667eea;
+        }
+
+        .video-card.expanded .expand-icon {
+            transform: rotate(180deg);
+        }
+
+        .video-card-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .video-card.expanded .video-card-content {
+            max-height: 3000px;
+        }
+
+        .video-slots {
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .video-slot {
+            border: 2px dashed #e0e0e0;
+            border-radius: 10px;
+            padding: 15px;
+            background: #fafafa;
+        }
+
+        .video-slot.has-video {
+            border-style: solid;
+            border-color: #667eea;
+            background: white;
+        }
+
+        .video-slot-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .slot-number {
+            font-weight: 600;
+            color: #667eea;
+            font-size: 14px;
+        }
+
+        .youtube-container {
+            margin: 10px 0;
+            border-radius: 10px;
             overflow: hidden;
             background: #000;
         }
@@ -258,54 +354,57 @@
         .youtube-placeholder {
             background: #f8f8f8;
             border: 2px dashed #ddd;
-            border-radius: 12px;
+            border-radius: 10px;
             padding: 20px;
             text-align: center;
             color: #999;
-            margin: 15px 0;
+            margin: 10px 0;
         }
 
-        .youtube-edit {
-            margin: 15px 0;
-            padding: 15px;
-            background: #f8f8f8;
-            border-radius: 12px;
+        .youtube-input-group {
+            margin: 10px 0;
         }
 
-        .youtube-edit label {
+        .youtube-input-group label {
             display: block;
             font-weight: 600;
             color: #555;
-            margin-bottom: 8px;
-            font-size: 14px;
+            margin-bottom: 6px;
+            font-size: 13px;
         }
 
-        .youtube-edit input {
+        .youtube-input-group input {
             width: 100%;
-            padding: 10px;
+            padding: 8px 12px;
             border: 2px solid #e0e0e0;
             border-radius: 8px;
             font-size: 14px;
-            margin-bottom: 10px;
         }
 
-        .youtube-edit input:focus {
+        .youtube-input-group input:focus {
             outline: none;
             border-color: #667eea;
         }
 
-        .youtube-edit-buttons {
+        .youtube-hint {
+            font-size: 11px;
+            color: #888;
+            margin-top: 4px;
+        }
+
+        .video-slot-buttons {
             display: flex;
             gap: 8px;
+            margin-top: 10px;
         }
 
         .btn-save, .btn-remove {
-            padding: 8px 16px;
+            padding: 6px 14px;
             border: none;
-            border-radius: 8px;
+            border-radius: 6px;
             cursor: pointer;
             font-weight: 600;
-            font-size: 13px;
+            font-size: 12px;
             transition: all 0.3s;
         }
 
@@ -326,26 +425,6 @@
 
         .btn-remove:hover {
             background: #ee5a5a;
-        }
-
-        .add-youtube-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-            background: #667eea;
-            color: white;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 600;
-            font-size: 13px;
-            margin-top: 10px;
-            transition: all 0.3s;
-        }
-
-        .add-youtube-btn:hover {
-            background: #5568d3;
         }
 
         .website-link {
@@ -423,10 +502,232 @@
             transform: translateY(-2px);
         }
 
-        .youtube-hint {
+        .google-sheet-btn {
+            display: inline-block;
+            background: #34a853;
+            color: white;
+            padding: 12px 28px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(52, 168, 83, 0.3);
+        }
+
+        .google-sheet-btn:hover {
+            background: #2d9248;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(52, 168, 83, 0.4);
+        }
+
+        .add-location-btn {
+            background: #ff6b6b;
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            margin-left: 10px;
+        }
+
+        .add-location-btn:hover {
+            background: #ee5a5a;
+            transform: translateY(-2px);
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            overflow-y: auto;
+        }
+
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            max-width: 600px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .modal-title {
+            font-size: 1.8em;
+            font-weight: 700;
+            color: #333;
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 28px;
+            color: #888;
+            cursor: pointer;
+            padding: 0;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: all 0.3s;
+        }
+
+        .close-modal:hover {
+            background: #f0f0f0;
+            color: #333;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            color: #555;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 10px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+            font-family: inherit;
+            transition: all 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .form-hint {
             font-size: 12px;
             color: #888;
-            margin-top: 5px;
+            margin-top: 4px;
+        }
+
+        .required {
+            color: #ff6b6b;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 30px;
+        }
+
+        .btn-primary {
+            flex: 1;
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-primary:hover {
+            background: #5568d3;
+        }
+
+        .btn-secondary {
+            background: #f0f0f0;
+            color: #555;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-secondary:hover {
+            background: #e0e0e0;
+        }
+
+        .success-message {
+            background: #d4edda;
+            border: 2px solid #28a745;
+            color: #155724;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .success-message h3 {
+            margin-bottom: 10px;
+        }
+
+        .success-message a {
+            color: #155724;
+            font-weight: 600;
+            text-decoration: underline;
+        }
+
+        .reminder-box {
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+
+        .reminder-box strong {
+            color: #856404;
         }
 
         @media (max-width: 768px) {
@@ -455,6 +756,13 @@
                 <div class="stat">✨ <span id="total-new">0</span> New</div>
                 <div class="stat">🎥 <span id="total-videos">0</span> Videos</div>
                 <div class="stat">📊 <span id="showing-count">194</span> Showing</div>
+            </div>
+            <div style="margin-top: 20px;">
+                <a href="https://docs.google.com/spreadsheets/d/1tRC8_42qx7pFrECfTMb9NbEsFsFKO4tkaLZ29kn2euM/edit?usp=sharing" 
+                   target="_blank" 
+                   class="google-sheet-btn">
+                    📊 View Full Google Sheet
+                </a>
             </div>
         </header>
 
@@ -496,13 +804,79 @@
 
                 <button class="clear-filters" id="clear-filters">Clear Filters</button>
                 <button class="admin-toggle" id="admin-toggle">🎬 Edit Mode</button>
+                <button class="add-location-btn" id="add-location-btn">➕ Add Location</button>
                 <button class="export-btn" id="export-btn">💾 Export Data</button>
+                <a href="https://docs.google.com/spreadsheets/d/1tRC8_42qx7pFrECfTMb9NbEsFsFKO4tkaLZ29kn2euM/edit?usp=sharing" 
+                   target="_blank" 
+                   class="google-sheet-btn" 
+                   id="sheet-btn">📊 View Sheet</a>
             </div>
 
             <div class="tags" id="category-tags"></div>
         </div>
 
         <div class="grid" id="places-grid"></div>
+    </div>
+
+    <!-- Add Location Modal -->
+    <div class="modal" id="add-location-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">➕ Add New Location</h2>
+                <button class="close-modal" onclick="closeAddLocationModal()">×</button>
+            </div>
+
+            <div id="success-message" style="display: none;"></div>
+
+            <form id="add-location-form">
+                <div class="form-group">
+                    <label>Place Name <span class="required">*</span></label>
+                    <input type="text" id="place-name" required placeholder="e.g., Marina Bay Sands">
+                </div>
+
+                <div class="form-group">
+                    <label>Area <span class="required">*</span></label>
+                    <select id="area-select" required>
+                        <option value="">Select an area...</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Categories</label>
+                    <input type="text" id="categories" placeholder="e.g., Architecture, Leisure, Food">
+                    <div class="form-hint">Separate multiple categories with commas</div>
+                </div>
+
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea id="description" placeholder="Brief description of the place..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>Website</label>
+                    <input type="url" id="website" placeholder="https://...">
+                </div>
+
+                <div class="form-group">
+                    <label>Is this a new place?</label>
+                    <select id="is-new">
+                        <option value="">No</option>
+                        <option value="NEW">Yes - Mark as NEW</option>
+                    </select>
+                </div>
+
+                <div class="reminder-box">
+                    <strong>📝 Important Reminder:</strong> After adding your location here, please also add it to the 
+                    <a href="https://docs.google.com/spreadsheets/d/1tRC8_42qx7pFrECfTMb9NbEsFsFKO4tkaLZ29kn2euM/edit?usp=sharing" 
+                       target="_blank">Google Sheet</a> so it's saved permanently!
+                </div>
+
+                <div class="modal-actions">
+                    <button type="button" class="btn-secondary" onclick="closeAddLocationModal()">Cancel</button>
+                    <button type="submit" class="btn-primary">Add Location</button>
+                </div>
+            </form>
+        </div>
     </div>
 
     <script>
@@ -516,7 +890,7 @@
                 "New?": null,
                 "Website": "https://www.sentosa.com.sg/en/things-to-do/attractions/fort-siloso/",
                 "Description": "WWII coastal fort and museum on Sentosa's western tip. Free entry.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "A2",
@@ -527,7 +901,7 @@
                 "New?": null,
                 "Website": "https://www.sla.gov.sg/properties/management-of-state-land-and-properties/visiting-the-sla-managed-islands/",
                 "Description": "Pristine crescent beach, connected to St. John's Island by causeway.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "A3",
@@ -538,7 +912,7 @@
                 "New?": null,
                 "Website": "https://www.sla.gov.sg/properties/management-of-state-land-and-properties/visiting-the-sla-managed-islands/",
                 "Description": "Tranquil island with beaches, lagoons and heritage trails.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "A4",
@@ -549,7 +923,7 @@
                 "New?": null,
                 "Website": "https://www.sla.gov.sg/properties/management-of-state-land-and-properties/visiting-the-sla-managed-islands/",
                 "Description": "Tortoise Island with Chinese temple and Malay shrines.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "A5",
@@ -560,7 +934,7 @@
                 "New?": null,
                 "Website": "https://www.nparks.gov.sg/visit/parks/park-detail/sisters-islands-marine-park/",
                 "Description": "Singapore's first marine park with rich coral reefs.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "A6",
@@ -571,7 +945,7 @@
                 "New?": "NEW",
                 "Website": "https://www.rwsentosa.com/en/play/universal-studios-singapore",
                 "Description": "Despicable Me themed zone at USS. Opened Feb 2025.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "A7",
@@ -582,7 +956,7 @@
                 "New?": "NEW",
                 "Website": "https://www.singaporeoceanarium.com/en.html",
                 "Description": "Revamped S.E.A. Aquarium, 3x larger with 22 zones. Opened Jul 2025.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "A8",
@@ -593,7 +967,7 @@
                 "New?": "NEW",
                 "Website": "https://www.rwsentosa.com/en/dine-and-shop/weave",
                 "Description": "20,000 sqm lifestyle hub with Asia-exclusive stores and dining.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "A9",
@@ -604,7 +978,7 @@
                 "New?": "NEW",
                 "Website": "https://www.rwsentosa.com/en/hotels/the-laurus",
                 "Description": "Singapore's first Luxury Collection all-suite hotel. Opened Oct 2025.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "B1",
@@ -615,7 +989,7 @@
                 "New?": null,
                 "Website": "https://www.nparks.gov.sg/visit/parks/park-detail/kent-ridge-park/",
                 "Description": "47-hectare park with WWII history, canopy walk, and panoramic views.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "B2",
@@ -626,7 +1000,7 @@
                 "New?": null,
                 "Website": "https://www.nparks.gov.sg/visit/parks/park-detail/kent-ridge-park/",
                 "Description": "280m elevated boardwalk through secondary forest canopy.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "B3",
@@ -637,7 +1011,7 @@
                 "New?": null,
                 "Website": "https://www.nhb.gov.sg/reflections-at-bukit-chandu/",
                 "Description": "WWII interpretive centre honouring the Malay Regiment.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "B4",
@@ -648,7 +1022,7 @@
                 "New?": null,
                 "Website": "https://www.nparks.gov.sg/visit/parks/park-detail/hortpark/",
                 "Description": "Experimental glasshouse at HortPark.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "B5",
@@ -659,7 +1033,7 @@
                 "New?": null,
                 "Website": "https://www.nparks.gov.sg/",
                 "Description": "NParks plant nursery visible from the canopy walk.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "B6",
@@ -670,7 +1044,7 @@
                 "New?": null,
                 "Website": "https://www.nparks.gov.sg/visit/parks/park-detail/hortpark/",
                 "Description": "Gardening hub with themed gardens and dining.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "B7",
@@ -681,7 +1055,7 @@
                 "New?": null,
                 "Website": "https://www.nparks.gov.sg/visit/parks/southern-ridges/",
                 "Description": "Striking curved pedestrian bridge on Southern Ridges.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "B8",
@@ -692,7 +1066,7 @@
                 "New?": null,
                 "Website": "https://www.nparks.gov.sg/visit/parks/southern-ridges/",
                 "Description": "10km green corridor connecting Kent Ridge to Mount Faber.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "B9",
@@ -703,7 +1077,7 @@
                 "New?": null,
                 "Website": "https://www.nparks.gov.sg/visit/parks/park-detail/telok-blangah-hill-park/",
                 "Description": "Hilltop park with terraced gardens along the Southern Ridges.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "B10",
@@ -714,7 +1088,7 @@
                 "New?": null,
                 "Website": "https://www.thealkaffmansion.sg/",
                 "Description": "Restored colonial mansion turned restaurant.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "B11",
@@ -725,7 +1099,7 @@
                 "New?": null,
                 "Website": "https://www.nparks.gov.sg/visit/parks/southern-ridges/",
                 "Description": "Iconic undulating bridge, 36m above Henderson Road.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "B12",
@@ -736,7 +1110,7 @@
                 "New?": null,
                 "Website": "https://www.mountfaberleisure.com/",
                 "Description": "Hilltop park with cable car and harbour views.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "B13",
@@ -747,7 +1121,7 @@
                 "New?": null,
                 "Website": "https://www.roots.gov.sg/places/places-landing/Places/national-monuments/japanese-cemetery-park",
                 "Description": "Historic Japanese cemetery park from the early 1900s.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "B14",
@@ -758,7 +1132,7 @@
                 "New?": null,
                 "Website": "https://www.roots.gov.sg/",
                 "Description": "Hidden WWII bunker near HarbourFront.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "B15",
@@ -769,7 +1143,7 @@
                 "New?": null,
                 "Website": null,
                 "Description": "Hidden heritage reservoir rediscovered in the forest.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "B16",
@@ -780,7 +1154,7 @@
                 "New?": null,
                 "Website": "https://www.nparks.gov.sg/visit/parks/park-detail/hortpark/",
                 "Description": "Forest trail connecting HortPark to Marang Road.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "C1",
@@ -791,7 +1165,7 @@
                 "New?": null,
                 "Website": "https://www.keppelbay.com.sg/",
                 "Description": "Pedestrian bridge with marina views connecting to Sentosa.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "C2",
@@ -802,7 +1176,7 @@
                 "New?": null,
                 "Website": null,
                 "Description": "Small island accessible from Keppel Bay area.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "C3",
@@ -813,7 +1187,7 @@
                 "New?": null,
                 "Website": "https://www.keppelbay.com.sg/",
                 "Description": "Daniel Libeskind-designed waterfront condominiums.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "C4",
@@ -824,7 +1198,7 @@
                 "New?": null,
                 "Website": "https://www.nparks.gov.sg/visit/parks/labrador-nature-reserve/",
                 "Description": "300m boardwalk over water at Labrador Nature Reserve.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "C5",
@@ -835,7 +1209,7 @@
                 "New?": null,
                 "Website": "https://www.nparks.gov.sg/visit/parks/labrador-nature-reserve/",
                 "Description": "Coastal nature reserve with WWII relics and rocky shore habitat.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "C6",
@@ -846,7 +1220,7 @@
                 "New?": null,
                 "Website": "https://www.nparks.gov.sg/visit/parks/labrador-nature-reserve/",
                 "Description": "Mangrove boardwalk showcasing coastal ecosystem.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "C7",
@@ -857,7 +1231,7 @@
                 "New?": null,
                 "Website": "https://www.roots.gov.sg/",
                 "Description": "Replica of historic maritime landmark at Labrador Park.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "C8",
@@ -868,7 +1242,7 @@
                 "New?": null,
                 "Website": "https://www.nparks.gov.sg/visit/parks/labrador-nature-reserve/",
                 "Description": "Preserved WWII gun emplacement.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "C9",
@@ -879,7 +1253,7 @@
                 "New?": null,
                 "Website": "https://www.nparks.gov.sg/visit/parks/labrador-nature-reserve/",
                 "Description": "Waterfront jetty with views of Sentosa and passing ships.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "C10",
@@ -890,7 +1264,7 @@
                 "New?": null,
                 "Website": "https://www.nparks.gov.sg/visit/parks/labrador-nature-reserve/",
                 "Description": "WWII artillery heritage display.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "C11",
@@ -901,7 +1275,7 @@
                 "New?": null,
                 "Website": "https://www.nparks.gov.sg/visit/parks/labrador-nature-reserve/",
                 "Description": "Underground WWII ammunition storage.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "C12",
@@ -912,7 +1286,7 @@
                 "New?": null,
                 "Website": "https://www.tamarindhill.com.sg/",
                 "Description": "Thai restaurant in restored colonial bungalow.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "C13",
@@ -923,7 +1297,7 @@
                 "New?": null,
                 "Website": "https://www.gillmanbarracks.com/",
                 "Description": "Former military barracks turned contemporary art enclave.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "C14",
@@ -934,7 +1308,7 @@
                 "New?": null,
                 "Website": null,
                 "Description": "Award-winning stacked residential complex by OMA.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "C15",
@@ -945,7 +1319,7 @@
                 "New?": null,
                 "Website": "https://www.mapletree.com.sg/",
                 "Description": "Major business park near Labrador Park MRT.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "C16",
@@ -956,7 +1330,7 @@
                 "New?": null,
                 "Website": null,
                 "Description": "Heritage red-brick power station. Future lifestyle hub.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "C17",
@@ -967,7 +1341,7 @@
                 "New?": "NEW",
                 "Website": "https://www.nparks.gov.sg/visit/parks/labrador-nature-reserve/special-features/keppel-coastal-trail",
                 "Description": "340m scenic trail with elevated boardwalk. Opened Jan 2025.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "D1",
@@ -978,7 +1352,7 @@
                 "New?": null,
                 "Website": "https://www.nparks.gov.sg/",
                 "Description": "Secondary forest near Clementi.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "D2",
@@ -989,7 +1363,7 @@
                 "New?": null,
                 "Website": "https://www.sde.nus.edu.sg/",
                 "Description": "Sustainable architecture showcase at NUS.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "D3",
@@ -1000,7 +1374,7 @@
                 "New?": null,
                 "Website": "https://lkcnhm.nus.edu.sg/",
                 "Description": "Natural history museum with three diplodocid dinosaur fossils.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "D4",
@@ -1011,7 +1385,7 @@
                 "New?": null,
                 "Website": "https://utown.nus.edu.sg/",
                 "Description": "NUS residential and learning hub with dining and green spaces.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "D5",
@@ -1022,7 +1396,7 @@
                 "New?": null,
                 "Website": null,
                 "Description": "Heritage telecommunications building.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "D6",
@@ -1033,7 +1407,7 @@
                 "New?": null,
                 "Website": "https://www.nparks.gov.sg/visit/parks/park-detail/west-coast-park/",
                 "Description": "Family-friendly coastal park with adventure playground.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "D7",
@@ -1044,7 +1418,7 @@
                 "New?": null,
                 "Website": "https://www.nparks.gov.sg/visit/parks/park-detail/west-coast-park/",
                 "Description": "Observation deck with shipping lane views.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "E1",
@@ -1055,7 +1429,7 @@
                 "New?": null,
                 "Website": "https://www.capitaland.com/",
                 "Description": "Twin-tower office development at one-north.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "E2",
@@ -1066,7 +1440,7 @@
                 "New?": null,
                 "Website": "https://www.thestarvista.com/",
                 "Description": "Naturally ventilated mall with performing arts centre.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "E3",
@@ -1077,7 +1451,7 @@
                 "New?": null,
                 "Website": null,
                 "Description": "Notable corporate architecture at one-north.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "E4",
@@ -1088,7 +1462,7 @@
                 "New?": null,
                 "Website": null,
                 "Description": "Heritage black-and-white bungalow dining enclave.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "E5",
@@ -1099,7 +1473,7 @@
                 "New?": null,
                 "Website": "https://www.jtc.gov.sg/about-jtc/our-developments/one-north",
                 "Description": "Green space within JTC's one-north innovation district.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "E6",
@@ -1110,7 +1484,7 @@
                 "New?": null,
                 "Website": "https://www.lucasfilm.com/",
                 "Description": "Lucasfilm Singapore HQ \u2014 Star Wars Sandcrawler design.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "E7",
@@ -1121,7 +1495,7 @@
                 "New?": null,
                 "Website": "https://www.jtc.gov.sg/about-jtc/our-developments/one-north",
                 "Description": "R&D hub within one-north innovation district.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "E8",
@@ -1132,7 +1506,7 @@
                 "New?": null,
                 "Website": "https://www.jtc.gov.sg/",
                 "Description": "Green-wrapped office building at one-north.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "E9",
@@ -1143,7 +1517,7 @@
                 "New?": null,
                 "Website": "https://www.mediacorp.sg/",
                 "Description": "National media broadcaster headquarters.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "E10",
@@ -1154,7 +1528,7 @@
                 "New?": null,
                 "Website": "https://www.timberplus.sg/",
                 "Description": "Hawker-style food village in timber-framed setting.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "E11",
@@ -1165,7 +1539,7 @@
                 "New?": null,
                 "Website": null,
                 "Description": "Heritage enclave with colonial buildings and eateries.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "E12",
@@ -1176,7 +1550,7 @@
                 "New?": null,
                 "Website": "https://www.colbar.com.sg/",
                 "Description": "Nostalgic colonial bar and restaurant on Portsdown Road.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "E13",
@@ -1187,7 +1561,7 @@
                 "New?": null,
                 "Website": null,
                 "Description": "Heritage hawker centre in Tanglin Halt estate.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "F1",
@@ -1198,7 +1572,7 @@
                 "New?": null,
                 "Website": null,
                 "Description": "Moshe Safdie-designed residential with sky bridges.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "F2",
@@ -1209,7 +1583,7 @@
                 "New?": null,
                 "Website": "https://www.nparks.gov.sg/visit/parks/park-detail/bishan-ang-mo-kio-park/",
                 "Description": "62-hectare park with naturalised river and playgrounds.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "F3",
@@ -1220,7 +1594,7 @@
                 "New?": null,
                 "Website": "https://www.nparks.gov.sg/visit/parks/park-detail/macritchie-reservoir-park/",
                 "Description": "Iconic trail with TreeTop Walk suspension bridge.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "F4",
@@ -1231,7 +1605,7 @@
                 "New?": null,
                 "Website": "https://www.bukitbrown.org/",
                 "Description": "Largest Chinese cemetery outside China. Rich biodiversity.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "F5",
@@ -1242,7 +1616,7 @@
                 "New?": null,
                 "Website": "https://www.nparks.gov.sg/sbg",
                 "Description": "UNESCO World Heritage Site with National Orchid Garden.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "F6",
@@ -1253,7 +1627,7 @@
                 "New?": null,
                 "Website": "https://www.dempseyhill.com/",
                 "Description": "Former barracks turned dining and lifestyle enclave.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "F7",
@@ -1264,7 +1638,7 @@
                 "New?": null,
                 "Website": "https://www.visitsingapore.com/see-do-singapore/places-to-see/holland-village/",
                 "Description": "Eclectic neighbourhood with dining and boutiques.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "G1",
@@ -1275,7 +1649,7 @@
                 "New?": null,
                 "Website": null,
                 "Description": "Award-winning public housing with sky gardens.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "G2",
@@ -1286,7 +1660,7 @@
                 "New?": null,
                 "Website": null,
                 "Description": "Popular hawker centre along the Singapore River.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "G3",
@@ -1297,7 +1671,7 @@
                 "New?": null,
                 "Website": "https://www.visitsingapore.com/see-do-singapore/places-to-see/robertson-quay/",
                 "Description": "Riverside dining and nightlife precinct.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "G4",
@@ -1308,7 +1682,7 @@
                 "New?": null,
                 "Website": "https://www.clarkequay.com.sg/",
                 "Description": "Colourful riverside entertainment hub.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "G5",
@@ -1319,7 +1693,7 @@
                 "New?": null,
                 "Website": "https://www.nparks.gov.sg/visit/parks/park-detail/fort-canning-park/",
                 "Description": "Historic hilltop park with 14th-century archaeological site.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "G6",
@@ -1330,7 +1704,7 @@
                 "New?": null,
                 "Website": "https://www.nparks.gov.sg/visit/parks/park-detail/fort-canning-park/",
                 "Description": "Instagrammable spiral staircase framed by trees.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "G7",
@@ -1341,7 +1715,7 @@
                 "New?": null,
                 "Website": "https://www.nparks.gov.sg/",
                 "Description": "Urban green space near Dhoby Ghaut MRT.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "G8",
@@ -1352,7 +1726,7 @@
                 "New?": null,
                 "Website": "https://www.roots.gov.sg/places/places-landing/Places/historic-sites/emerald-hill",
                 "Description": "Well-preserved Peranakan terrace houses off Orchard Road.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "G9",
@@ -1363,7 +1737,7 @@
                 "New?": null,
                 "Website": "https://www.orchardroad.org/",
                 "Description": "Singapore's premier shopping boulevard.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "G10",
@@ -1374,7 +1748,7 @@
                 "New?": null,
                 "Website": null,
                 "Description": "Famous hawker centre from Crazy Rich Asians.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "G11",
@@ -1385,7 +1759,7 @@
                 "New?": "NEW",
                 "Website": "https://www.chinatownheritagecentre.com.sg/",
                 "Description": "Immersive 1950s shophouse museum. Reopened Jan 2025.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "H1",
@@ -1396,7 +1770,7 @@
                 "New?": null,
                 "Website": "https://www.tah.sg/",
                 "Description": "Hub for trade associations at Jurong Town Hall.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "H2",
@@ -1407,7 +1781,7 @@
                 "New?": null,
                 "Website": "https://www.science.edu.sg/",
                 "Description": "Public observatory and science museum.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "H3",
@@ -1418,7 +1792,7 @@
                 "New?": null,
                 "Website": "https://www.nparks.gov.sg/visit/parks/park-detail/jurong-lake-gardens/",
                 "Description": "Classical Chinese garden within Jurong Lake Gardens.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "H4",
@@ -1429,7 +1803,7 @@
                 "New?": null,
                 "Website": "https://www.nparks.gov.sg/visit/parks/park-detail/jurong-lake-gardens/",
                 "Description": "Tranquil Japanese-style garden on Jurong Lake island.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "H5",
@@ -1440,7 +1814,7 @@
                 "New?": null,
                 "Website": "https://www.nparks.gov.sg/visit/parks/park-detail/jurong-lake-gardens/",
                 "Description": "National gardens in the heartlands with play areas.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "H6",
@@ -1451,7 +1825,7 @@
                 "New?": null,
                 "Website": "https://www.nparks.gov.sg/",
                 "Description": "Neighbourhood park in Jurong.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "H7",
@@ -1462,7 +1836,7 @@
                 "New?": null,
                 "Website": "https://www.mandai.com/en/bird-paradise.html",
                 "Description": "Now relocated to Mandai as Bird Paradise.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "H8",
@@ -1473,7 +1847,7 @@
                 "New?": null,
                 "Website": "https://www.nparks.gov.sg/",
                 "Description": "Hilltop lookout near the former bird park.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "H9",
@@ -1484,7 +1858,7 @@
                 "New?": null,
                 "Website": null,
                 "Description": "Heritage trees and garden on Jurong Hill.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "H10",
@@ -1495,7 +1869,7 @@
                 "New?": null,
                 "Website": "https://www.ntu.edu.sg/adm",
                 "Description": "Green-roofed building, iconic NTU architecture.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "H11",
@@ -1506,7 +1880,7 @@
                 "New?": null,
                 "Website": "https://www.ntu.edu.sg/",
                 "Description": "Heatherwick-designed learning hub at NTU.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "H12",
@@ -1517,7 +1891,7 @@
                 "New?": null,
                 "Website": "https://www.sdc.com.sg/",
                 "Description": "Interactive exhibition on Singapore's defence and national story.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "H13",
@@ -1528,7 +1902,7 @@
                 "New?": null,
                 "Website": "https://www.tigerbrewerytour.com.sg/",
                 "Description": "Brewery tour experience for Tiger Beer.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "H14",
@@ -1539,7 +1913,7 @@
                 "New?": null,
                 "Website": null,
                 "Description": "Abandoned former theme park site.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "H15",
@@ -1550,7 +1924,7 @@
                 "New?": null,
                 "Website": "https://www.rafflesmarina.com.sg/",
                 "Description": "Westernmost point of mainland Singapore with lighthouse.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "H16",
@@ -1561,7 +1935,7 @@
                 "New?": null,
                 "Website": null,
                 "Description": "Large public cemetery.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "H17",
@@ -1572,7 +1946,7 @@
                 "New?": "NEW",
                 "Website": "https://www.science.edu.sg/",
                 "Description": "3,000 sqm exhibition with 40m Patagotitan cast at Science Centre.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "H18",
@@ -1583,7 +1957,7 @@
                 "New?": "NEW",
                 "Website": "https://www.snowcity.com.sg/",
                 "Description": "Renovated indoor snow centre with Glacier Luge and bumper cars on ice.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "I1",
@@ -1594,7 +1968,7 @@
                 "New?": null,
                 "Website": "https://www.cwgc.org/visit-us/find-us/find-a-cemetery-or-memorial/kranji-war-cemetery/",
                 "Description": "Commonwealth war cemetery honouring WWII soldiers.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "I2",
@@ -1605,7 +1979,7 @@
                 "New?": null,
                 "Website": null,
                 "Description": "Colourful bridge near Kranji Reservoir.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "I3",
@@ -1616,7 +1990,7 @@
                 "New?": null,
                 "Website": null,
                 "Description": "Rural heritage area near Kranji.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "I4",
@@ -1627,7 +2001,7 @@
                 "New?": null,
                 "Website": "https://www.pub.gov.sg/",
                 "Description": "Reservoir dam with views of Johor.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "I5",
@@ -1638,7 +2012,7 @@
                 "New?": null,
                 "Website": "https://www.nparks.gov.sg/visit/parks/park-detail/sungei-buloh-wetland-reserve/",
                 "Description": "ASEAN Heritage Park with mangroves and migratory birds.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "I6",
@@ -1649,7 +2023,7 @@
                 "New?": null,
                 "Website": "https://www.nparks.gov.sg/visit/parks/park-detail/kranji-marshes/",
                 "Description": "56.8-hectare freshwater marshland. Bird watching paradise.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "I7",
@@ -1660,7 +2034,7 @@
                 "New?": null,
                 "Website": "https://www.bollywoodveggies.com/",
                 "Description": "Farm-to-table experience with organic farming tours.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "I8",
@@ -1671,7 +2045,7 @@
                 "New?": null,
                 "Website": null,
                 "Description": "Heritage colonial bungalow near Kranji.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "J1",
@@ -1682,7 +2056,7 @@
                 "New?": null,
                 "Website": "https://www.nparks.gov.sg/gardens-parks-and-nature/parks-and-nature-reserves/rail-corridor",
                 "Description": "24km former railway line turned nature corridor.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "J2",
@@ -1693,7 +2067,7 @@
                 "New?": null,
                 "Website": "https://www.nparks.gov.sg/gardens-parks-and-nature/parks-and-nature-reserves/rail-corridor",
                 "Description": "Scenic canal section along the Rail Corridor.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "J3",
@@ -1704,7 +2078,7 @@
                 "New?": null,
                 "Website": "https://www.nparks.gov.sg/",
                 "Description": "Secondary forest with tall canopy near Rail Corridor.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "J4",
@@ -1715,7 +2089,7 @@
                 "New?": null,
                 "Website": "https://www.nparks.gov.sg/gardens-parks-and-nature/parks-and-nature-reserves/rail-corridor",
                 "Description": "Restored heritage railway station along Rail Corridor.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "J5",
@@ -1726,7 +2100,7 @@
                 "New?": null,
                 "Website": "https://www.nparks.gov.sg/visit/parks/park-detail/bukit-timah-nature-reserve/",
                 "Description": "163-hectare primary rainforest within the city.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "J6",
@@ -1737,7 +2111,7 @@
                 "New?": null,
                 "Website": "https://www.nparks.gov.sg/visit/parks/park-detail/bukit-timah-nature-reserve/",
                 "Description": "Singapore's highest natural point at 163.63m.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "J7",
@@ -1748,7 +2122,7 @@
                 "New?": null,
                 "Website": "https://www.nparks.gov.sg/visit/parks/park-detail/dairy-farm-nature-park/",
                 "Description": "Trail named after Alfred Russel Wallace near Dairy Farm.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "J8",
@@ -1759,7 +2133,7 @@
                 "New?": null,
                 "Website": "https://www.nparks.gov.sg/visit/parks/park-detail/dairy-farm-nature-park/",
                 "Description": "Nature park with quarry, Wallace Centre and forest trails.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "J9",
@@ -1770,7 +2144,7 @@
                 "New?": null,
                 "Website": "https://www.nparks.gov.sg/gardens-parks-and-nature/parks-and-nature-reserves/rail-corridor",
                 "Description": "Northern terminus of the Rail Corridor trail.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "J10",
@@ -1781,7 +2155,7 @@
                 "New?": null,
                 "Website": "https://www.nparks.gov.sg/visit/parks/park-detail/bukit-timah-nature-reserve/",
                 "Description": "Scenic former quarry with emerald-green waters.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "J11",
@@ -1792,7 +2166,7 @@
                 "New?": null,
                 "Website": "https://www.nhb.gov.sg/former-ford-factory/",
                 "Description": "WWII museum at the British surrender site.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "J12",
@@ -1803,7 +2177,7 @@
                 "New?": null,
                 "Website": "https://www.nparks.gov.sg/visit/parks/park-detail/bukit-batok-nature-park/",
                 "Description": "Forest park with WWII memorial and trails.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "J13",
@@ -1814,7 +2188,7 @@
                 "New?": null,
                 "Website": "https://www.roots.gov.sg/",
                 "Description": "Site of former Japanese Syonan Jinja shrine.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "J14",
@@ -1825,7 +2199,7 @@
                 "New?": null,
                 "Website": "https://www.nparks.gov.sg/visit/parks/park-detail/bukit-batok-town-park/",
                 "Description": "Dramatic granite rock face rising from a lake.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "J15",
@@ -1836,7 +2210,7 @@
                 "New?": "NEW",
                 "Website": "https://www.nparks.gov.sg/visit/parks/park-detail/rifle-range-nature-park",
                 "Description": "66-hectare park, Singapore's first net positive energy nature park.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "K1",
@@ -1847,7 +2221,7 @@
                 "New?": null,
                 "Website": "https://www.onepa.gov.sg/",
                 "Description": "Community club in Bukit Panjang.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "K2",
@@ -1858,7 +2232,7 @@
                 "New?": null,
                 "Website": "https://www.nparks.gov.sg/visit/parks/park-detail/zhenghua-park/",
                 "Description": "Nature park bordering the Central Catchment.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "K3",
@@ -1869,7 +2243,7 @@
                 "New?": null,
                 "Website": "https://www.nparks.gov.sg/visit/parks/park-detail/chestnut-nature-park/",
                 "Description": "Mountain biking and hiking trails in northern forest.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "K4",
@@ -1880,7 +2254,7 @@
                 "New?": null,
                 "Website": "https://www.mandai.com/en/singapore-zoo.html",
                 "Description": "World-renowned open-concept zoo at Mandai.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "K5",
@@ -1891,7 +2265,7 @@
                 "New?": null,
                 "Website": "https://www.mandai.com/en/bird-paradise.html",
                 "Description": "Asia's largest bird park at Mandai.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "K6",
@@ -1902,7 +2276,7 @@
                 "New?": null,
                 "Website": "https://www.nparks.gov.sg/",
                 "Description": "Neighbourhood park in Woodlands.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "K7",
@@ -1913,7 +2287,7 @@
                 "New?": null,
                 "Website": null,
                 "Description": "Waterfront jetty with views of Johor Bahru.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "K8",
@@ -1924,7 +2298,7 @@
                 "New?": null,
                 "Website": null,
                 "Description": "Seafood restaurant on Woodlands waterfront.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "K9",
@@ -1935,7 +2309,7 @@
                 "New?": null,
                 "Website": "https://www.nparks.gov.sg/visit/parks/park-detail/admiralty-park/",
                 "Description": "Destination park with Singapore's longest slide.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "K10",
@@ -1946,7 +2320,7 @@
                 "New?": null,
                 "Website": null,
                 "Description": "Historic railway tunnel in Woodlands.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "K11",
@@ -1957,7 +2331,7 @@
                 "New?": null,
                 "Website": "https://www.sfa.gov.sg/",
                 "Description": "Working fishery port in northern Singapore.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "K12",
@@ -1968,7 +2342,7 @@
                 "New?": null,
                 "Website": "https://www.nparks.gov.sg/visit/parks/park-detail/sembawang-park/",
                 "Description": "Seaside park with fishing pier and heritage trees.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "K13",
@@ -1979,7 +2353,7 @@
                 "New?": null,
                 "Website": null,
                 "Description": "Historical marker of former Japanese settlement.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "K14",
@@ -1990,7 +2364,7 @@
                 "New?": null,
                 "Website": "https://www.nparks.gov.sg/visit/parks/park-detail/sembawang-hot-spring-park/",
                 "Description": "Singapore's only natural hot spring with cascading pools.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "K15",
@@ -2001,7 +2375,7 @@
                 "New?": null,
                 "Website": "https://www.nparks.gov.sg/visit/parks/park-detail/lower-seletar-reservoir-park/",
                 "Description": "Waterfront park with rocket-shaped observation tower.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "K16",
@@ -2012,7 +2386,7 @@
                 "New?": null,
                 "Website": "https://www.pub.gov.sg/",
                 "Description": "Dam across Lower Seletar Reservoir. Sunset spot.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "K17",
@@ -2023,7 +2397,7 @@
                 "New?": null,
                 "Website": null,
                 "Description": "Last surviving fishing village at Lim Chu Kang.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "K18",
@@ -2034,7 +2408,7 @@
                 "New?": null,
                 "Website": "https://www.nparks.gov.sg/",
                 "Description": "Waterfront park at Lower Seletar Reservoir.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "K19",
@@ -2045,7 +2419,7 @@
                 "New?": null,
                 "Website": "https://www.wheelersestate.com/",
                 "Description": "Heritage dining venue in restored colonial building.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "K20",
@@ -2056,7 +2430,7 @@
                 "New?": "NEW",
                 "Website": "https://www.mandai.com/en/rainforest-wild-asia.html",
                 "Description": "Adventure wildlife park with Malayan tigers. Opened Mar 2025.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "K21",
@@ -2067,7 +2441,7 @@
                 "New?": "NEW",
                 "Website": "https://www.mandai.com/",
                 "Description": "Scenic waterfront trail along Upper Seletar Reservoir.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "K22",
@@ -2078,7 +2452,7 @@
                 "New?": "NEW",
                 "Website": "https://www.mandai.com/en/mandai-rainforest-resort.html",
                 "Description": "Banyan Tree eco-resort with 24 treehouses. Opened Apr 2025.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "K23",
@@ -2089,7 +2463,7 @@
                 "New?": "NEW",
                 "Website": "https://www.mandai.com/en/colugo-camp.html",
                 "Description": "Safari-style glamping at Mandai. Opened Aug 2025.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "K24",
@@ -2100,7 +2474,7 @@
                 "New?": "NEW",
                 "Website": "https://www.mandai.com/en/exploria.html",
                 "Description": "10,000 sqm indoor nature multimedia attraction. Opened Mar 2026.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "K25",
@@ -2111,7 +2485,7 @@
                 "New?": "NEW",
                 "Website": "https://www.mandai.com/en/curiosity-cove.html",
                 "Description": "4,600 sqm nature playground for ages 3\u201312. Opened Nov 2025.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "L1",
@@ -2122,7 +2496,7 @@
                 "New?": null,
                 "Website": "https://www.visitsingapore.com/see-do-singapore/places-to-see/geylang-serai/",
                 "Description": "Cultural corridor with temples, mosques, and street food.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "L2",
@@ -2133,7 +2507,7 @@
                 "New?": null,
                 "Website": "https://www.visitsingapore.com/see-do-singapore/places-to-see/joo-chiat/",
                 "Description": "Heritage Peranakan streetscape with colourful shophouses.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "L3",
@@ -2144,7 +2518,7 @@
                 "New?": null,
                 "Website": "https://www.the-intan.com/",
                 "Description": "Private Peranakan home-museum with guided tours by appointment.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "L4",
@@ -2155,7 +2529,7 @@
                 "New?": null,
                 "Website": null,
                 "Description": "Heritage spot on Joo Chiat Road.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "L5",
@@ -2166,7 +2540,7 @@
                 "New?": null,
                 "Website": null,
                 "Description": "Row of ornate Peranakan terrace houses.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "L6",
@@ -2177,7 +2551,7 @@
                 "New?": null,
                 "Website": "https://www.sinpopo.com/",
                 "Description": "Nostalgic Singaporean cafe with retro vibes.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "L7",
@@ -2188,7 +2562,7 @@
                 "New?": null,
                 "Website": "https://www.srisenpaga.org.sg/",
                 "Description": "Beautiful Hindu temple in the Katong area.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "L8",
@@ -2199,7 +2573,7 @@
                 "New?": null,
                 "Website": null,
                 "Description": "Legendary hawker centre with some of Singapore's best stalls.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "L9",
@@ -2210,7 +2584,7 @@
                 "New?": "NEW",
                 "Website": "https://www.visitsingapore.com/see-do-singapore/places-to-see/tanjong-pagar/",
                 "Description": "Heritage shophouses, street art, and vibrant dining in CBD.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "M1",
@@ -2221,7 +2595,7 @@
                 "New?": null,
                 "Website": "https://www.jewelchangiairport.com/",
                 "Description": "Nature-themed hub with Rain Vortex waterfall.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "M2",
@@ -2232,7 +2606,7 @@
                 "New?": null,
                 "Website": "https://www.capitaland.com/",
                 "Description": "Business park precinct near Changi.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "M3",
@@ -2243,7 +2617,7 @@
                 "New?": null,
                 "Website": null,
                 "Description": "Beloved hawker centre near Changi Beach.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "M4",
@@ -2254,7 +2628,7 @@
                 "New?": null,
                 "Website": "https://www.nparks.gov.sg/visit/parks/park-detail/changi-beach-park/",
                 "Description": "Coastal park with WWII history and Ubin views.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "M5",
@@ -2265,7 +2639,7 @@
                 "New?": null,
                 "Website": "https://www.nparks.gov.sg/visit/parks/park-detail/changi-beach-park/",
                 "Description": "Scenic boardwalk along Changi coast.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "M6",
@@ -2276,7 +2650,7 @@
                 "New?": null,
                 "Website": "https://www.nparks.gov.sg/visit/parks/park-detail/changi-beach-park/",
                 "Description": "2.2km boardwalk connecting Changi Beach to ferry terminal.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "M7",
@@ -2287,7 +2661,7 @@
                 "New?": null,
                 "Website": null,
                 "Description": "Abandoned WWII hospital known for its eerie atmosphere.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "M8",
@@ -2298,7 +2672,7 @@
                 "New?": null,
                 "Website": "https://www.nparks.gov.sg/visit/parks/park-detail/pasir-ris-park/",
                 "Description": "Family beach with mangrove boardwalk and playground.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "M9",
@@ -2309,7 +2683,7 @@
                 "New?": null,
                 "Website": "https://www.nparks.gov.sg/visit/parks/park-detail/pasir-ris-town-park/",
                 "Description": "Neighbourhood park in Pasir Ris.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "M10",
@@ -2320,7 +2694,7 @@
                 "New?": null,
                 "Website": "https://www.nparks.gov.sg/visit/parks/park-detail/tampines-eco-green/",
                 "Description": "Ecological park with grasslands and open habitats.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "M11",
@@ -2331,7 +2705,7 @@
                 "New?": null,
                 "Website": "https://www.nparks.gov.sg/",
                 "Description": "Park in Tampines with themed gardens.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "M12",
@@ -2342,7 +2716,7 @@
                 "New?": null,
                 "Website": "https://www.nparks.gov.sg/visit/parks/park-detail/bedok-reservoir-park/",
                 "Description": "Popular reservoir park for running and kayaking.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "M13",
@@ -2353,7 +2727,7 @@
                 "New?": null,
                 "Website": "https://www.nparks.gov.sg/visit/parks/park-detail/bedok-town-park/",
                 "Description": "Neighbourhood park in Bedok.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "M14",
@@ -2364,7 +2738,7 @@
                 "New?": "NEW",
                 "Website": "https://www.terrasg.com/",
                 "Description": "Asia's first carbon-focused experiential hub at Pasir Ris.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "N1",
@@ -2375,7 +2749,7 @@
                 "New?": null,
                 "Website": "https://www.nparks.gov.sg/visit/parks/park-detail/pulau-ubin/",
                 "Description": "Offshore island with kampong heritage and Chek Jawa wetlands.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "O1",
@@ -2386,7 +2760,7 @@
                 "New?": null,
                 "Website": "https://www.waterwaypoint.com.sg/",
                 "Description": "Shopping mall by Punggol Waterway.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "O2",
@@ -2397,7 +2771,7 @@
                 "New?": null,
                 "Website": "https://www.nparks.gov.sg/",
                 "Description": "Red bridge over Serangoon Reservoir.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "O3",
@@ -2408,7 +2782,7 @@
                 "New?": null,
                 "Website": "https://www.pub.gov.sg/",
                 "Description": "Constructed wetland for water treatment and nature walks.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "O4",
@@ -2419,7 +2793,7 @@
                 "New?": null,
                 "Website": "https://www.pub.gov.sg/",
                 "Description": "Dam with views of Serangoon Reservoir.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "O5",
@@ -2430,7 +2804,7 @@
                 "New?": null,
                 "Website": "https://www.nparks.gov.sg/visit/parks/park-detail/coney-island-park/",
                 "Description": "Rustic island park with beaches and casuarina woodland.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "O6",
@@ -2441,7 +2815,7 @@
                 "New?": null,
                 "Website": "https://www.thepunggolsettlement.com/",
                 "Description": "Waterfront dining village at Punggol Point.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "O7",
@@ -2452,7 +2826,7 @@
                 "New?": null,
                 "Website": null,
                 "Description": "Pedestrian bridge at Punggol Waterway.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "O8",
@@ -2463,7 +2837,7 @@
                 "New?": null,
                 "Website": "https://www.nparks.gov.sg/visit/parks/park-detail/sengkang-riverside-park/",
                 "Description": "Riverside park with wetland and boardwalks.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "O9",
@@ -2474,7 +2848,7 @@
                 "New?": null,
                 "Website": null,
                 "Description": "Singapore's last surviving kampong (village).",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "O10",
@@ -2485,7 +2859,7 @@
                 "New?": "NEW",
                 "Website": "https://www.nparks.gov.sg/",
                 "Description": "Therapeutic garden with play mounds. Opened Jun 2025.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "P1",
@@ -2496,7 +2870,7 @@
                 "New?": null,
                 "Website": "https://www.nparks.gov.sg/visit/parks/park-detail/east-coast-park/",
                 "Description": "15km coastal park for cycling, skating, and beach.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "P2",
@@ -2507,7 +2881,7 @@
                 "New?": null,
                 "Website": null,
                 "Description": "Educational park about water desalination.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "P3",
@@ -2518,7 +2892,7 @@
                 "New?": null,
                 "Website": "https://www.foundersmemorial.gov.sg/",
                 "Description": "Future national memorial at Bay East Garden. Opening 2028.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "P4",
@@ -2529,7 +2903,7 @@
                 "New?": null,
                 "Website": "https://www.gardensbythebay.com.sg/",
                 "Description": "Waterfront garden with city skyline views across Marina Bay.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "P5",
@@ -2540,7 +2914,7 @@
                 "New?": null,
                 "Website": "https://www.pub.gov.sg/marinabarrage",
                 "Description": "Dam, green roof, and kite-flying spot with city views.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "P6",
@@ -2551,7 +2925,7 @@
                 "New?": null,
                 "Website": "https://www.gardensbythebay.com.sg/",
                 "Description": "Iconic gardens with Supertrees, Cloud Forest, and Flower Dome.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "P7",
@@ -2562,7 +2936,7 @@
                 "New?": null,
                 "Website": "https://www.marinabaysands.com/museum.html",
                 "Description": "Lotus-shaped museum with rotating exhibitions.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "P8",
@@ -2573,7 +2947,7 @@
                 "New?": null,
                 "Website": "https://www.marinabaysands.com/",
                 "Description": "Iconic resort with SkyPark observation deck.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "P9",
@@ -2584,7 +2958,7 @@
                 "New?": "NEW",
                 "Website": "https://www.gardensbythebay.com.sg/",
                 "Description": "Animatronic dinosaur exhibition in Cloud Forest.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "P10",
@@ -2595,7 +2969,7 @@
                 "New?": "NEW",
                 "Website": "https://www.gardensbythebay.com.sg/",
                 "Description": "New outdoor playground in the Active Garden area.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "X1",
@@ -2606,7 +2980,7 @@
                 "New?": null,
                 "Website": "https://www.nhb.gov.sg/nationalmuseum/",
                 "Description": "Singapore's oldest museum with immersive history galleries.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "X2",
@@ -2617,7 +2991,7 @@
                 "New?": null,
                 "Website": "https://www.singaporeartmuseum.sg/",
                 "Description": "Contemporary art museum focused on Southeast Asian art.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "X3",
@@ -2628,7 +3002,7 @@
                 "New?": null,
                 "Website": "https://www.nationalgallery.sg/",
                 "Description": "Largest visual arts institution in Southeast Asia.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         },
         {
                 "Code": "X4",
@@ -2639,7 +3013,7 @@
                 "New?": null,
                 "Website": "https://www.nhb.gov.sg/acm/",
                 "Description": "Pan-Asian cultures and civilisations on the Singapore River.",
-                "YouTube Short": null
+                "YouTube Shorts": []
         }
 ];
 
@@ -2647,6 +3021,36 @@
         let filteredPlaces = [...allPlaces];
         let selectedCategories = new Set();
         let adminMode = false;
+        let expandedCards = new Set();
+
+        // Extract YouTube video ID from URL or embed code
+        function extractYouTubeID(input) {
+            if (!input) return null;
+            
+            input = input.trim();
+            
+            if (input.includes('<iframe') || input.includes('iframe')) {
+                const embedMatch = input.match(/src=["']([^"']+)["']/);
+                if (embedMatch) input = embedMatch[1];
+            }
+            
+            const patterns = [
+                /youtube\.com\/shorts\/([a-zA-Z0-9_-]+)/,
+                /youtu\.be\/([a-zA-Z0-9_-]+)/,
+                /youtube\.com\/watch\?v=([a-zA-Z0-9_-]+)/,
+                /youtube\.com\/embed\/([a-zA-Z0-9_-]+)/,
+                /youtube-nocookie\.com\/embed\/([a-zA-Z0-9_-]+)/,
+                /v=([a-zA-Z0-9_-]+)/
+            ];
+            
+            for (const pattern of patterns) {
+                const match = input.match(pattern);
+                if (match && match[1]) return match[1];
+            }
+            
+            if (/^[a-zA-Z0-9_-]{11}$/.test(input)) return input;
+            return null;
+        }
 
         // Load saved YouTube data from localStorage
         function loadYouTubeData() {
@@ -2656,7 +3060,7 @@
                     const youtubeData = JSON.parse(saved);
                     allPlaces.forEach(place => {
                         if (youtubeData[place.Code]) {
-                            place['YouTube Short'] = youtubeData[place.Code];
+                            place['YouTube Shorts'] = youtubeData[place.Code];
                         }
                     });
                 } catch (e) {
@@ -2669,76 +3073,59 @@
         function saveYouTubeData() {
             const youtubeData = {};
             allPlaces.forEach(place => {
-                if (place['YouTube Short']) {
-                    youtubeData[place.Code] = place['YouTube Short'];
+                if (place['YouTube Shorts'] && place['YouTube Shorts'].length > 0) {
+                    youtubeData[place.Code] = place['YouTube Shorts'];
                 }
             });
             localStorage.setItem('singaporePlacesYouTube', JSON.stringify(youtubeData));
         }
 
-        // Extract YouTube video ID from URL or embed code
-        function extractYouTubeID(input) {
-            if (!input) return null;
-            
-            // Clean up the input
-            input = input.trim();
-            
-            // Check if it's an embed code (contains iframe)
-            if (input.includes('<iframe') || input.includes('iframe')) {
-                const embedMatch = input.match(/src=["']([^"']+)["']/);
-                if (embedMatch) {
-                    input = embedMatch[1];
-                }
-            }
-            
-            // YouTube URL patterns
-            const patterns = [
-                /youtube\.com\/shorts\/([a-zA-Z0-9_-]+)/,
-                /youtu\.be\/([a-zA-Z0-9_-]+)/,
-                /youtube\.com\/watch\?v=([a-zA-Z0-9_-]+)/,
-                /youtube\.com\/embed\/([a-zA-Z0-9_-]+)/,
-                /v=([a-zA-Z0-9_-]+)/  // Catch any v= parameter
-            ];
-            
-            for (const pattern of patterns) {
-                const match = input.match(pattern);
-                if (match && match[1]) return match[1];
-            }
-            
-            // If it's just the ID (11 characters)
-            if (/^[a-zA-Z0-9_-]{11}$/.test(input)) {
-                return input;
-            }
-            
-            return null;
-        }
-
-        // Update YouTube video for a place
-        function updateYouTube(placeCode, url) {
+        // Update YouTube video for a place at specific slot
+        function updateYouTubeSlot(placeCode, slotIndex, url) {
             const place = allPlaces.find(p => p.Code === placeCode);
             if (place) {
                 const videoId = extractYouTubeID(url);
-                place['YouTube Short'] = videoId;
+                if (videoId) {
+                    if (!place['YouTube Shorts']) place['YouTube Shorts'] = [];
+                    place['YouTube Shorts'][slotIndex] = videoId;
+                    saveYouTubeData();
+                    updateStats();
+                    renderPlaces();
+                }
+            }
+        }
+
+        // Remove YouTube video from slot
+        function removeYouTubeSlot(placeCode, slotIndex) {
+            const place = allPlaces.find(p => p.Code === placeCode);
+            if (place && place['YouTube Shorts']) {
+                place['YouTube Shorts'][slotIndex] = null;
+                // Clean up nulls at the end
+                while (place['YouTube Shorts'].length > 0 && 
+                       place['YouTube Shorts'][place['YouTube Shorts'].length - 1] === null) {
+                    place['YouTube Shorts'].pop();
+                }
                 saveYouTubeData();
                 updateStats();
                 renderPlaces();
             }
         }
 
-        // Remove YouTube video
-        function removeYouTube(placeCode) {
-            const place = allPlaces.find(p => p.Code === placeCode);
-            if (place) {
-                place['YouTube Short'] = null;
-                saveYouTubeData();
-                updateStats();
-                renderPlaces();
+        // Toggle video card expansion
+        function toggleVideoCard(placeCode) {
+            if (expandedCards.has(placeCode)) {
+                expandedCards.delete(placeCode);
+            } else {
+                expandedCards.add(placeCode);
             }
+            renderPlaces();
         }
 
         // Update statistics
         function updateStats() {
-            const videoCount = allPlaces.filter(p => p['YouTube Short']).length;
+            const videoCount = allPlaces.filter(p => 
+                p['YouTube Shorts'] && p['YouTube Shorts'].some(v => v)
+            ).length;
             document.getElementById('total-videos').textContent = videoCount;
         }
 
@@ -2765,11 +3152,18 @@
 
         // Populate area filter
         const areaFilter = document.getElementById('area-filter');
+        const areaSelect = document.getElementById('area-select');
         areas.forEach(area => {
             const option = document.createElement('option');
             option.value = area;
             option.textContent = area;
             areaFilter.appendChild(option);
+
+            // Also populate modal area select
+            const modalOption = document.createElement('option');
+            modalOption.value = area;
+            modalOption.textContent = area;
+            areaSelect.appendChild(modalOption);
         });
 
         // Create category tags
@@ -2822,9 +3216,10 @@
                     (newFilter === 'new' && place['New?'] === 'NEW') ||
                     (newFilter === 'existing' && place['New?'] !== 'NEW');
 
+                const hasVideos = place['YouTube Shorts'] && place['YouTube Shorts'].some(v => v);
                 const matchesVideo = !videoFilter ||
-                    (videoFilter === 'with-video' && place['YouTube Short']) ||
-                    (videoFilter === 'no-video' && !place['YouTube Short']);
+                    (videoFilter === 'with-video' && hasVideos) ||
+                    (videoFilter === 'no-video' && !hasVideos);
 
                 const matchesCategory = selectedCategories.size === 0 || 
                     (place.Categories && [...selectedCategories].some(cat => 
@@ -2837,73 +3232,103 @@
             renderPlaces();
         }
 
-        function renderYouTubeSection(place) {
+        function renderVideoSlot(place, slotIndex) {
+            const videoId = place['YouTube Shorts'] && place['YouTube Shorts'][slotIndex];
+            const hasVideo = !!videoId;
+
             if (adminMode) {
-                // Edit mode
-                if (place['YouTube Short']) {
-                    return `
-                        <div class="youtube-container">
-                            <iframe 
-                                src="https://www.youtube-nocookie.com/embed/${place['YouTube Short']}?rel=0&modestbranding=1&enablejsapi=1" 
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                referrerpolicy="strict-origin-when-cross-origin"
-                                allowfullscreen
-                                loading="lazy"
-                            ></iframe>
+                return `
+                    <div class="video-slot ${hasVideo ? 'has-video' : ''}">
+                        <div class="video-slot-header">
+                            <span class="slot-number">Video ${slotIndex + 1}</span>
                         </div>
-                        <div class="youtube-edit">
-                            <label>YouTube Short URL, ID, or Embed Code:</label>
+                        ${hasVideo ? `
+                            <div class="youtube-container">
+                                <iframe 
+                                    src="https://www.youtube-nocookie.com/embed/${videoId}?rel=0&modestbranding=1&enablejsapi=1" 
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                    referrerpolicy="strict-origin-when-cross-origin"
+                                    allowfullscreen
+                                    loading="lazy"
+                                ></iframe>
+                            </div>
+                        ` : `
+                            <div class="youtube-placeholder">
+                                📹 No video added
+                            </div>
+                        `}
+                        <div class="youtube-input-group">
+                            <label>YouTube URL, ID, or Embed Code:</label>
                             <input 
                                 type="text" 
                                 class="youtube-input" 
                                 data-code="${place.Code}"
-                                value="${place['YouTube Short']}"
-                                placeholder="Paste URL, embed code, or video ID"
+                                data-slot="${slotIndex}"
+                                value="${videoId || ''}"
+                                placeholder="Paste YouTube Shorts URL or ID"
                             >
-                            <div class="youtube-hint">Accepts: URL, embed code (iframe), or just the video ID</div>
-                            <div class="youtube-edit-buttons">
-                                <button class="btn-save" onclick="saveYouTube('${place.Code}')">💾 Update</button>
-                                <button class="btn-remove" onclick="removeYouTube('${place.Code}')">🗑️ Remove</button>
-                            </div>
+                            <div class="youtube-hint">Paste URL, embed code, or video ID</div>
                         </div>
-                    `;
-                } else {
-                    return `
-                        <div class="youtube-placeholder">
-                            📹 No video added yet
+                        <div class="video-slot-buttons">
+                            <button class="btn-save" onclick="saveYouTubeSlot('${place.Code}', ${slotIndex})">
+                                💾 ${hasVideo ? 'Update' : 'Save'}
+                            </button>
+                            ${hasVideo ? `
+                                <button class="btn-remove" onclick="removeYouTubeSlot('${place.Code}', ${slotIndex})">
+                                    🗑️ Remove
+                                </button>
+                            ` : ''}
                         </div>
-                        <div class="youtube-edit">
-                            <label>YouTube Short URL, ID, or Embed Code:</label>
-                            <input 
-                                type="text" 
-                                class="youtube-input" 
-                                data-code="${place.Code}"
-                                placeholder="Paste URL, embed code, or video ID"
-                            >
-                            <div class="youtube-hint">Accepts: URL, embed code (iframe), or just the video ID</div>
-                            <div class="youtube-edit-buttons">
-                                <button class="btn-save" onclick="saveYouTube('${place.Code}')">💾 Save Video</button>
-                            </div>
-                        </div>
-                    `;
-                }
+                    </div>
+                `;
             } else {
-                // View mode
-                if (place['YouTube Short']) {
+                // View mode - only show if has video
+                if (hasVideo) {
                     return `
-                        <div class="youtube-container">
-                            <iframe 
-                                src="https://www.youtube-nocookie.com/embed/${place['YouTube Short']}?rel=0&modestbranding=1&enablejsapi=1" 
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                referrerpolicy="strict-origin-when-cross-origin"
-                                allowfullscreen
-                                loading="lazy"
-                            ></iframe>
+                        <div class="video-slot has-video">
+                            <div class="youtube-container">
+                                <iframe 
+                                    src="https://www.youtube-nocookie.com/embed/${videoId}?rel=0&modestbranding=1&enablejsapi=1" 
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                    referrerpolicy="strict-origin-when-cross-origin"
+                                    allowfullscreen
+                                    loading="lazy"
+                                ></iframe>
+                            </div>
                         </div>
                     `;
                 }
                 return '';
             }
+        }
+
+        function renderVideoCard(place) {
+            const videos = place['YouTube Shorts'] || [];
+            const videoCount = videos.filter(v => v).length;
+            const isExpanded = expandedCards.has(place.Code);
+
+            if (!adminMode && videoCount === 0) {
+                return '';
+            }
+
+            return `
+                <div class="video-card ${isExpanded ? 'expanded' : ''}">
+                    <div class="video-card-header" onclick="toggleVideoCard('${place.Code}')">
+                        <div class="video-card-title">
+                            🎥 Videos
+                            ${videoCount > 0 ? `<span class="video-count">${videoCount}</span>` : ''}
+                        </div>
+                        <span class="expand-icon">▼</span>
+                    </div>
+                    <div class="video-card-content">
+                        <div class="video-slots">
+                            ${renderVideoSlot(place, 0)}
+                            ${renderVideoSlot(place, 1)}
+                            ${renderVideoSlot(place, 2)}
+                        </div>
+                    </div>
+                </div>
+            `;
         }
 
         function renderPlaces() {
@@ -2941,7 +3366,7 @@
                                 `).join('')}
                             </div>
                         ` : ''}
-                        ${renderYouTubeSection(place)}
+                        ${renderVideoCard(place)}
                         ${place.Website ? `
                             <a href="${place.Website}" target="_blank" class="website-link">
                                 🔗 Visit Website →
@@ -2953,18 +3378,23 @@
         }
 
         // Save YouTube URL from input
-        window.saveYouTube = function(placeCode) {
-            const input = document.querySelector(`.youtube-input[data-code="${placeCode}"]`);
+        window.saveYouTubeSlot = function(placeCode, slotIndex) {
+            const input = document.querySelector(`.youtube-input[data-code="${placeCode}"][data-slot="${slotIndex}"]`);
             if (input && input.value.trim()) {
-                updateYouTube(placeCode, input.value.trim());
+                updateYouTubeSlot(placeCode, slotIndex, input.value.trim());
             }
         };
 
         // Remove YouTube video
-        window.removeYouTube = function(placeCode) {
+        window.removeYouTubeSlot = function(placeCode, slotIndex) {
             if (confirm('Remove this video?')) {
-                removeYouTube(placeCode);
+                removeYouTubeSlot(placeCode, slotIndex);
             }
+        };
+
+        // Toggle video card
+        window.toggleVideoCard = function(placeCode) {
+            toggleVideoCard(placeCode);
         };
 
         // Toggle admin mode
@@ -2979,11 +3409,13 @@
         document.getElementById('export-btn').addEventListener('click', function() {
             const youtubeData = {};
             allPlaces.forEach(place => {
-                if (place['YouTube Short']) {
+                if (place['YouTube Shorts'] && place['YouTube Shorts'].some(v => v)) {
                     youtubeData[place.Code] = {
                         name: place['Place Name'],
-                        videoId: place['YouTube Short'],
-                        url: `https://youtube.com/shorts/${place['YouTube Short']}`
+                        videos: place['YouTube Shorts'].filter(v => v).map(id => ({
+                            id: id,
+                            url: `https://youtube.com/shorts/${id}`
+                        }))
                     };
                 }
             });
@@ -3015,6 +3447,114 @@
 
         // Initial render
         renderPlaces();
+
+        // Add Location Modal Functions
+        function openAddLocationModal() {
+            document.getElementById('add-location-modal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        window.closeAddLocationModal = function() {
+            document.getElementById('add-location-modal').classList.remove('active');
+            document.body.style.overflow = 'auto';
+            document.getElementById('add-location-form').reset();
+            document.getElementById('success-message').style.display = 'none';
+        };
+
+        // Close modal when clicking outside
+        document.getElementById('add-location-modal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeAddLocationModal();
+            }
+        });
+
+        // Add Location button
+        document.getElementById('add-location-btn').addEventListener('click', openAddLocationModal);
+
+        // Form submission
+        document.getElementById('add-location-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            // Get form values
+            const placeName = document.getElementById('place-name').value.trim();
+            const areaName = document.getElementById('area-select').value;
+            const categories = document.getElementById('categories').value.trim();
+            const description = document.getElementById('description').value.trim();
+            const website = document.getElementById('website').value.trim();
+            const isNew = document.getElementById('is-new').value;
+
+            // Generate a temporary code (user should update in Google Sheet)
+            const tempCode = 'U' + (allPlaces.length + 1);
+
+            // Create new place object
+            const newPlace = {
+                'Code': tempCode,
+                'Place Name': placeName,
+                'Area': areaName.charAt(0), // Just the first letter
+                'Area Name': areaName,
+                'Categories': categories,
+                'New?': isNew,
+                'Website': website,
+                'Description': description,
+                'YouTube Shorts': []
+            };
+
+            // Add to places array
+            allPlaces.push(newPlace);
+
+            // Save to localStorage
+            const userAddedPlaces = JSON.parse(localStorage.getItem('userAddedPlaces') || '[]');
+            userAddedPlaces.push(newPlace);
+            localStorage.setItem('userAddedPlaces', JSON.stringify(userAddedPlaces));
+
+            // Update stats and re-render
+            document.getElementById('total-places').textContent = allPlaces.length;
+            filterPlaces();
+
+            // Show success message
+            const successMsg = document.getElementById('success-message');
+            successMsg.innerHTML = `
+                <div class="success-message">
+                    <h3>✅ Location Added Successfully!</h3>
+                    <p><strong>${placeName}</strong> has been added to your local list.</p>
+                    <p style="margin-top: 10px;">
+                        <strong>⚠️ Don't forget:</strong> Please also add this location to the 
+                        <a href="https://docs.google.com/spreadsheets/d/1tRC8_42qx7pFrECfTMb9NbEsFsFKO4tkaLZ29kn2euM/edit?usp=sharing" 
+                           target="_blank">Google Sheet</a> 
+                        to save it permanently!
+                    </p>
+                </div>
+            `;
+            successMsg.style.display = 'block';
+
+            // Reset form
+            document.getElementById('add-location-form').reset();
+
+            // Scroll to top of modal
+            document.querySelector('.modal-content').scrollTop = 0;
+
+            // Auto-close after 5 seconds (optional)
+            setTimeout(() => {
+                closeAddLocationModal();
+            }, 5000);
+        });
+
+        // Load user-added places on startup
+        function loadUserAddedPlaces() {
+            const userAddedPlaces = JSON.parse(localStorage.getItem('userAddedPlaces') || '[]');
+            if (userAddedPlaces.length > 0) {
+                // Merge with existing places (avoid duplicates by Code)
+                const existingCodes = new Set(allPlaces.map(p => p.Code));
+                userAddedPlaces.forEach(place => {
+                    if (!existingCodes.has(place.Code)) {
+                        allPlaces.push(place);
+                    }
+                });
+                document.getElementById('total-places').textContent = allPlaces.length;
+            }
+        }
+
+        loadUserAddedPlaces();
     </script>
 </body>
 </html>
