@@ -520,6 +520,25 @@
             box-shadow: 0 6px 20px rgba(52, 168, 83, 0.4);
         }
 
+        .michelin-guide-btn {
+            display: inline-block;
+            background: #d32f2f;
+            color: white;
+            padding: 12px 28px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(211, 47, 47, 0.3);
+            margin-left: 10px;
+        }
+
+        .michelin-guide-btn:hover {
+            background: #c62828;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(211, 47, 47, 0.4);
+        }
+
         .add-location-btn {
             background: #ff6b6b;
             color: white;
@@ -810,6 +829,10 @@
                    target="_blank" 
                    class="google-sheet-btn" 
                    id="sheet-btn">📊 View Sheet</a>
+                <a href="https://guide.michelin.com/sg/en/restaurants" 
+                   target="_blank" 
+                   class="michelin-guide-btn" 
+                   id="michelin-btn">⭐ Michelin Guide</a>
             </div>
 
             <div class="tags" id="category-tags"></div>
@@ -3377,26 +3400,6 @@
             }).join('');
         }
 
-        // Save YouTube URL from input
-        window.saveYouTubeSlot = function(placeCode, slotIndex) {
-            const input = document.querySelector(`.youtube-input[data-code="${placeCode}"][data-slot="${slotIndex}"]`);
-            if (input && input.value.trim()) {
-                updateYouTubeSlot(placeCode, slotIndex, input.value.trim());
-            }
-        };
-
-        // Remove YouTube video
-        window.removeYouTubeSlot = function(placeCode, slotIndex) {
-            if (confirm('Remove this video?')) {
-                removeYouTubeSlot(placeCode, slotIndex);
-            }
-        };
-
-        // Toggle video card
-        window.toggleVideoCard = function(placeCode) {
-            toggleVideoCard(placeCode);
-        };
-
         // Toggle admin mode
         document.getElementById('admin-toggle').addEventListener('click', function() {
             adminMode = !adminMode;
@@ -3444,6 +3447,26 @@
             updateCategoryTags();
             filterPlaces();
         });
+
+        // Save YouTube URL from input
+        window.saveYouTubeSlot = function(placeCode, slotIndex) {
+            const input = document.querySelector(`.youtube-input[data-code="${placeCode}"][data-slot="${slotIndex}"]`);
+            if (input && input.value.trim()) {
+                updateYouTubeSlot(placeCode, slotIndex, input.value.trim());
+            }
+        };
+
+        // Remove YouTube video
+        window.removeYouTubeSlot = function(placeCode, slotIndex) {
+            if (confirm('Remove this video?')) {
+                removeYouTubeSlot(placeCode, slotIndex);
+            }
+        };
+
+        // Toggle video card
+        window.toggleVideoCard = function(placeCode) {
+            toggleVideoCard(placeCode);
+        };
 
         // Initial render
         renderPlaces();
