@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Singapore Places Explorer</title>
+    <title>IE Singapore Place Explorer</title>
     <style>
         * {
             margin: 0;
@@ -539,6 +539,25 @@
             box-shadow: 0 6px 20px rgba(211, 47, 47, 0.4);
         }
 
+        .google-maps-btn {
+            display: inline-block;
+            background: #4285f4;
+            color: white;
+            padding: 12px 28px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(66, 133, 244, 0.3);
+            margin-left: 10px;
+        }
+
+        .google-maps-btn:hover {
+            background: #3367d6;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(66, 133, 244, 0.4);
+        }
+
         .add-location-btn {
             background: #ff6b6b;
             color: white;
@@ -767,8 +786,8 @@
 <body>
     <div class="container">
         <header>
-            <h1>🇸🇬 Singapore Places Explorer</h1>
-            <div class="subtitle">Discover 194 amazing places across the Lion City</div>
+            <h1>🇸🇬 IE Singapore Place Explorer</h1>
+            <div class="subtitle">Hi! I used to share this with friends who would visit me in Singapore. I hope you like this list! - Ella Garcia :)</div>
             <div class="stats">
                 <div class="stat">📍 <span id="total-places">194</span> Places</div>
                 <div class="stat">🗺️ <span id="total-areas">17</span> Areas</div>
@@ -833,6 +852,10 @@
                    target="_blank" 
                    class="michelin-guide-btn" 
                    id="michelin-btn">⭐ Michelin Guide</a>
+                <a href="YOUR_GOOGLE_MAPS_LINK_HERE" 
+                   target="_blank" 
+                   class="google-maps-btn" 
+                   id="maps-btn">🗺️ View Map</a>
             </div>
 
             <div class="tags" id="category-tags"></div>
