@@ -3,73 +3,75 @@
     {
       "name": "Cheak",
       "type": "Streetwear",
-      "description": "Singapore streetwear"
+      "description": "Singapore streetwear",
+      "website": "https://www.cheak.com/"
     },
     {
       "name": "Charles & Keith",
       "type": "Fashion",
-      "description": "Local fashion, affordable heels and bags; sister brand Pedro for elevated take"
+      "description": "Local fashion, affordable heels and bags; sister brand Pedro for elevated take",
+      "website": "https://www.charleskeith.com/sg"
     },
     {
       "name": "Love Bonito",
       "type": "Fashion",
-      "description": "Women's fashion, very popular local brand"
+      "description": "Women's fashion, very popular local brand",
+      "website": "https://www.lovebonito.com/sg"
     },
     {
       "name": "Editor's Market",
       "type": "Fashion",
-      "description": "Contemporary women's fashion, shophouse vibes"
+      "description": "Contemporary women's fashion, shophouse vibes",
+      "website": "https://www.theeditorsmarket.com/"
     },
     {
       "name": "Shanghai Tang",
       "type": "Luxury",
-      "description": "Asian-inspired luxury, great for gifts"
+      "description": "Asian-inspired luxury, great for gifts",
+      "website": "https://www.shanghaitang.com/"
     },
     {
       "name": "In Good Company",
       "type": "Fashion",
-      "description": "Minimalist local womenswear"
-    },
-    {
-      "name": "Supermama",
-      "type": "Design",
-      "description": "Local design studio, Singapore-themed gifts and ceramics"
-    },
-    {
-      "name": "Naiise",
-      "type": "Lifestyle",
-      "description": "Local lifestyle and design products, good for souvenirs"
+      "description": "Minimalist local womenswear",
+      "website": "https://ingoodcompany.asia/"
     }
   ],
   "areas": [
     {
       "name": "Raffles City / ION / Marina Bay Sands / Orchard",
-      "type": "Mall"
+      "type": "Mall",
+      "website": "https://www.raffles city.com.sg/"
     },
     {
       "name": "Tanglin Mall",
       "type": "Mall",
-      "description": "Upscale, expat favourite, great specialty stores and restaurants"
+      "description": "Upscale, expat favourite, great specialty stores and restaurants",
+      "website": "https://www.tanglinmall.com.sg/"
     },
     {
       "name": "Takashimaya / Ngee Ann City",
       "type": "Mall",
-      "description": "Japanese department store anchor on Orchard, massive, great basement food hall"
+      "description": "Japanese department store anchor on Orchard, massive, great basement food hall",
+      "website": "https://www.takashimayasc.com.sg/"
     },
     {
       "name": "Haji Lane / Arab Street",
       "type": "Indie Area",
-      "description": "Indie and vintage boutiques"
+      "description": "Indie and vintage boutiques",
+      "website": null
     },
     {
       "name": "Bugis Street",
       "type": "Market",
-      "description": "Budget street market"
+      "description": "Budget street market",
+      "website": null
     },
     {
       "name": "Dempsey Hill",
       "type": "Lifestyle Area",
-      "description": "Upscale lifestyle"
+      "description": "Upscale lifestyle",
+      "website": "https://www.dempseyhill.com/"
     }
   ]
 }
