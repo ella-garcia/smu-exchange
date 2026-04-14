@@ -1,0 +1,137 @@
+{
+  "outdoor": [
+    {
+      "name": "East Coast Park",
+      "type": "Cycling/Running",
+      "description": "Coastal ride/run, 15km, great sea breeze"
+    },
+    {
+      "name": "Marina Bay / Esplanade loop",
+      "type": "Cycling/Running",
+      "description": "City skyline views"
+    },
+    {
+      "name": "Southern Ridges",
+      "type": "Hiking",
+      "description": "9km scenic trail connecting parks"
+    },
+    {
+      "name": "Sentosa Eastside Loop",
+      "type": "Cycling",
+      "description": "Beach views"
+    }
+  ],
+  "runClubs": [
+    {
+      "name": "Kaya Run Club",
+      "type": "Social Running"
+    },
+    {
+      "name": "The Running Department",
+      "type": "Structured Training",
+      "description": "Structured weekly training"
+    },
+    {
+      "name": "EP*RC",
+      "type": "Social Running",
+      "description": "Chill runs around Marina Bay Sands"
+    },
+    {
+      "name": "Social Running Club",
+      "type": "Social Running",
+      "description": "Run then eat hawker food after"
+    }
+  ],
+  "fitness": [
+    {
+      "name": "H-Kore",
+      "type": "Lagree",
+      "description": "Singapore's only Lagree studio",
+      "location": "Telok Ayer"
+    },
+    {
+      "name": "Pilates / reformer",
+      "type": "Pilates"
+    },
+    {
+      "name": "Barry's Bootcamp",
+      "type": "Bootcamp"
+    },
+    {
+      "name": "WeBarre",
+      "type": "Barre"
+    },
+    {
+      "name": "Revolution / XYCO",
+      "type": "Spin"
+    },
+    {
+      "name": "Trapeze Rec. Club",
+      "type": "Multi",
+      "description": "Pilates, yoga, sauna, cold plunge"
+    }
+  ],
+  "waterSports": [
+    {
+      "name": "Singapore Wake Park",
+      "type": "Wakeboarding",
+      "location": "East Coast Park"
+    },
+    {
+      "name": "Ski360",
+      "type": "Wakeboarding",
+      "location": "Lower Seletar Reservoir"
+    },
+    {
+      "name": "Tanjong Beach Club",
+      "type": "Beach Club",
+      "location": "Sentosa"
+    },
+    {
+      "name": "Siloso Beach",
+      "type": "Beach",
+      "location": "Sentosa"
+    },
+    {
+      "name": "Kayaking",
+      "type": "Water Sport",
+      "location": "Sentosa"
+    },
+    {
+      "name": "Stand-up Paddleboarding",
+      "type": "Water Sport",
+      "location": "Sentosa"
+    },
+    {
+      "name": "Skyline Luge",
+      "type": "Activity",
+      "location": "Sentosa"
+    },
+    {
+      "name": "AJ Hackett Bungy",
+      "type": "Extreme",
+      "location": "Sentosa"
+    }
+  ],
+  "climbing": [
+    {
+      "name": "Project Send",
+      "type": "Bouldering",
+      "description": "70+ routes, skyline views, Beta Café on-site",
+      "location": "Esplanade Mall Level 2",
+      "hours": "Open until 1:30am Fri/Sat"
+    },
+    {
+      "name": "Climb Central Funan",
+      "type": "Multi",
+      "description": "Tallest walls in civic district up to 16m, top rope + lead + bouldering + auto-belay",
+      "location": "Funan"
+    },
+    {
+      "name": "Boulder Movement",
+      "type": "Bouldering",
+      "description": "Best bouldering-only community gym",
+      "location": "Rochor/Tekka Place"
+    }
+  ]
+}
