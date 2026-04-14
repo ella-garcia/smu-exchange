@@ -2,26 +2,31 @@
   "museums": [
     {
       "name": "National Gallery Singapore",
-      "type": "Art"
+      "type": "Art",
+      "website": "https://www.nationalgallery.sg/"
     },
     {
-      "name": "Asian Civilizations Museum",
-      "type": "History/Culture"
+      "name": "Asian Civilisations Museum",
+      "type": "History/Culture",
+      "website": "https://www.nhb.gov.sg/acm"
     },
     {
       "name": "National Museum of Singapore",
-      "type": "History"
+      "type": "History",
+      "website": "https://www.nhb.gov.sg/nationalmuseum/"
     }
   ],
   "nature": [
     {
       "name": "Night Safari",
-      "type": "Wildlife"
+      "type": "Wildlife",
+      "website": "https://www.mandai.com/en/night-safari.html"
     },
     {
       "name": "Gardens by the Bay",
       "type": "Gardens",
-      "description": "Supertrees, Cloud Forest"
+      "description": "Supertrees, Cloud Forest",
+      "website": "https://www.gardensbythebay.com.sg/"
     }
   ],
   "golf": [
@@ -29,48 +34,66 @@
       "name": "Sentosa Golf Club",
       "type": "Championship",
       "description": "Top 100 worldwide, hosted Singapore Open 14x",
-      "notes": "Bring home club membership card + intro letter, book tee times 1 week ahead"
+      "notes": "Bring home club membership card + intro letter, book tee times 1 week ahead",
+      "website": "https://sentosagolf.com/"
     },
     {
       "name": "SICC",
       "type": "Country Club",
       "description": "Oldest club, 70+ reciprocal clubs globally",
-      "notes": "Bring home club membership card + intro letter, book tee times 1 week ahead"
+      "notes": "Bring home club membership card + intro letter, book tee times 1 week ahead",
+      "website": "https://www.sicc.org.sg/"
     },
     {
       "name": "Tanah Merah CC",
       "type": "Country Club",
       "description": "34 affiliated clubs across 12 countries",
-      "notes": "Bring home club membership card + intro letter, book tee times 1 week ahead"
+      "notes": "Bring home club membership card + intro letter, book tee times 1 week ahead",
+      "website": "https://www.tmcc.org.sg/"
     },
     {
       "name": "Laguna National",
       "type": "Resort",
       "description": "Two championship courses, resort hotel",
-      "notes": "Bring home club membership card + intro letter, book tee times 1 week ahead"
+      "notes": "Bring home club membership card + intro letter, book tee times 1 week ahead",
+      "website": "https://www.lagunagolf.com.sg/"
     },
     {
       "name": "Seletar Country Club",
       "type": "Country Club",
       "description": "Reciprocal visits up to 14 days/year",
-      "notes": "Bring home club membership card + intro letter, book tee times 1 week ahead"
+      "notes": "Bring home club membership card + intro letter, book tee times 1 week ahead",
+      "website": "https://www.seletarclub.com.sg/"
     }
   ],
   "socialClubs": [
     {
       "name": "Tanglin Club",
       "description": "130+ reciprocal clubs, dining, tennis, 27 guest suites",
-      "notes": "Submit intro letter 48hrs before arrival"
+      "notes": "Submit intro letter 48hrs before arrival",
+      "website": "https://www.tanglinclub.org.sg/"
     },
     {
       "name": "American Club",
       "description": "150 clubs worldwide, sports and family-friendly",
-      "notes": "Submit intro letter 48hrs before arrival"
+      "notes": "Submit intro letter 48hrs before arrival",
+      "website": "https://www.americanclubsingapore.org/"
     },
     {
       "name": "ONE°15 Marina Club",
       "description": "IAC network of 250 clubs globally, sailing lifestyle",
-      "notes": "Submit intro letter 48hrs before arrival"
+      "notes": "Submit intro letter 48hrs before arrival",
+      "website": "https://www.one15marina.com/"
+    },
+    {
+      "name": "Mandala Club",
+      "description": "Private members club, conversation, creation, celebration and connection, Bukit Pasoh heritage shophouse",
+      "website": "https://www.mandala.club/"
+    },
+    {
+      "name": "67 Pall Mall",
+      "description": "Private wine club, 6,000 wines (1,000 by the glass), Shaw Centre Penthouse with panoramic views",
+      "website": "https://www.67pallmall.com/the-singapore-club/"
     }
   ]
 }
