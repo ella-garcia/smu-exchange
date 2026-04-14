@@ -5,7 +5,8 @@
       "type": "Microbrewery",
       "description": "World's highest urban microbrewery, craft beers brewed on-site, great Marina Bay views",
       "location": "Level 33, Marina Bay Financial Centre",
-      "area": "Marina Bay"
+      "area": "Marina Bay",
+      "website": "https://level33.com.sg/"
     },
     {
       "name": "OUE Sky",
@@ -13,19 +14,22 @@
       "description": "4 concepts: HighHouse restaurant and lounge (L61–62) with Pan-Asian food, immersive art and DJ sets; Nova rooftop bar (L63) — Singapore's highest bar, 360° views, ASTRA star installation, open-air dancing",
       "location": "One Raffles Place L61-63",
       "area": "Raffles Place",
-      "notes": "Also has private karaoke room and champagne room"
+      "notes": "Also has private karaoke room and champagne room",
+      "website": "https://www.ouesky.sg/"
     },
     {
       "name": "Brass Lion Distillery",
       "type": "Distillery",
       "description": "Singapore's first craft gin distillery, tours + tasting flights",
-      "location": "Alexandra Terrace"
+      "location": "Alexandra Terrace",
+      "website": "https://www.brassliondistillery.com/"
     },
     {
       "name": "Tanglin Gin Distillery",
       "type": "Distillery",
       "description": "Award-winning gin in a Dempsey Hill colonial setting, bar and food on-site",
-      "location": "Dempsey Hill"
+      "location": "Dempsey Hill",
+      "website": "https://www.tanglingin.com/"
     }
   ],
   "clubs": [
@@ -33,47 +37,56 @@
       "name": "Marquee",
       "type": "EDM",
       "description": "Singapore's biggest club, indoor Ferris wheel + slide, big international DJs",
-      "location": "Marina Bay Sands"
+      "location": "Marina Bay Sands",
+      "website": "https://www.marinabaysands.com/entertainment/nightlife/marquee.html"
     },
     {
       "name": "Avenue",
       "type": "Hip-hop/R&B",
       "description": "Also has bowling and arcade",
-      "location": "Marina Bay Sands"
+      "location": "Marina Bay Sands",
+      "website": "https://www.marinabaysands.com/entertainment/nightlife/avenue.html"
     },
     {
       "name": "Cherry Discotheque",
       "type": "Retro/Hip-hop",
       "description": "Underground, retro, old-school hip-hop",
-      "location": "Cecil St"
+      "location": "Cecil St",
+      "website": "https://www.cherrydiscotheque.com/"
     },
     {
       "name": "Cé La Vi",
       "type": "Multi-venue",
       "description": "Restaurant, sky bar, club lounge and open sky deck — Singapore skyline at your feet",
-      "location": "MBS Level 57"
+      "location": "MBS Level 57",
+      "website": "https://www.celavi.com/en/singapore"
     }
   ],
   "areas": [
     {
       "name": "Raffles Place",
-      "vibe": "Rooftop bars, after-work crowd"
+      "vibe": "Rooftop bars, after-work crowd",
+      "website": null
     },
     {
       "name": "Robertson Quay",
-      "vibe": "Chill riverside"
+      "vibe": "Chill riverside",
+      "website": null
     },
     {
       "name": "Clarke Quay",
-      "vibe": "Lively, Zouk is here"
+      "vibe": "Lively, Zouk is here",
+      "website": null
     },
     {
       "name": "Telok Ayer",
-      "vibe": "Trendy bar street, next to H-Kore"
+      "vibe": "Trendy bar street, next to H-Kore",
+      "website": null
     },
     {
       "name": "Ann Siang / Duxton Hill",
-      "vibe": "Craft cocktails in shophouses"
+      "vibe": "Craft cocktails in shophouses",
+      "website": null
     }
   ]
 }
