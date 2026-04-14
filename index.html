@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IE SMU Exchange Placesr</title>
+    <title>🇸🇬 IE SMU Exchange Explorer</title>
     
     <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
@@ -16,3755 +16,1412 @@
             box-sizing: border-box;
         }
 
+        :root {
+            /* Singapore-inspired color palette */
+            --sg-red: #EE2737;
+            --sg-white: #FFFFFF;
+            --orchid-purple: #8B4789;
+            --tropical-green: #2D5016;
+            --marina-blue: #0077BE;
+            --sunset-orange: #FF6B35;
+            --hawker-yellow: #FFB627;
+            
+            --sidebar-bg: #1a1a1a;
+            --sidebar-text: #e0e0e0;
+            --sidebar-active: var(--sg-red);
+            --main-bg: #f5f5f5;
+            --card-bg: white;
+            --text-primary: #2a2a2a;
+            --text-secondary: #666;
+            --border: #e0e0e0;
+            --shadow: rgba(0,0,0,0.1);
+        }
+
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--main-bg);
+            margin: 0;
+            padding: 0;
+            display: flex;
             min-height: 100vh;
-            padding: 20px;
         }
 
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
+        /* Sidebar Navigation */
+        .sidebar {
+            width: 280px;
+            background: var(--sidebar-bg);
+            height: 100vh;
+            position: fixed;
+            left: 0;
+            top: 0;
+            overflow-y: auto;
+            z-index: 1000;
+            box-shadow: 4px 0 20px rgba(0,0,0,0.3);
         }
 
-        header {
-            text-align: center;
-            color: white;
-            margin-bottom: 30px;
-        }
-
-        h1 {
-            font-size: 3em;
-            margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
-        }
-
-        .subtitle {
-            font-size: 1.2em;
-            opacity: 0.95;
-        }
-
-        .stats {
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            margin-top: 15px;
-            flex-wrap: wrap;
-        }
-
-        .stat {
-            background: rgba(255,255,255,0.2);
-            padding: 10px 20px;
-            border-radius: 20px;
-            font-weight: 600;
-        }
-
-        .controls {
-            background: white;
-            padding: 25px;
-            border-radius: 15px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
-            margin-bottom: 30px;
-        }
-
-        .search-bar {
-            display: flex;
-            gap: 15px;
-            margin-bottom: 20px;
-            flex-wrap: wrap;
-        }
-
-        .search-input {
-            flex: 1;
-            min-width: 250px;
-            padding: 12px 20px;
-            border: 2px solid #e0e0e0;
-            border-radius: 25px;
-            font-size: 16px;
-            transition: all 0.3s;
-        }
-
-        .search-input:focus {
-            outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-        }
-
-        .filter-section {
-            display: flex;
-            gap: 15px;
-            flex-wrap: wrap;
-            align-items: center;
-        }
-
-        .filter-group {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-        }
-
-        .filter-label {
-            font-weight: 600;
-            color: #555;
-        }
-
-        select {
-            padding: 8px 15px;
-            border: 2px solid #e0e0e0;
-            border-radius: 20px;
-            font-size: 14px;
-            cursor: pointer;
-            background: white;
-            transition: all 0.3s;
-        }
-
-        select:focus {
-            outline: none;
-            border-color: #667eea;
-        }
-
-        .admin-toggle {
-            background: #764ba2;
-            color: white;
-            border: none;
-            padding: 10px 25px;
-            border-radius: 20px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.3s;
-            margin-left: auto;
-        }
-
-        .admin-toggle:hover {
-            background: #6a4291;
-            transform: translateY(-2px);
-        }
-
-        .admin-toggle.active {
-            background: #ff6b6b;
-        }
-
-        .tags {
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-            margin-top: 15px;
-        }
-
-        .tag {
-            padding: 6px 15px;
-            background: #f0f0f0;
-            border-radius: 15px;
-            font-size: 14px;
-            cursor: pointer;
-            transition: all 0.3s;
-            border: 2px solid transparent;
-        }
-
-        .tag:hover {
-            background: #e0e0e0;
-        }
-
-        .tag.active {
-            background: #667eea;
-            color: white;
-            border-color: #667eea;
-        }
-
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
-            gap: 20px;
-            margin-bottom: 30px;
-        }
-
-        .card {
-            background: white;
-            border-radius: 12px;
-            padding: 20px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            transition: all 0.3s;
+        .sidebar-header {
+            padding: 40px 24px;
+            background: linear-gradient(135deg, var(--sg-red) 0%, var(--orchid-purple) 100%);
             position: relative;
             overflow: hidden;
         }
 
+        .sidebar-header::before {
+            content: '🦁';
+            position: absolute;
+            right: -20px;
+            bottom: -20px;
+            font-size: 120px;
+            opacity: 0.1;
+        }
+
+        .sidebar-header h1 {
+            color: white;
+            font-size: 1.6em;
+            font-weight: 700;
+            margin-bottom: 8px;
+            letter-spacing: -0.5px;
+        }
+
+        .sidebar-header .tagline {
+            color: rgba(255,255,255,0.9);
+            font-size: 0.9em;
+            font-weight: 400;
+        }
+
+        .nav-menu {
+            padding: 20px 0;
+        }
+
+        .nav-item {
+            padding: 16px 24px;
+            cursor: pointer;
+            color: var(--sidebar-text);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border-left: 3px solid transparent;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            font-weight: 500;
+            font-size: 0.95em;
+        }
+
+        .nav-item:hover {
+            background: rgba(255,255,255,0.05);
+            color: white;
+        }
+
+        .nav-item.active {
+            background: rgba(238, 39, 55, 0.15);
+            border-left-color: var(--sidebar-active);
+            color: white;
+        }
+
+        .nav-icon {
+            font-size: 1.4em;
+            width: 28px;
+            text-align: center;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: 280px;
+            flex: 1;
+            padding: 40px;
+            min-height: 100vh;
+        }
+
+        .section {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Section Header */
+        .section-header {
+            margin-bottom: 32px;
+        }
+
+        .section-title {
+            font-size: 2.5em;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+            letter-spacing: -1px;
+        }
+
+        .section-subtitle {
+            font-size: 1.1em;
+            color: var(--text-secondary);
+        }
+
+        /* Controls Bar */
+        .controls-bar {
+            background: white;
+            padding: 24px;
+            border-radius: 16px;
+            box-shadow: 0 2px 12px var(--shadow);
+            margin-bottom: 32px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            align-items: center;
+        }
+
+        .search-box {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 14px 20px;
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            font-size: 1em;
+            transition: all 0.3s;
+            font-family: inherit;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--sg-red);
+            box-shadow: 0 0 0 3px rgba(238, 39, 55, 0.1);
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 10px;
+            font-size: 0.95em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: inherit;
+        }
+
+        .btn-primary {
+            background: var(--sg-red);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #d11f2e;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(238, 39, 55, 0.3);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: var(--text-primary);
+            border: 2px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--sg-red);
+            color: var(--sg-red);
+        }
+
+        /* Toggle Switch */
+        .toggle-switch {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .toggle-label {
+            font-weight: 600;
+            color: var(--text-secondary);
+            font-size: 0.9em;
+        }
+
+        .switch {
+            position: relative;
+            width: 54px;
+            height: 28px;
+            background: #ddd;
+            border-radius: 14px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .switch.active {
+            background: var(--sg-red);
+        }
+
+        .switch-thumb {
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 22px;
+            height: 22px;
+            background: white;
+            border-radius: 50%;
+            transition: transform 0.3s;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .switch.active .switch-thumb {
+            transform: translateX(26px);
+        }
+
+        /* Cards Grid */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+            gap: 24px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 2px 8px var(--shadow);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--sg-red), var(--orchid-purple));
+            transform: scaleX(0);
+            transition: transform 0.3s;
+        }
+
         .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px var(--shadow);
+        }
+
+        .card:hover::before {
+            transform: scaleX(1);
         }
 
         .card-header {
             display: flex;
             justify-content: space-between;
-            align-items: start;
+            align-items: flex-start;
             margin-bottom: 12px;
         }
 
-        .place-code {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 4px 10px;
-            border-radius: 8px;
-            font-weight: 700;
-            font-size: 12px;
-        }
-
-        .place-name {
+        .card-title {
             font-size: 1.3em;
             font-weight: 700;
-            color: #222;
-            margin-bottom: 8px;
+            color: var(--text-primary);
             line-height: 1.3;
         }
 
-        .area-name {
-            color: #667eea;
-            font-weight: 600;
-            font-size: 0.9em;
-            margin-bottom: 12px;
-        }
-
-        .description {
-            color: #555;
-            line-height: 1.6;
-            margin-bottom: 12px;
-        }
-
-        .categories {
-            display: flex;
-            gap: 6px;
-            flex-wrap: wrap;
-            margin-bottom: 12px;
-        }
-
-        .category-tag {
-            background: #f0f0f0;
+        .card-code {
+            font-size: 0.85em;
+            font-weight: 700;
+            color: var(--sg-red);
+            background: rgba(238, 39, 55, 0.1);
             padding: 4px 10px;
-            border-radius: 10px;
-            font-size: 12px;
-            color: #555;
+            border-radius: 6px;
         }
 
-        /* Video Card Styles */
-        .video-card {
-            margin: 15px 0;
-            border: 2px solid #e0e0e0;
-            border-radius: 12px;
-            overflow: hidden;
+        .card-badge {
+            display: inline-block;
+            padding: 6px 12px;
+            background: var(--hawker-yellow);
+            color: var(--text-primary);
+            border-radius: 8px;
+            font-size: 0.8em;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .card-description {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin: 12px 0;
+        }
+
+        .card-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 16px;
+        }
+
+        .meta-tag {
+            padding: 6px 12px;
+            background: var(--main-bg);
+            border-radius: 8px;
+            font-size: 0.85em;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .card-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--marina-blue);
+            text-decoration: none;
+            font-weight: 600;
+            margin-top: 12px;
             transition: all 0.3s;
         }
 
-        .video-card.expanded {
-            border-color: #667eea;
+        .card-link:hover {
+            color: var(--sg-red);
+            transform: translateX(4px);
         }
 
-        .video-card-header {
+        /* Video Section */
+        .video-section {
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px solid var(--border);
+        }
+
+        .video-header {
             display: flex;
+            align-items: center;
             justify-content: space-between;
-            align-items: center;
-            padding: 12px 15px;
-            background: #f8f8f8;
             cursor: pointer;
-            user-select: none;
-        }
-
-        .video-card-header:hover {
-            background: #f0f0f0;
-        }
-
-        .video-card-title {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-weight: 600;
-            color: #333;
+            padding: 8px 0;
         }
 
         .video-count {
-            background: #667eea;
-            color: white;
-            padding: 2px 8px;
-            border-radius: 10px;
-            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-secondary);
         }
 
-        .expand-icon {
+        .video-toggle {
             transition: transform 0.3s;
-            font-size: 18px;
-            color: #667eea;
         }
 
-        .video-card.expanded .expand-icon {
+        .video-toggle.expanded {
             transform: rotate(180deg);
         }
 
-        .video-card-content {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s ease;
-        }
-
-        .video-card.expanded .video-card-content {
-            max-height: 3000px;
-        }
-
         .video-slots {
-            padding: 15px;
-            display: flex;
+            display: none;
+            margin-top: 12px;
+            gap: 8px;
             flex-direction: column;
-            gap: 15px;
+        }
+
+        .video-slots.visible {
+            display: flex;
         }
 
         .video-slot {
-            border: 2px dashed #e0e0e0;
-            border-radius: 10px;
-            padding: 15px;
-            background: #fafafa;
-        }
-
-        .video-slot.has-video {
-            border-style: solid;
-            border-color: #667eea;
-            background: white;
-        }
-
-        .video-slot-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
-        }
-
-        .slot-number {
-            font-weight: 600;
-            color: #667eea;
-            font-size: 14px;
-        }
-
-        .youtube-container {
-            margin: 10px 0;
-            border-radius: 10px;
-            overflow: hidden;
-            background: #000;
-        }
-
-        .youtube-container iframe {
-            width: 100%;
-            aspect-ratio: 9/16;
-            border: none;
-            display: block;
-        }
-
-        .youtube-placeholder {
-            background: #f8f8f8;
-            border: 2px dashed #ddd;
-            border-radius: 10px;
-            padding: 20px;
-            text-align: center;
-            color: #999;
-            margin: 10px 0;
-        }
-
-        .youtube-input-group {
-            margin: 10px 0;
-        }
-
-        .youtube-input-group label {
-            display: block;
-            font-weight: 600;
-            color: #555;
-            margin-bottom: 6px;
-            font-size: 13px;
-        }
-
-        .youtube-input-group input {
-            width: 100%;
-            padding: 8px 12px;
-            border: 2px solid #e0e0e0;
-            border-radius: 8px;
-            font-size: 14px;
-        }
-
-        .youtube-input-group input:focus {
-            outline: none;
-            border-color: #667eea;
-        }
-
-        .youtube-hint {
-            font-size: 11px;
-            color: #888;
-            margin-top: 4px;
-        }
-
-        .video-slot-buttons {
             display: flex;
             gap: 8px;
-            margin-top: 10px;
-        }
-
-        .btn-save, .btn-remove {
-            padding: 6px 14px;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: 600;
-            font-size: 12px;
-            transition: all 0.3s;
-        }
-
-        .btn-save {
-            background: #667eea;
-            color: white;
-            flex: 1;
-        }
-
-        .btn-save:hover {
-            background: #5568d3;
-        }
-
-        .btn-remove {
-            background: #ff6b6b;
-            color: white;
-        }
-
-        .btn-remove:hover {
-            background: #ee5a5a;
-        }
-
-        .website-link {
-            display: inline-flex;
             align-items: center;
-            gap: 5px;
-            color: #667eea;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 14px;
-            margin-top: 8px;
         }
 
-        .website-link:hover {
-            text-decoration: underline;
+        .video-slot input {
+            flex: 1;
+            padding: 10px 14px;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            font-size: 0.9em;
+            font-family: inherit;
         }
 
-        .new-indicator {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            background: #ff6b6b;
-            color: white;
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-weight: 700;
-            font-size: 11px;
-            text-transform: uppercase;
-            box-shadow: 0 2px 8px rgba(255, 107, 107, 0.3);
+        .video-slot input:focus {
+            outline: none;
+            border-color: var(--sg-red);
         }
 
-        .no-results {
+        .video-thumbnail {
+            width: 80px;
+            height: 60px;
+            border-radius: 6px;
+            object-fit: cover;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .video-thumbnail:hover {
+            transform: scale(1.05);
+        }
+
+        /* Loading State */
+        .loading {
             text-align: center;
             padding: 60px 20px;
-            background: white;
-            border-radius: 12px;
-            color: #888;
         }
 
-        .no-results-icon {
-            font-size: 4em;
-            margin-bottom: 15px;
-        }
-
-        .clear-filters {
-            background: #667eea;
-            color: white;
-            border: none;
-            padding: 10px 25px;
-            border-radius: 20px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.3s;
-        }
-
-        .clear-filters:hover {
-            background: #5568d3;
-            transform: translateY(-2px);
-        }
-
-        .export-btn {
-            background: #28a745;
-            color: white;
-            border: none;
-            padding: 10px 25px;
-            border-radius: 20px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.3s;
-            margin-left: 10px;
-        }
-
-        .export-btn:hover {
-            background: #218838;
-            transform: translateY(-2px);
-        }
-
-        .google-sheet-btn {
-            display: inline-block;
-            background: #34a853;
-            color: white;
-            padding: 12px 28px;
-            border-radius: 25px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s;
-            box-shadow: 0 4px 15px rgba(52, 168, 83, 0.3);
-        }
-
-        .google-sheet-btn:hover {
-            background: #2d9248;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(52, 168, 83, 0.4);
-        }
-
-        .michelin-guide-btn {
-            display: inline-block;
-            background: #d32f2f;
-            color: white;
-            padding: 12px 28px;
-            border-radius: 25px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s;
-            box-shadow: 0 4px 15px rgba(211, 47, 47, 0.3);
-            margin-left: 10px;
-        }
-
-        .michelin-guide-btn:hover {
-            background: #c62828;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(211, 47, 47, 0.4);
-        }
-
-        .google-maps-btn {
-            display: inline-block;
-            background: #4285f4;
-            color: white;
-            padding: 12px 28px;
-            border-radius: 25px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s;
-            box-shadow: 0 4px 15px rgba(66, 133, 244, 0.3);
-            margin-left: 10px;
-        }
-
-        .google-maps-btn:hover {
-            background: #3367d6;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(66, 133, 244, 0.4);
-        }
-
-        .add-location-btn {
-            background: #ff6b6b;
-            color: white;
-            border: none;
-            padding: 10px 25px;
-            border-radius: 20px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.3s;
-            margin-left: 10px;
-        }
-
-        .add-location-btn:hover {
-            background: #ee5a5a;
-            transform: translateY(-2px);
-        }
-
-        /* Modal Styles */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0,0,0,0.5);
-            overflow-y: auto;
-        }
-
-        .modal.active {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
-
-        .modal-content {
-            background: white;
-            border-radius: 15px;
-            padding: 30px;
-            max-width: 600px;
-            width: 100%;
-            max-height: 90vh;
-            overflow-y: auto;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
-            animation: slideIn 0.3s ease;
-        }
-
-        @keyframes slideIn {
-            from {
-                transform: translateY(-50px);
-                opacity: 0;
-            }
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
-        }
-
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 25px;
-        }
-
-        .modal-title {
-            font-size: 1.8em;
-            font-weight: 700;
-            color: #333;
-        }
-
-        .close-modal {
-            background: none;
-            border: none;
-            font-size: 28px;
-            color: #888;
-            cursor: pointer;
-            padding: 0;
-            width: 32px;
-            height: 32px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid var(--border);
+            border-top-color: var(--sg-red);
             border-radius: 50%;
-            transition: all 0.3s;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
         }
 
-        .close-modal:hover {
-            background: #f0f0f0;
-            color: #333;
+        @keyframes spin {
+            to { transform: rotate(360deg); }
         }
 
-        .form-group {
-            margin-bottom: 20px;
+        .loading-text {
+            color: var(--text-secondary);
+            font-size: 1.1em;
         }
 
-        .form-group label {
-            display: block;
-            font-weight: 600;
-            color: #555;
-            margin-bottom: 8px;
-            font-size: 14px;
+        /* Edit Mode Styles */
+        .edit-mode .card {
+            border: 2px solid var(--sg-red);
         }
 
-        .form-group input,
-        .form-group textarea,
-        .form-group select {
+        .edit-controls {
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px solid var(--border);
+        }
+
+        .edit-input {
             width: 100%;
-            padding: 10px 15px;
-            border: 2px solid #e0e0e0;
+            padding: 10px 14px;
+            border: 2px solid var(--border);
             border-radius: 8px;
-            font-size: 14px;
+            font-size: 0.9em;
+            margin-top: 8px;
             font-family: inherit;
-            transition: all 0.3s;
         }
 
-        .form-group input:focus,
-        .form-group textarea:focus,
-        .form-group select:focus {
+        .edit-input:focus {
             outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            border-color: var(--sg-red);
         }
 
-        .form-group textarea {
-            resize: vertical;
-            min-height: 80px;
-        }
-
-        .form-hint {
-            font-size: 12px;
-            color: #888;
-            margin-top: 4px;
-        }
-
-        .required {
-            color: #ff6b6b;
-        }
-
-        .modal-actions {
+        /* Stats Bar */
+        .stats-bar {
             display: flex;
+            gap: 24px;
+            background: white;
+            padding: 20px 24px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px var(--shadow);
+            margin-bottom: 24px;
+        }
+
+        .stat-item {
+            display: flex;
+            align-items: center;
             gap: 10px;
-            margin-top: 30px;
         }
 
-        .btn-primary {
-            flex: 1;
-            background: #667eea;
-            color: white;
-            border: none;
-            padding: 12px 24px;
-            border-radius: 8px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
+        .stat-icon {
+            font-size: 1.5em;
         }
 
-        .btn-primary:hover {
-            background: #5568d3;
+        .stat-value {
+            font-size: 1.3em;
+            font-weight: 700;
+            color: var(--text-primary);
         }
 
-        .btn-secondary {
-            background: #f0f0f0;
-            color: #555;
-            border: none;
-            padding: 12px 24px;
-            border-radius: 8px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
+        .stat-label {
+            font-size: 0.85em;
+            color: var(--text-secondary);
         }
 
-        .btn-secondary:hover {
-            background: #e0e0e0;
-        }
-
-        .success-message {
-            background: #d4edda;
-            border: 2px solid #28a745;
-            color: #155724;
-            padding: 20px;
-            border-radius: 10px;
-            margin-bottom: 20px;
-            text-align: center;
-        }
-
-        .success-message h3 {
-            margin-bottom: 10px;
-        }
-
-        .success-message a {
-            color: #155724;
-            font-weight: 600;
-            text-decoration: underline;
-        }
-
-        .reminder-box {
-            background: #fff3cd;
-            border: 2px solid #ffc107;
-            padding: 15px;
-            border-radius: 10px;
-            margin-top: 20px;
-        }
-
-        .reminder-box strong {
-            color: #856404;
-        }
-
+        /* Responsive */
         @media (max-width: 768px) {
-            h1 {
-                font-size: 2em;
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
             }
 
-            .grid {
+            .main-content {
+                margin-left: 0;
+                padding: 20px;
+            }
+
+            .cards-grid {
                 grid-template-columns: 1fr;
             }
 
-            .stats {
-                font-size: 0.9em;
+            .section-title {
+                font-size: 2em;
+            }
+
+            .controls-bar {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .search-box {
+                min-width: auto;
             }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <header>
+    <!-- Sidebar Navigation -->
+    <div class="sidebar">
+        <div class="sidebar-header">
             <h1>🇸🇬 IE SMU Exchange Explorer</h1>
-            <div class="subtitle">Hi! This is a list of places that I usually share. Hope you like it! Ella :)</div>
-            <div class="stats">
-                <div class="stat">📍 <span id="total-places">194</span> Places</div>
-                <div class="stat">🗺️ <span id="total-areas">17</span> Areas</div>
-                <div class="stat">✨ <span id="total-new">0</span> New</div>
-                <div class="stat">🎥 <span id="total-videos">0</span> Videos</div>
-                <div class="stat">📊 <span id="showing-count">194</span> Showing</div>
-            </div>
-            <div style="margin-top: 20px;">
-                <a href="https://docs.google.com/spreadsheets/d/1tRC8_42qx7pFrECfTMb9NbEsFsFKO4tkaLZ29kn2euM/edit?usp=sharing" 
-                   target="_blank" 
-                   class="google-sheet-btn">
-                    📊 View Full Google Sheet
-                </a>
-            </div>
-        </header>
-
-        <div class="controls">
-            <div class="search-bar">
-                <input 
-                    type="text" 
-                    id="search" 
-                    class="search-input" 
-                    placeholder="🔍 Search places by name, description, or category..."
-                >
-            </div>
-
-            <div class="filter-section">
-                <div class="filter-group">
-                    <span class="filter-label">Area:</span>
-                    <select id="area-filter">
-                        <option value="">All Areas</option>
-                    </select>
-                </div>
-
-                <div class="filter-group">
-                    <span class="filter-label">Show:</span>
-                    <select id="new-filter">
-                        <option value="">All Places</option>
-                        <option value="new">New Places Only</option>
-                        <option value="existing">Existing Places</option>
-                    </select>
-                </div>
-
-                <div class="filter-group">
-                    <span class="filter-label">Videos:</span>
-                    <select id="video-filter">
-                        <option value="">All</option>
-                        <option value="with-video">With Video</option>
-                        <option value="no-video">No Video</option>
-                    </select>
-                </div>
-
-                <button class="clear-filters" id="clear-filters">Clear Filters</button>
-                <button class="admin-toggle" id="admin-toggle">🎬 Edit Mode</button>
-                <button class="add-location-btn" id="add-location-btn">➕ Add Location</button>
-                <button class="export-btn" id="export-btn">💾 Export Data</button>
-                <a href="https://docs.google.com/spreadsheets/d/1tRC8_42qx7pFrECfTMb9NbEsFsFKO4tkaLZ29kn2euM/edit?usp=sharing" 
-                   target="_blank" 
-                   class="google-sheet-btn" 
-                   id="sheet-btn">📊 View Sheet</a>
-                <a href="https://guide.michelin.com/sg/en/restaurants" 
-                   target="_blank" 
-                   class="michelin-guide-btn" 
-                   id="michelin-btn">⭐ Michelin Guide</a>
-                <a href="YOUR_GOOGLE_MAPS_LINK_HERE" 
-                   target="_blank" 
-                   class="google-maps-btn" 
-                   id="maps-btn">🗺️ View Map</a>
-            </div>
-
-            <div class="tags" id="category-tags"></div>
+            <div class="tagline">Hi! This is a list of places that I usually share. Hope you like it! Ella :)</div>
         </div>
-
-        <div class="grid" id="places-grid"></div>
+        <nav class="nav-menu">
+            <div class="nav-item active" data-section="places">
+                <span class="nav-icon">📍</span>
+                <span>Places</span>
+            </div>
+            <div class="nav-item" data-section="food">
+                <span class="nav-icon">🍜</span>
+                <span>Food & Dining</span>
+            </div>
+            <div class="nav-item" data-section="active">
+                <span class="nav-icon">🏃</span>
+                <span>Active & Fitness</span>
+            </div>
+            <div class="nav-item" data-section="nightlife">
+                <span class="nav-icon">🍹</span>
+                <span>Nightlife</span>
+            </div>
+            <div class="nav-item" data-section="shopping">
+                <span class="nav-icon">🛍️</span>
+                <span>Shopping</span>
+            </div>
+            <div class="nav-item" data-section="experiences">
+                <span class="nav-icon">🎯</span>
+                <span>Experiences</span>
+            </div>
+            <div class="nav-item" data-section="guide">
+                <span class="nav-icon">📖</span>
+                <span>Singlish Guide</span>
+            </div>
+        </nav>
     </div>
 
-    <!-- Add Location Modal -->
-    <div class="modal" id="add-location-modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2 class="modal-title">➕ Add New Location</h2>
-                <button class="close-modal" onclick="closeAddLocationModal()">×</button>
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Loading State -->
+        <div id="loading" class="loading">
+            <div class="loading-spinner"></div>
+            <div class="loading-text">Loading Singapore data...</div>
+        </div>
+
+        <!-- Places Section -->
+        <div id="places-section" class="section">
+            <div class="section-header">
+                <h1 class="section-title">📍 Places</h1>
+                <p class="section-subtitle">Discover 194 amazing locations across the Lion City</p>
             </div>
 
-            <div id="success-message" style="display: none;"></div>
+            <div class="stats-bar" id="places-stats">
+                <div class="stat-item">
+                    <span class="stat-icon">📍</span>
+                    <div>
+                        <div class="stat-value" id="total-places">0</div>
+                        <div class="stat-label">Places</div>
+                    </div>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-icon">🗺️</span>
+                    <div>
+                        <div class="stat-value" id="total-areas">0</div>
+                        <div class="stat-label">Areas</div>
+                    </div>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-icon">🎥</span>
+                    <div>
+                        <div class="stat-value" id="total-videos">0</div>
+                        <div class="stat-label">Videos</div>
+                    </div>
+                </div>
+            </div>
 
-            <form id="add-location-form">
-                <div class="form-group">
-                    <label>Place Name <span class="required">*</span></label>
-                    <input type="text" id="place-name" required placeholder="e.g., Marina Bay Sands">
+            <div class="controls-bar">
+                <div class="search-box">
+                    <input type="text" class="search-input" id="places-search" placeholder="🔍 Search places...">
+                </div>
+                
+                <div class="toggle-switch">
+                    <span class="toggle-label">Edit Mode</span>
+                    <div class="switch" id="edit-mode-toggle">
+                        <div class="switch-thumb"></div>
+                    </div>
                 </div>
 
-                <div class="form-group">
-                    <label>Area <span class="required">*</span></label>
-                    <select id="area-select" required>
-                        <option value="">Select an area...</option>
-                    </select>
-                </div>
+                <button class="btn btn-primary" id="add-place-btn">➕ Add Place</button>
+                <button class="btn btn-secondary" id="export-data-btn">📤 Export</button>
+            </div>
 
-                <div class="form-group">
-                    <label>Categories</label>
-                    <input type="text" id="categories" placeholder="e.g., Architecture, Leisure, Food">
-                    <div class="form-hint">Separate multiple categories with commas</div>
-                </div>
+            <div class="cards-grid" id="places-grid"></div>
+        </div>
 
-                <div class="form-group">
-                    <label>Description</label>
-                    <textarea id="description" placeholder="Brief description of the place..."></textarea>
-                </div>
+        <!-- Food Section -->
+        <div id="food-section" class="section">
+            <div class="section-header">
+                <h1 class="section-title">🍜 Food & Dining</h1>
+                <p class="section-subtitle">Must-try dishes and dining spots</p>
+            </div>
 
-                <div class="form-group">
-                    <label>Website</label>
-                    <input type="url" id="website" placeholder="https://...">
+            <div class="controls-bar">
+                <div class="search-box">
+                    <input type="text" class="search-input" id="food-search" placeholder="🔍 Search food...">
                 </div>
+                
+                <div class="toggle-switch">
+                    <span class="toggle-label">Edit Mode</span>
+                    <div class="switch" id="food-edit-toggle">
+                        <div class="switch-thumb"></div>
+                    </div>
+                </div>
+            </div>
 
-                <div class="form-group">
-                    <label>Is this a new place?</label>
-                    <select id="is-new">
-                        <option value="">No</option>
-                        <option value="NEW">Yes - Mark as NEW</option>
-                    </select>
-                </div>
+            <div class="cards-grid" id="food-grid"></div>
+        </div>
 
-                <div class="reminder-box">
-                    <strong>📝 Important Reminder:</strong> After adding your location here, please also add it to the 
-                    <a href="https://docs.google.com/spreadsheets/d/1tRC8_42qx7pFrECfTMb9NbEsFsFKO4tkaLZ29kn2euM/edit?usp=sharing" 
-                       target="_blank">Google Sheet</a> so it's saved permanently!
-                </div>
+        <!-- Active Section -->
+        <div id="active-section" class="section">
+            <div class="section-header">
+                <h1 class="section-title">🏃 Active & Fitness</h1>
+                <p class="section-subtitle">Stay fit in the tropics</p>
+            </div>
 
-                <div class="modal-actions">
-                    <button type="button" class="btn-secondary" onclick="closeAddLocationModal()">Cancel</button>
-                    <button type="submit" class="btn-primary">Add Location</button>
+            <div class="controls-bar">
+                <div class="search-box">
+                    <input type="text" class="search-input" id="active-search" placeholder="🔍 Search activities...">
                 </div>
-            </form>
+                
+                <div class="toggle-switch">
+                    <span class="toggle-label">Edit Mode</span>
+                    <div class="switch" id="active-edit-toggle">
+                        <div class="switch-thumb"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="cards-grid" id="active-grid"></div>
+        </div>
+
+        <!-- Nightlife Section -->
+        <div id="nightlife-section" class="section">
+            <div class="section-header">
+                <h1 class="section-title">🍹 Nightlife</h1>
+                <p class="section-subtitle">Where the night comes alive</p>
+            </div>
+
+            <div class="controls-bar">
+                <div class="search-box">
+                    <input type="text" class="search-input" id="nightlife-search" placeholder="🔍 Search venues...">
+                </div>
+                
+                <div class="toggle-switch">
+                    <span class="toggle-label">Edit Mode</span>
+                    <div class="switch" id="nightlife-edit-toggle">
+                        <div class="switch-thumb"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="cards-grid" id="nightlife-grid"></div>
+        </div>
+
+        <!-- Shopping Section -->
+        <div id="shopping-section" class="section">
+            <div class="section-header">
+                <h1 class="section-title">🛍️ Shopping</h1>
+                <p class="section-subtitle">From local brands to luxury malls</p>
+            </div>
+
+            <div class="controls-bar">
+                <div class="search-box">
+                    <input type="text" class="search-input" id="shopping-search" placeholder="🔍 Search shopping...">
+                </div>
+                
+                <div class="toggle-switch">
+                    <span class="toggle-label">Edit Mode</span>
+                    <div class="switch" id="shopping-edit-toggle">
+                        <div class="switch-thumb"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="cards-grid" id="shopping-grid"></div>
+        </div>
+
+        <!-- Experiences Section -->
+        <div id="experiences-section" class="section">
+            <div class="section-header">
+                <h1 class="section-title">🎯 Experiences</h1>
+                <p class="section-subtitle">Unique Singapore moments</p>
+            </div>
+
+            <div class="controls-bar">
+                <div class="search-box">
+                    <input type="text" class="search-input" id="experiences-search" placeholder="🔍 Search experiences...">
+                </div>
+                
+                <div class="toggle-switch">
+                    <span class="toggle-label">Edit Mode</span>
+                    <div class="switch" id="experiences-edit-toggle">
+                        <div class="switch-thumb"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="cards-grid" id="experiences-grid"></div>
+        </div>
+
+        <!-- Singlish Guide Section -->
+        <div id="guide-section" class="section">
+            <div class="section-header">
+                <h1 class="section-title">📖 Singlish Guide</h1>
+                <p class="section-subtitle">Learn to speak like a local, lah!</p>
+            </div>
+
+            <div class="cards-grid" id="guide-grid"></div>
         </div>
     </div>
 
     <script>
-        const placesData = [
-        {
-                "Code": "A1",
-                "Place Name": "Sentosa Island (Fort Siloso)",
-                "Area": "A",
-                "Area Name": "Southern Islands",
-                "Categories": "Heritage",
-                "New?": null,
-                "Website": "https://www.sentosa.com.sg/en/things-to-do/attractions/fort-siloso/",
-                "Description": "WWII coastal fort and museum on Sentosa's western tip. Free entry.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "A2",
-                "Place Name": "Lazarus Island",
-                "Area": "A",
-                "Area Name": "Southern Islands",
-                "Categories": "Nature",
-                "New?": null,
-                "Website": "https://www.sla.gov.sg/properties/management-of-state-land-and-properties/visiting-the-sla-managed-islands/",
-                "Description": "Pristine crescent beach, connected to St. John's Island by causeway.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "A3",
-                "Place Name": "St. John Island",
-                "Area": "A",
-                "Area Name": "Southern Islands",
-                "Categories": "Nature",
-                "New?": null,
-                "Website": "https://www.sla.gov.sg/properties/management-of-state-land-and-properties/visiting-the-sla-managed-islands/",
-                "Description": "Tranquil island with beaches, lagoons and heritage trails.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "A4",
-                "Place Name": "Kusu Island",
-                "Area": "A",
-                "Area Name": "Southern Islands",
-                "Categories": "Heritage",
-                "New?": null,
-                "Website": "https://www.sla.gov.sg/properties/management-of-state-land-and-properties/visiting-the-sla-managed-islands/",
-                "Description": "Tortoise Island with Chinese temple and Malay shrines.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "A5",
-                "Place Name": "Sisters' Islands",
-                "Area": "A",
-                "Area Name": "Southern Islands",
-                "Categories": "Nature",
-                "New?": null,
-                "Website": "https://www.nparks.gov.sg/visit/parks/park-detail/sisters-islands-marine-park/",
-                "Description": "Singapore's first marine park with rich coral reefs.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "A6",
-                "Place Name": "Minion Land at USS",
-                "Area": "A",
-                "Area Name": "Southern Islands",
-                "Categories": "Leisure",
-                "New?": "NEW",
-                "Website": "https://www.rwsentosa.com/en/play/universal-studios-singapore",
-                "Description": "Despicable Me themed zone at USS. Opened Feb 2025.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "A7",
-                "Place Name": "Singapore Oceanarium",
-                "Area": "A",
-                "Area Name": "Southern Islands",
-                "Categories": "Wildlife, Museum",
-                "New?": "NEW",
-                "Website": "https://www.singaporeoceanarium.com/en.html",
-                "Description": "Revamped S.E.A. Aquarium, 3x larger with 22 zones. Opened Jul 2025.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "A8",
-                "Place Name": "WEAVE at RWS",
-                "Area": "A",
-                "Area Name": "Southern Islands",
-                "Categories": "Leisure, Food",
-                "New?": "NEW",
-                "Website": "https://www.rwsentosa.com/en/dine-and-shop/weave",
-                "Description": "20,000 sqm lifestyle hub with Asia-exclusive stores and dining.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "A9",
-                "Place Name": "The Laurus Hotel",
-                "Area": "A",
-                "Area Name": "Southern Islands",
-                "Categories": "Architecture",
-                "New?": "NEW",
-                "Website": "https://www.rwsentosa.com/en/hotels/the-laurus",
-                "Description": "Singapore's first Luxury Collection all-suite hotel. Opened Oct 2025.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "B1",
-                "Place Name": "Kent Ridge Park",
-                "Area": "B",
-                "Area Name": "Kent Ridge\u2013Mount Faber",
-                "Categories": "Nature, Heritage",
-                "New?": null,
-                "Website": "https://www.nparks.gov.sg/visit/parks/park-detail/kent-ridge-park/",
-                "Description": "47-hectare park with WWII history, canopy walk, and panoramic views.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "B2",
-                "Place Name": "Canopy Walk",
-                "Area": "B",
-                "Area Name": "Kent Ridge\u2013Mount Faber",
-                "Categories": "Nature",
-                "New?": null,
-                "Website": "https://www.nparks.gov.sg/visit/parks/park-detail/kent-ridge-park/",
-                "Description": "280m elevated boardwalk through secondary forest canopy.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "B3",
-                "Place Name": "Bukit Chandu War Memorial",
-                "Area": "B",
-                "Area Name": "Kent Ridge\u2013Mount Faber",
-                "Categories": "Heritage, Museum",
-                "New?": null,
-                "Website": "https://www.nhb.gov.sg/reflections-at-bukit-chandu/",
-                "Description": "WWII interpretive centre honouring the Malay Regiment.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "B4",
-                "Place Name": "Prototype Glasshouse",
-                "Area": "B",
-                "Area Name": "Kent Ridge\u2013Mount Faber",
-                "Categories": "Nature",
-                "New?": null,
-                "Website": "https://www.nparks.gov.sg/visit/parks/park-detail/hortpark/",
-                "Description": "Experimental glasshouse at HortPark.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "B5",
-                "Place Name": "Pasir Panjang Nursery",
-                "Area": "B",
-                "Area Name": "Kent Ridge\u2013Mount Faber",
-                "Categories": "Nature",
-                "New?": null,
-                "Website": "https://www.nparks.gov.sg/",
-                "Description": "NParks plant nursery visible from the canopy walk.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "B6",
-                "Place Name": "Hort Park",
-                "Area": "B",
-                "Area Name": "Kent Ridge\u2013Mount Faber",
-                "Categories": "Nature",
-                "New?": null,
-                "Website": "https://www.nparks.gov.sg/visit/parks/park-detail/hortpark/",
-                "Description": "Gardening hub with themed gardens and dining.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "B7",
-                "Place Name": "Alexandra Arch Bridge",
-                "Area": "B",
-                "Area Name": "Kent Ridge\u2013Mount Faber",
-                "Categories": "Architecture",
-                "New?": null,
-                "Website": "https://www.nparks.gov.sg/visit/parks/southern-ridges/",
-                "Description": "Striking curved pedestrian bridge on Southern Ridges.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "B8",
-                "Place Name": "Southern Ridges",
-                "Area": "B",
-                "Area Name": "Kent Ridge\u2013Mount Faber",
-                "Categories": "Nature",
-                "New?": null,
-                "Website": "https://www.nparks.gov.sg/visit/parks/southern-ridges/",
-                "Description": "10km green corridor connecting Kent Ridge to Mount Faber.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "B9",
-                "Place Name": "Telok Blangah Hill Park",
-                "Area": "B",
-                "Area Name": "Kent Ridge\u2013Mount Faber",
-                "Categories": "Nature",
-                "New?": null,
-                "Website": "https://www.nparks.gov.sg/visit/parks/park-detail/telok-blangah-hill-park/",
-                "Description": "Hilltop park with terraced gardens along the Southern Ridges.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "B10",
-                "Place Name": "Alkaff Mansion",
-                "Area": "B",
-                "Area Name": "Kent Ridge\u2013Mount Faber",
-                "Categories": "Food, Heritage",
-                "New?": null,
-                "Website": "https://www.thealkaffmansion.sg/",
-                "Description": "Restored colonial mansion turned restaurant.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "B11",
-                "Place Name": "Henderson Waves",
-                "Area": "B",
-                "Area Name": "Kent Ridge\u2013Mount Faber",
-                "Categories": "Architecture",
-                "New?": null,
-                "Website": "https://www.nparks.gov.sg/visit/parks/southern-ridges/",
-                "Description": "Iconic undulating bridge, 36m above Henderson Road.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "B12",
-                "Place Name": "Mount Faber Park",
-                "Area": "B",
-                "Area Name": "Kent Ridge\u2013Mount Faber",
-                "Categories": "Nature",
-                "New?": null,
-                "Website": "https://www.mountfaberleisure.com/",
-                "Description": "Hilltop park with cable car and harbour views.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "B13",
-                "Place Name": "Japanese Tomb",
-                "Area": "B",
-                "Area Name": "Kent Ridge\u2013Mount Faber",
-                "Categories": "Heritage",
-                "New?": null,
-                "Website": "https://www.roots.gov.sg/places/places-landing/Places/national-monuments/japanese-cemetery-park",
-                "Description": "Historic Japanese cemetery park from the early 1900s.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "B14",
-                "Place Name": "Seah Im Bunker",
-                "Area": "B",
-                "Area Name": "Kent Ridge\u2013Mount Faber",
-                "Categories": "Heritage",
-                "New?": null,
-                "Website": "https://www.roots.gov.sg/",
-                "Description": "Hidden WWII bunker near HarbourFront.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "B15",
-                "Place Name": "Keppel Hill Reservoir",
-                "Area": "B",
-                "Area Name": "Kent Ridge\u2013Mount Faber",
-                "Categories": "Heritage, Nature",
-                "New?": null,
-                "Website": null,
-                "Description": "Hidden heritage reservoir rediscovered in the forest.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "B16",
-                "Place Name": "Marang Trail",
-                "Area": "B",
-                "Area Name": "Kent Ridge\u2013Mount Faber",
-                "Categories": "Nature",
-                "New?": null,
-                "Website": "https://www.nparks.gov.sg/visit/parks/park-detail/hortpark/",
-                "Description": "Forest trail connecting HortPark to Marang Road.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "C1",
-                "Place Name": "Keppel Bay Bridge",
-                "Area": "C",
-                "Area Name": "Keppel Bay\u2013Labrador",
-                "Categories": "Architecture",
-                "New?": null,
-                "Website": "https://www.keppelbay.com.sg/",
-                "Description": "Pedestrian bridge with marina views connecting to Sentosa.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "C2",
-                "Place Name": "Keppel Island",
-                "Area": "C",
-                "Area Name": "Keppel Bay\u2013Labrador",
-                "Categories": "Nature",
-                "New?": null,
-                "Website": null,
-                "Description": "Small island accessible from Keppel Bay area.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "C3",
-                "Place Name": "Reflections at Keppel Bay",
-                "Area": "C",
-                "Area Name": "Keppel Bay\u2013Labrador",
-                "Categories": "Architecture",
-                "New?": null,
-                "Website": "https://www.keppelbay.com.sg/",
-                "Description": "Daniel Libeskind-designed waterfront condominiums.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "C4",
-                "Place Name": "Bukit Chermin Boardwalk",
-                "Area": "C",
-                "Area Name": "Keppel Bay\u2013Labrador",
-                "Categories": "Nature",
-                "New?": null,
-                "Website": "https://www.nparks.gov.sg/visit/parks/labrador-nature-reserve/",
-                "Description": "300m boardwalk over water at Labrador Nature Reserve.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "C5",
-                "Place Name": "Labrador Park",
-                "Area": "C",
-                "Area Name": "Keppel Bay\u2013Labrador",
-                "Categories": "Nature, Heritage",
-                "New?": null,
-                "Website": "https://www.nparks.gov.sg/visit/parks/labrador-nature-reserve/",
-                "Description": "Coastal nature reserve with WWII relics and rocky shore habitat.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "C6",
-                "Place Name": "Berlayer Creek Boardwalk",
-                "Area": "C",
-                "Area Name": "Keppel Bay\u2013Labrador",
-                "Categories": "Nature",
-                "New?": null,
-                "Website": "https://www.nparks.gov.sg/visit/parks/labrador-nature-reserve/",
-                "Description": "Mangrove boardwalk showcasing coastal ecosystem.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "C7",
-                "Place Name": "Dragon's Teeth Gate",
-                "Area": "C",
-                "Area Name": "Keppel Bay\u2013Labrador",
-                "Categories": "Heritage",
-                "New?": null,
-                "Website": "https://www.roots.gov.sg/",
-                "Description": "Replica of historic maritime landmark at Labrador Park.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "C8",
-                "Place Name": "Labrador Battery",
-                "Area": "C",
-                "Area Name": "Keppel Bay\u2013Labrador",
-                "Categories": "Heritage",
-                "New?": null,
-                "Website": "https://www.nparks.gov.sg/visit/parks/labrador-nature-reserve/",
-                "Description": "Preserved WWII gun emplacement.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "C9",
-                "Place Name": "Labrador Jetty",
-                "Area": "C",
-                "Area Name": "Keppel Bay\u2013Labrador",
-                "Categories": "Nature",
-                "New?": null,
-                "Website": "https://www.nparks.gov.sg/visit/parks/labrador-nature-reserve/",
-                "Description": "Waterfront jetty with views of Sentosa and passing ships.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "C10",
-                "Place Name": "Gunners of Labrador",
-                "Area": "C",
-                "Area Name": "Keppel Bay\u2013Labrador",
-                "Categories": "Heritage",
-                "New?": null,
-                "Website": "https://www.nparks.gov.sg/visit/parks/labrador-nature-reserve/",
-                "Description": "WWII artillery heritage display.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "C11",
-                "Place Name": "The Casemate",
-                "Area": "C",
-                "Area Name": "Keppel Bay\u2013Labrador",
-                "Categories": "Heritage",
-                "New?": null,
-                "Website": "https://www.nparks.gov.sg/visit/parks/labrador-nature-reserve/",
-                "Description": "Underground WWII ammunition storage.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "C12",
-                "Place Name": "Tamarind Hill",
-                "Area": "C",
-                "Area Name": "Keppel Bay\u2013Labrador",
-                "Categories": "Food",
-                "New?": null,
-                "Website": "https://www.tamarindhill.com.sg/",
-                "Description": "Thai restaurant in restored colonial bungalow.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "C13",
-                "Place Name": "Gillman Barracks",
-                "Area": "C",
-                "Area Name": "Keppel Bay\u2013Labrador",
-                "Categories": "Museum, Heritage",
-                "New?": null,
-                "Website": "https://www.gillmanbarracks.com/",
-                "Description": "Former military barracks turned contemporary art enclave.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "C14",
-                "Place Name": "Interlace",
-                "Area": "C",
-                "Area Name": "Keppel Bay\u2013Labrador",
-                "Categories": "Architecture",
-                "New?": null,
-                "Website": null,
-                "Description": "Award-winning stacked residential complex by OMA.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "C15",
-                "Place Name": "Mapletree Business City",
-                "Area": "C",
-                "Area Name": "Keppel Bay\u2013Labrador",
-                "Categories": "Architecture",
-                "New?": null,
-                "Website": "https://www.mapletree.com.sg/",
-                "Description": "Major business park near Labrador Park MRT.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "C16",
-                "Place Name": "Pasir Panjang Power Station",
-                "Area": "C",
-                "Area Name": "Keppel Bay\u2013Labrador",
-                "Categories": "Heritage, Architecture",
-                "New?": null,
-                "Website": null,
-                "Description": "Heritage red-brick power station. Future lifestyle hub.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "C17",
-                "Place Name": "Keppel Coastal Trail",
-                "Area": "C",
-                "Area Name": "Keppel Bay\u2013Labrador",
-                "Categories": "Nature",
-                "New?": "NEW",
-                "Website": "https://www.nparks.gov.sg/visit/parks/labrador-nature-reserve/special-features/keppel-coastal-trail",
-                "Description": "340m scenic trail with elevated boardwalk. Opened Jan 2025.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "D1",
-                "Place Name": "Clementi Woods Park",
-                "Area": "D",
-                "Area Name": "Clementi\u2013NUS\u2013West Coast",
-                "Categories": "Nature",
-                "New?": null,
-                "Website": "https://www.nparks.gov.sg/",
-                "Description": "Secondary forest near Clementi.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "D2",
-                "Place Name": "NUS School of Design Net Zero Building",
-                "Area": "D",
-                "Area Name": "Clementi\u2013NUS\u2013West Coast",
-                "Categories": "Architecture",
-                "New?": null,
-                "Website": "https://www.sde.nus.edu.sg/",
-                "Description": "Sustainable architecture showcase at NUS.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "D3",
-                "Place Name": "Lee Kong Chian Natural Museum",
-                "Area": "D",
-                "Area Name": "Clementi\u2013NUS\u2013West Coast",
-                "Categories": "Museum",
-                "New?": null,
-                "Website": "https://lkcnhm.nus.edu.sg/",
-                "Description": "Natural history museum with three diplodocid dinosaur fossils.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "D4",
-                "Place Name": "University Town",
-                "Area": "D",
-                "Area Name": "Clementi\u2013NUS\u2013West Coast",
-                "Categories": "Architecture",
-                "New?": null,
-                "Website": "https://utown.nus.edu.sg/",
-                "Description": "NUS residential and learning hub with dining and green spaces.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "D5",
-                "Place Name": "Ayer Rajah Telephone Exchange",
-                "Area": "D",
-                "Area Name": "Clementi\u2013NUS\u2013West Coast",
-                "Categories": "Heritage",
-                "New?": null,
-                "Website": null,
-                "Description": "Heritage telecommunications building.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "D6",
-                "Place Name": "West Coast Park",
-                "Area": "D",
-                "Area Name": "Clementi\u2013NUS\u2013West Coast",
-                "Categories": "Nature, Leisure",
-                "New?": null,
-                "Website": "https://www.nparks.gov.sg/visit/parks/park-detail/west-coast-park/",
-                "Description": "Family-friendly coastal park with adventure playground.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "D7",
-                "Place Name": "West Coast Park Look-out Deck",
-                "Area": "D",
-                "Area Name": "Clementi\u2013NUS\u2013West Coast",
-                "Categories": "Nature",
-                "New?": null,
-                "Website": "https://www.nparks.gov.sg/visit/parks/park-detail/west-coast-park/",
-                "Description": "Observation deck with shipping lane views.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "E1",
-                "Place Name": "Metropolis",
-                "Area": "E",
-                "Area Name": "One North\u2013Portsdown",
-                "Categories": "Architecture",
-                "New?": null,
-                "Website": "https://www.capitaland.com/",
-                "Description": "Twin-tower office development at one-north.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "E2",
-                "Place Name": "The Star Vista",
-                "Area": "E",
-                "Area Name": "One North\u2013Portsdown",
-                "Categories": "Architecture, Leisure",
-                "New?": null,
-                "Website": "https://www.thestarvista.com/",
-                "Description": "Naturally ventilated mall with performing arts centre.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "E3",
-                "Place Name": "GSK Asia House",
-                "Area": "E",
-                "Area Name": "One North\u2013Portsdown",
-                "Categories": "Architecture",
-                "New?": null,
-                "Website": null,
-                "Description": "Notable corporate architecture at one-north.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "E4",
-                "Place Name": "Rochester Park",
-                "Area": "E",
-                "Area Name": "One North\u2013Portsdown",
-                "Categories": "Food, Heritage",
-                "New?": null,
-                "Website": null,
-                "Description": "Heritage black-and-white bungalow dining enclave.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "E5",
-                "Place Name": "One North Park",
-                "Area": "E",
-                "Area Name": "One North\u2013Portsdown",
-                "Categories": "Nature",
-                "New?": null,
-                "Website": "https://www.jtc.gov.sg/about-jtc/our-developments/one-north",
-                "Description": "Green space within JTC's one-north innovation district.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "E6",
-                "Place Name": "Sandcrawler Building",
-                "Area": "E",
-                "Area Name": "One North\u2013Portsdown",
-                "Categories": "Architecture",
-                "New?": null,
-                "Website": "https://www.lucasfilm.com/",
-                "Description": "Lucasfilm Singapore HQ \u2014 Star Wars Sandcrawler design.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "E7",
-                "Place Name": "Fusionopolis",
-                "Area": "E",
-                "Area Name": "One North\u2013Portsdown",
-                "Categories": "Architecture",
-                "New?": null,
-                "Website": "https://www.jtc.gov.sg/about-jtc/our-developments/one-north",
-                "Description": "R&D hub within one-north innovation district.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "E8",
-                "Place Name": "Solaris",
-                "Area": "E",
-                "Area Name": "One North\u2013Portsdown",
-                "Categories": "Architecture",
-                "New?": null,
-                "Website": "https://www.jtc.gov.sg/",
-                "Description": "Green-wrapped office building at one-north.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "E9",
-                "Place Name": "Mediacorp Campus",
-                "Area": "E",
-                "Area Name": "One North\u2013Portsdown",
-                "Categories": "Architecture",
-                "New?": null,
-                "Website": "https://www.mediacorp.sg/",
-                "Description": "National media broadcaster headquarters.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "E10",
-                "Place Name": "Timber+",
-                "Area": "E",
-                "Area Name": "One North\u2013Portsdown",
-                "Categories": "Food",
-                "New?": null,
-                "Website": "https://www.timberplus.sg/",
-                "Description": "Hawker-style food village in timber-framed setting.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "E11",
-                "Place Name": "Portsdown Road",
-                "Area": "E",
-                "Area Name": "One North\u2013Portsdown",
-                "Categories": "Heritage",
-                "New?": null,
-                "Website": null,
-                "Description": "Heritage enclave with colonial buildings and eateries.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "E12",
-                "Place Name": "Colbar",
-                "Area": "E",
-                "Area Name": "One North\u2013Portsdown",
-                "Categories": "Food, Heritage",
-                "New?": null,
-                "Website": "https://www.colbar.com.sg/",
-                "Description": "Nostalgic colonial bar and restaurant on Portsdown Road.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "E13",
-                "Place Name": "Tanglin Halt Food Centre",
-                "Area": "E",
-                "Area Name": "One North\u2013Portsdown",
-                "Categories": "Food",
-                "New?": null,
-                "Website": null,
-                "Description": "Heritage hawker centre in Tanglin Halt estate.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "F1",
-                "Place Name": "Sky Habitat",
-                "Area": "F",
-                "Area Name": "Bishan\u2013MacRitchie\u2013Botanic",
-                "Categories": "Architecture",
-                "New?": null,
-                "Website": null,
-                "Description": "Moshe Safdie-designed residential with sky bridges.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "F2",
-                "Place Name": "Bishan-Ang Mo Kio Park",
-                "Area": "F",
-                "Area Name": "Bishan\u2013MacRitchie\u2013Botanic",
-                "Categories": "Nature",
-                "New?": null,
-                "Website": "https://www.nparks.gov.sg/visit/parks/park-detail/bishan-ang-mo-kio-park/",
-                "Description": "62-hectare park with naturalised river and playgrounds.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "F3",
-                "Place Name": "MacRitchie Trail",
-                "Area": "F",
-                "Area Name": "Bishan\u2013MacRitchie\u2013Botanic",
-                "Categories": "Nature",
-                "New?": null,
-                "Website": "https://www.nparks.gov.sg/visit/parks/park-detail/macritchie-reservoir-park/",
-                "Description": "Iconic trail with TreeTop Walk suspension bridge.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "F4",
-                "Place Name": "Bukit Brown Cemetery",
-                "Area": "F",
-                "Area Name": "Bishan\u2013MacRitchie\u2013Botanic",
-                "Categories": "Heritage, Nature",
-                "New?": null,
-                "Website": "https://www.bukitbrown.org/",
-                "Description": "Largest Chinese cemetery outside China. Rich biodiversity.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "F5",
-                "Place Name": "Singapore Botanic Gardens",
-                "Area": "F",
-                "Area Name": "Bishan\u2013MacRitchie\u2013Botanic",
-                "Categories": "Nature, Heritage",
-                "New?": null,
-                "Website": "https://www.nparks.gov.sg/sbg",
-                "Description": "UNESCO World Heritage Site with National Orchid Garden.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "F6",
-                "Place Name": "Dempsey Hill",
-                "Area": "F",
-                "Area Name": "Bishan\u2013MacRitchie\u2013Botanic",
-                "Categories": "Food, Heritage",
-                "New?": null,
-                "Website": "https://www.dempseyhill.com/",
-                "Description": "Former barracks turned dining and lifestyle enclave.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "F7",
-                "Place Name": "Holland Village",
-                "Area": "F",
-                "Area Name": "Bishan\u2013MacRitchie\u2013Botanic",
-                "Categories": "Food, Leisure",
-                "New?": null,
-                "Website": "https://www.visitsingapore.com/see-do-singapore/places-to-see/holland-village/",
-                "Description": "Eclectic neighbourhood with dining and boutiques.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "G1",
-                "Place Name": "Skyville Dawson",
-                "Area": "G",
-                "Area Name": "River\u2013Orchard\u2013Newton",
-                "Categories": "Architecture",
-                "New?": null,
-                "Website": null,
-                "Description": "Award-winning public housing with sky gardens.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "G2",
-                "Place Name": "Zion Riverside Food Centre",
-                "Area": "G",
-                "Area Name": "River\u2013Orchard\u2013Newton",
-                "Categories": "Food",
-                "New?": null,
-                "Website": null,
-                "Description": "Popular hawker centre along the Singapore River.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "G3",
-                "Place Name": "Robertson Quay",
-                "Area": "G",
-                "Area Name": "River\u2013Orchard\u2013Newton",
-                "Categories": "Food, Leisure",
-                "New?": null,
-                "Website": "https://www.visitsingapore.com/see-do-singapore/places-to-see/robertson-quay/",
-                "Description": "Riverside dining and nightlife precinct.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "G4",
-                "Place Name": "Clarke Quay",
-                "Area": "G",
-                "Area Name": "River\u2013Orchard\u2013Newton",
-                "Categories": "Food, Leisure",
-                "New?": null,
-                "Website": "https://www.clarkequay.com.sg/",
-                "Description": "Colourful riverside entertainment hub.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "G5",
-                "Place Name": "Fort Canning Park",
-                "Area": "G",
-                "Area Name": "River\u2013Orchard\u2013Newton",
-                "Categories": "Nature, Heritage",
-                "New?": null,
-                "Website": "https://www.nparks.gov.sg/visit/parks/park-detail/fort-canning-park/",
-                "Description": "Historic hilltop park with 14th-century archaeological site.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "G6",
-                "Place Name": "Fort Canning Tree Tunnel",
-                "Area": "G",
-                "Area Name": "River\u2013Orchard\u2013Newton",
-                "Categories": "Nature",
-                "New?": null,
-                "Website": "https://www.nparks.gov.sg/visit/parks/park-detail/fort-canning-park/",
-                "Description": "Instagrammable spiral staircase framed by trees.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "G7",
-                "Place Name": "Dhoby Ghaut Green",
-                "Area": "G",
-                "Area Name": "River\u2013Orchard\u2013Newton",
-                "Categories": "Nature",
-                "New?": null,
-                "Website": "https://www.nparks.gov.sg/",
-                "Description": "Urban green space near Dhoby Ghaut MRT.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "G8",
-                "Place Name": "Emerald Hill",
-                "Area": "G",
-                "Area Name": "River\u2013Orchard\u2013Newton",
-                "Categories": "Heritage, Architecture",
-                "New?": null,
-                "Website": "https://www.roots.gov.sg/places/places-landing/Places/historic-sites/emerald-hill",
-                "Description": "Well-preserved Peranakan terrace houses off Orchard Road.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "G9",
-                "Place Name": "Orchard Road",
-                "Area": "G",
-                "Area Name": "River\u2013Orchard\u2013Newton",
-                "Categories": "Leisure",
-                "New?": null,
-                "Website": "https://www.orchardroad.org/",
-                "Description": "Singapore's premier shopping boulevard.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "G10",
-                "Place Name": "Newton Food Centre",
-                "Area": "G",
-                "Area Name": "River\u2013Orchard\u2013Newton",
-                "Categories": "Food",
-                "New?": null,
-                "Website": null,
-                "Description": "Famous hawker centre from Crazy Rich Asians.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "G11",
-                "Place Name": "Chinatown Heritage Centre",
-                "Area": "G",
-                "Area Name": "River\u2013Orchard\u2013Newton",
-                "Categories": "Museum, Heritage",
-                "New?": "NEW",
-                "Website": "https://www.chinatownheritagecentre.com.sg/",
-                "Description": "Immersive 1950s shophouse museum. Reopened Jan 2025.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "H1",
-                "Place Name": "Trade Association Hub",
-                "Area": "H",
-                "Area Name": "Jurong\u2013NTU\u2013Lighthouse",
-                "Categories": "Architecture",
-                "New?": null,
-                "Website": "https://www.tah.sg/",
-                "Description": "Hub for trade associations at Jurong Town Hall.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "H2",
-                "Place Name": "Science Centre Observatory",
-                "Area": "H",
-                "Area Name": "Jurong\u2013NTU\u2013Lighthouse",
-                "Categories": "Museum",
-                "New?": null,
-                "Website": "https://www.science.edu.sg/",
-                "Description": "Public observatory and science museum.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "H3",
-                "Place Name": "Chinese Garden",
-                "Area": "H",
-                "Area Name": "Jurong\u2013NTU\u2013Lighthouse",
-                "Categories": "Nature",
-                "New?": null,
-                "Website": "https://www.nparks.gov.sg/visit/parks/park-detail/jurong-lake-gardens/",
-                "Description": "Classical Chinese garden within Jurong Lake Gardens.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "H4",
-                "Place Name": "Japanese Garden",
-                "Area": "H",
-                "Area Name": "Jurong\u2013NTU\u2013Lighthouse",
-                "Categories": "Nature",
-                "New?": null,
-                "Website": "https://www.nparks.gov.sg/visit/parks/park-detail/jurong-lake-gardens/",
-                "Description": "Tranquil Japanese-style garden on Jurong Lake island.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "H5",
-                "Place Name": "Jurong Lake Gardens",
-                "Area": "H",
-                "Area Name": "Jurong\u2013NTU\u2013Lighthouse",
-                "Categories": "Nature",
-                "New?": null,
-                "Website": "https://www.nparks.gov.sg/visit/parks/park-detail/jurong-lake-gardens/",
-                "Description": "National gardens in the heartlands with play areas.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "H6",
-                "Place Name": "Jurong Central Park",
-                "Area": "H",
-                "Area Name": "Jurong\u2013NTU\u2013Lighthouse",
-                "Categories": "Nature",
-                "New?": null,
-                "Website": "https://www.nparks.gov.sg/",
-                "Description": "Neighbourhood park in Jurong.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "H7",
-                "Place Name": "Jurong Bird Park (Bird Paradise)",
-                "Area": "H",
-                "Area Name": "Jurong\u2013NTU\u2013Lighthouse",
-                "Categories": "Wildlife",
-                "New?": null,
-                "Website": "https://www.mandai.com/en/bird-paradise.html",
-                "Description": "Now relocated to Mandai as Bird Paradise.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "H8",
-                "Place Name": "Jurong Hill Park",
-                "Area": "H",
-                "Area Name": "Jurong\u2013NTU\u2013Lighthouse",
-                "Categories": "Nature",
-                "New?": null,
-                "Website": "https://www.nparks.gov.sg/",
-                "Description": "Hilltop lookout near the former bird park.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "H9",
-                "Place Name": "Garden of Fame",
-                "Area": "H",
-                "Area Name": "Jurong\u2013NTU\u2013Lighthouse",
-                "Categories": "Heritage",
-                "New?": null,
-                "Website": null,
-                "Description": "Heritage trees and garden on Jurong Hill.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "H10",
-                "Place Name": "NTU School of Art Design & Media",
-                "Area": "H",
-                "Area Name": "Jurong\u2013NTU\u2013Lighthouse",
-                "Categories": "Architecture",
-                "New?": null,
-                "Website": "https://www.ntu.edu.sg/adm",
-                "Description": "Green-roofed building, iconic NTU architecture.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "H11",
-                "Place Name": "The Hive NTU",
-                "Area": "H",
-                "Area Name": "Jurong\u2013NTU\u2013Lighthouse",
-                "Categories": "Architecture",
-                "New?": null,
-                "Website": "https://www.ntu.edu.sg/",
-                "Description": "Heatherwick-designed learning hub at NTU.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "H12",
-                "Place Name": "Singapore Discovery Centre",
-                "Area": "H",
-                "Area Name": "Jurong\u2013NTU\u2013Lighthouse",
-                "Categories": "Museum",
-                "New?": null,
-                "Website": "https://www.sdc.com.sg/",
-                "Description": "Interactive exhibition on Singapore's defence and national story.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "H13",
-                "Place Name": "Tiger Brewery",
-                "Area": "H",
-                "Area Name": "Jurong\u2013NTU\u2013Lighthouse",
-                "Categories": "Food, Leisure",
-                "New?": null,
-                "Website": "https://www.tigerbrewerytour.com.sg/",
-                "Description": "Brewery tour experience for Tiger Beer.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "H14",
-                "Place Name": "Former Tuas TV World Site",
-                "Area": "H",
-                "Area Name": "Jurong\u2013NTU\u2013Lighthouse",
-                "Categories": "Heritage",
-                "New?": null,
-                "Website": null,
-                "Description": "Abandoned former theme park site.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "H15",
-                "Place Name": "Raffles Marina Lighthouse",
-                "Area": "H",
-                "Area Name": "Jurong\u2013NTU\u2013Lighthouse",
-                "Categories": "Heritage",
-                "New?": null,
-                "Website": "https://www.rafflesmarina.com.sg/",
-                "Description": "Westernmost point of mainland Singapore with lighthouse.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "H16",
-                "Place Name": "Choa Chu Kang Cemetery",
-                "Area": "H",
-                "Area Name": "Jurong\u2013NTU\u2013Lighthouse",
-                "Categories": "Heritage",
-                "New?": null,
-                "Website": null,
-                "Description": "Large public cemetery.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "H17",
-                "Place Name": "Dinosaurs | Extinctions | Us",
-                "Area": "H",
-                "Area Name": "Jurong\u2013NTU\u2013Lighthouse",
-                "Categories": "Museum",
-                "New?": "NEW",
-                "Website": "https://www.science.edu.sg/",
-                "Description": "3,000 sqm exhibition with 40m Patagotitan cast at Science Centre.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "H18",
-                "Place Name": "Snow City (renovated)",
-                "Area": "H",
-                "Area Name": "Jurong\u2013NTU\u2013Lighthouse",
-                "Categories": "Leisure",
-                "New?": "NEW",
-                "Website": "https://www.snowcity.com.sg/",
-                "Description": "Renovated indoor snow centre with Glacier Luge and bumper cars on ice.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "I1",
-                "Place Name": "Kranji War Memorial",
-                "Area": "I",
-                "Area Name": "Kranji\u2013Sungei Buloh",
-                "Categories": "Heritage",
-                "New?": null,
-                "Website": "https://www.cwgc.org/visit-us/find-us/find-a-cemetery-or-memorial/kranji-war-cemetery/",
-                "Description": "Commonwealth war cemetery honouring WWII soldiers.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "I2",
-                "Place Name": "Rainbow Bridge",
-                "Area": "I",
-                "Area Name": "Kranji\u2013Sungei Buloh",
-                "Categories": "Nature",
-                "New?": null,
-                "Website": null,
-                "Description": "Colourful bridge near Kranji Reservoir.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "I3",
-                "Place Name": "Kranji Close",
-                "Area": "I",
-                "Area Name": "Kranji\u2013Sungei Buloh",
-                "Categories": "Heritage",
-                "New?": null,
-                "Website": null,
-                "Description": "Rural heritage area near Kranji.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "I4",
-                "Place Name": "Kranji Dam",
-                "Area": "I",
-                "Area Name": "Kranji\u2013Sungei Buloh",
-                "Categories": "Nature",
-                "New?": null,
-                "Website": "https://www.pub.gov.sg/",
-                "Description": "Reservoir dam with views of Johor.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "I5",
-                "Place Name": "Sungei Buloh Wetland Reserve",
-                "Area": "I",
-                "Area Name": "Kranji\u2013Sungei Buloh",
-                "Categories": "Nature, Wildlife",
-                "New?": null,
-                "Website": "https://www.nparks.gov.sg/visit/parks/park-detail/sungei-buloh-wetland-reserve/",
-                "Description": "ASEAN Heritage Park with mangroves and migratory birds.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "I6",
-                "Place Name": "Kranji Marshes",
-                "Area": "I",
-                "Area Name": "Kranji\u2013Sungei Buloh",
-                "Categories": "Nature, Wildlife",
-                "New?": null,
-                "Website": "https://www.nparks.gov.sg/visit/parks/park-detail/kranji-marshes/",
-                "Description": "56.8-hectare freshwater marshland. Bird watching paradise.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "I7",
-                "Place Name": "Bollywood Veggies",
-                "Area": "I",
-                "Area Name": "Kranji\u2013Sungei Buloh",
-                "Categories": "Food, Nature",
-                "New?": null,
-                "Website": "https://www.bollywoodveggies.com/",
-                "Description": "Farm-to-table experience with organic farming tours.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "I8",
-                "Place Name": "Cashin House",
-                "Area": "I",
-                "Area Name": "Kranji\u2013Sungei Buloh",
-                "Categories": "Heritage",
-                "New?": null,
-                "Website": null,
-                "Description": "Heritage colonial bungalow near Kranji.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "J1",
-                "Place Name": "Green Corridor (Rail Corridor)",
-                "Area": "J",
-                "Area Name": "Green Corridor\u2013Bukit Timah",
-                "Categories": "Nature, Heritage",
-                "New?": null,
-                "Website": "https://www.nparks.gov.sg/gardens-parks-and-nature/parks-and-nature-reserves/rail-corridor",
-                "Description": "24km former railway line turned nature corridor.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "J2",
-                "Place Name": "Bukit Timah Diversion Canal",
-                "Area": "J",
-                "Area Name": "Green Corridor\u2013Bukit Timah",
-                "Categories": "Nature",
-                "New?": null,
-                "Website": "https://www.nparks.gov.sg/gardens-parks-and-nature/parks-and-nature-reserves/rail-corridor",
-                "Description": "Scenic canal section along the Rail Corridor.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "J3",
-                "Place Name": "Clementi Forest",
-                "Area": "J",
-                "Area Name": "Green Corridor\u2013Bukit Timah",
-                "Categories": "Nature",
-                "New?": null,
-                "Website": "https://www.nparks.gov.sg/",
-                "Description": "Secondary forest with tall canopy near Rail Corridor.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "J4",
-                "Place Name": "Old Bukit Timah Railway Station",
-                "Area": "J",
-                "Area Name": "Green Corridor\u2013Bukit Timah",
-                "Categories": "Heritage",
-                "New?": null,
-                "Website": "https://www.nparks.gov.sg/gardens-parks-and-nature/parks-and-nature-reserves/rail-corridor",
-                "Description": "Restored heritage railway station along Rail Corridor.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "J5",
-                "Place Name": "Bukit Timah Nature Reserve",
-                "Area": "J",
-                "Area Name": "Green Corridor\u2013Bukit Timah",
-                "Categories": "Nature",
-                "New?": null,
-                "Website": "https://www.nparks.gov.sg/visit/parks/park-detail/bukit-timah-nature-reserve/",
-                "Description": "163-hectare primary rainforest within the city.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "J6",
-                "Place Name": "Bukit Timah Hill",
-                "Area": "J",
-                "Area Name": "Green Corridor\u2013Bukit Timah",
-                "Categories": "Nature",
-                "New?": null,
-                "Website": "https://www.nparks.gov.sg/visit/parks/park-detail/bukit-timah-nature-reserve/",
-                "Description": "Singapore's highest natural point at 163.63m.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "J7",
-                "Place Name": "Wallace Trail",
-                "Area": "J",
-                "Area Name": "Green Corridor\u2013Bukit Timah",
-                "Categories": "Nature",
-                "New?": null,
-                "Website": "https://www.nparks.gov.sg/visit/parks/park-detail/dairy-farm-nature-park/",
-                "Description": "Trail named after Alfred Russel Wallace near Dairy Farm.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "J8",
-                "Place Name": "Dairy Farm Nature Park",
-                "Area": "J",
-                "Area Name": "Green Corridor\u2013Bukit Timah",
-                "Categories": "Nature",
-                "New?": null,
-                "Website": "https://www.nparks.gov.sg/visit/parks/park-detail/dairy-farm-nature-park/",
-                "Description": "Nature park with quarry, Wallace Centre and forest trails.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "J9",
-                "Place Name": "Rail Corridor End Point",
-                "Area": "J",
-                "Area Name": "Green Corridor\u2013Bukit Timah",
-                "Categories": "Nature",
-                "New?": null,
-                "Website": "https://www.nparks.gov.sg/gardens-parks-and-nature/parks-and-nature-reserves/rail-corridor",
-                "Description": "Northern terminus of the Rail Corridor trail.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "J10",
-                "Place Name": "Hindhede Quarry",
-                "Area": "J",
-                "Area Name": "Green Corridor\u2013Bukit Timah",
-                "Categories": "Nature",
-                "New?": null,
-                "Website": "https://www.nparks.gov.sg/visit/parks/park-detail/bukit-timah-nature-reserve/",
-                "Description": "Scenic former quarry with emerald-green waters.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "J11",
-                "Place Name": "Former Ford Factory",
-                "Area": "J",
-                "Area Name": "Green Corridor\u2013Bukit Timah",
-                "Categories": "Heritage, Museum",
-                "New?": null,
-                "Website": "https://www.nhb.gov.sg/former-ford-factory/",
-                "Description": "WWII museum at the British surrender site.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "J12",
-                "Place Name": "Bukit Batok Nature Park",
-                "Area": "J",
-                "Area Name": "Green Corridor\u2013Bukit Timah",
-                "Categories": "Nature, Heritage",
-                "New?": null,
-                "Website": "https://www.nparks.gov.sg/visit/parks/park-detail/bukit-batok-nature-park/",
-                "Description": "Forest park with WWII memorial and trails.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "J13",
-                "Place Name": "Bukit Batok WWII Memorial",
-                "Area": "J",
-                "Area Name": "Green Corridor\u2013Bukit Timah",
-                "Categories": "Heritage",
-                "New?": null,
-                "Website": "https://www.roots.gov.sg/",
-                "Description": "Site of former Japanese Syonan Jinja shrine.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "J14",
-                "Place Name": "Little Guilin",
-                "Area": "J",
-                "Area Name": "Green Corridor\u2013Bukit Timah",
-                "Categories": "Nature",
-                "New?": null,
-                "Website": "https://www.nparks.gov.sg/visit/parks/park-detail/bukit-batok-town-park/",
-                "Description": "Dramatic granite rock face rising from a lake.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "J15",
-                "Place Name": "Rifle Range Nature Park",
-                "Area": "J",
-                "Area Name": "Green Corridor\u2013Bukit Timah",
-                "Categories": "Nature",
-                "New?": "NEW",
-                "Website": "https://www.nparks.gov.sg/visit/parks/park-detail/rifle-range-nature-park",
-                "Description": "66-hectare park, Singapore's first net positive energy nature park.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "K1",
-                "Place Name": "Senja-Cashew Community Club",
-                "Area": "K",
-                "Area Name": "Northwest\u2013Northeast",
-                "Categories": "Leisure",
-                "New?": null,
-                "Website": "https://www.onepa.gov.sg/",
-                "Description": "Community club in Bukit Panjang.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "K2",
-                "Place Name": "Zhenghua Park",
-                "Area": "K",
-                "Area Name": "Northwest\u2013Northeast",
-                "Categories": "Nature",
-                "New?": null,
-                "Website": "https://www.nparks.gov.sg/visit/parks/park-detail/zhenghua-park/",
-                "Description": "Nature park bordering the Central Catchment.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "K3",
-                "Place Name": "Chestnut Nature Park",
-                "Area": "K",
-                "Area Name": "Northwest\u2013Northeast",
-                "Categories": "Nature",
-                "New?": null,
-                "Website": "https://www.nparks.gov.sg/visit/parks/park-detail/chestnut-nature-park/",
-                "Description": "Mountain biking and hiking trails in northern forest.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "K4",
-                "Place Name": "Singapore Zoo",
-                "Area": "K",
-                "Area Name": "Northwest\u2013Northeast",
-                "Categories": "Wildlife",
-                "New?": null,
-                "Website": "https://www.mandai.com/en/singapore-zoo.html",
-                "Description": "World-renowned open-concept zoo at Mandai.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "K5",
-                "Place Name": "Bird Paradise",
-                "Area": "K",
-                "Area Name": "Northwest\u2013Northeast",
-                "Categories": "Wildlife",
-                "New?": null,
-                "Website": "https://www.mandai.com/en/bird-paradise.html",
-                "Description": "Asia's largest bird park at Mandai.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "K6",
-                "Place Name": "Marisiling Park",
-                "Area": "K",
-                "Area Name": "Northwest\u2013Northeast",
-                "Categories": "Nature",
-                "New?": null,
-                "Website": "https://www.nparks.gov.sg/",
-                "Description": "Neighbourhood park in Woodlands.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "K7",
-                "Place Name": "Woodlands Jetty",
-                "Area": "K",
-                "Area Name": "Northwest\u2013Northeast",
-                "Categories": "Nature",
-                "New?": null,
-                "Website": null,
-                "Description": "Waterfront jetty with views of Johor Bahru.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "K8",
-                "Place Name": "Rasa Istimewa Waterfront",
-                "Area": "K",
-                "Area Name": "Northwest\u2013Northeast",
-                "Categories": "Food",
-                "New?": null,
-                "Website": null,
-                "Description": "Seafood restaurant on Woodlands waterfront.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "K9",
-                "Place Name": "Admiralty Park",
-                "Area": "K",
-                "Area Name": "Northwest\u2013Northeast",
-                "Categories": "Nature, Leisure",
-                "New?": null,
-                "Website": "https://www.nparks.gov.sg/visit/parks/park-detail/admiralty-park/",
-                "Description": "Destination park with Singapore's longest slide.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "K10",
-                "Place Name": "Marisiling Tunnel",
-                "Area": "K",
-                "Area Name": "Northwest\u2013Northeast",
-                "Categories": "Heritage",
-                "New?": null,
-                "Website": null,
-                "Description": "Historic railway tunnel in Woodlands.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "K11",
-                "Place Name": "SFA Senoko Fishery Port",
-                "Area": "K",
-                "Area Name": "Northwest\u2013Northeast",
-                "Categories": "Heritage",
-                "New?": null,
-                "Website": "https://www.sfa.gov.sg/",
-                "Description": "Working fishery port in northern Singapore.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "K12",
-                "Place Name": "Sembawang Park Fishing Pier",
-                "Area": "K",
-                "Area Name": "Northwest\u2013Northeast",
-                "Categories": "Nature",
-                "New?": null,
-                "Website": "https://www.nparks.gov.sg/visit/parks/park-detail/sembawang-park/",
-                "Description": "Seaside park with fishing pier and heritage trees.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "K13",
-                "Place Name": "The Japanese Theater",
-                "Area": "K",
-                "Area Name": "Northwest\u2013Northeast",
-                "Categories": "Heritage",
-                "New?": null,
-                "Website": null,
-                "Description": "Historical marker of former Japanese settlement.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "K14",
-                "Place Name": "Sembawang Hot Spring Park",
-                "Area": "K",
-                "Area Name": "Northwest\u2013Northeast",
-                "Categories": "Nature",
-                "New?": null,
-                "Website": "https://www.nparks.gov.sg/visit/parks/park-detail/sembawang-hot-spring-park/",
-                "Description": "Singapore's only natural hot spring with cascading pools.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "K15",
-                "Place Name": "Lower Seletar Reservoir Park",
-                "Area": "K",
-                "Area Name": "Northwest\u2013Northeast",
-                "Categories": "Nature",
-                "New?": null,
-                "Website": "https://www.nparks.gov.sg/visit/parks/park-detail/lower-seletar-reservoir-park/",
-                "Description": "Waterfront park with rocket-shaped observation tower.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "K16",
-                "Place Name": "Yishun Dam",
-                "Area": "K",
-                "Area Name": "Northwest\u2013Northeast",
-                "Categories": "Nature",
-                "New?": null,
-                "Website": "https://www.pub.gov.sg/",
-                "Description": "Dam across Lower Seletar Reservoir. Sunset spot.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "K17",
-                "Place Name": "Singapore Last Fishing Village",
-                "Area": "K",
-                "Area Name": "Northwest\u2013Northeast",
-                "Categories": "Heritage",
-                "New?": null,
-                "Website": null,
-                "Description": "Last surviving fishing village at Lim Chu Kang.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "K18",
-                "Place Name": "Rower's Bay Park",
-                "Area": "K",
-                "Area Name": "Northwest\u2013Northeast",
-                "Categories": "Nature",
-                "New?": null,
-                "Website": "https://www.nparks.gov.sg/",
-                "Description": "Waterfront park at Lower Seletar Reservoir.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "K19",
-                "Place Name": "Wheeler's Estate",
-                "Area": "K",
-                "Area Name": "Northwest\u2013Northeast",
-                "Categories": "Food, Heritage",
-                "New?": null,
-                "Website": "https://www.wheelersestate.com/",
-                "Description": "Heritage dining venue in restored colonial building.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "K20",
-                "Place Name": "Rainforest Wild Asia",
-                "Area": "K",
-                "Area Name": "Northwest\u2013Northeast",
-                "Categories": "Wildlife",
-                "New?": "NEW",
-                "Website": "https://www.mandai.com/en/rainforest-wild-asia.html",
-                "Description": "Adventure wildlife park with Malayan tigers. Opened Mar 2025.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "K21",
-                "Place Name": "Mandai Boardwalk",
-                "Area": "K",
-                "Area Name": "Northwest\u2013Northeast",
-                "Categories": "Nature",
-                "New?": "NEW",
-                "Website": "https://www.mandai.com/",
-                "Description": "Scenic waterfront trail along Upper Seletar Reservoir.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "K22",
-                "Place Name": "Mandai Rainforest Resort",
-                "Area": "K",
-                "Area Name": "Northwest\u2013Northeast",
-                "Categories": "Leisure, Nature",
-                "New?": "NEW",
-                "Website": "https://www.mandai.com/en/mandai-rainforest-resort.html",
-                "Description": "Banyan Tree eco-resort with 24 treehouses. Opened Apr 2025.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "K23",
-                "Place Name": "Colugo Camp",
-                "Area": "K",
-                "Area Name": "Northwest\u2013Northeast",
-                "Categories": "Leisure, Nature",
-                "New?": "NEW",
-                "Website": "https://www.mandai.com/en/colugo-camp.html",
-                "Description": "Safari-style glamping at Mandai. Opened Aug 2025.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "K24",
-                "Place Name": "Exploria",
-                "Area": "K",
-                "Area Name": "Northwest\u2013Northeast",
-                "Categories": "Museum, Wildlife",
-                "New?": "NEW",
-                "Website": "https://www.mandai.com/en/exploria.html",
-                "Description": "10,000 sqm indoor nature multimedia attraction. Opened Mar 2026.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "K25",
-                "Place Name": "Curiosity Cove",
-                "Area": "K",
-                "Area Name": "Northwest\u2013Northeast",
-                "Categories": "Leisure, Wildlife",
-                "New?": "NEW",
-                "Website": "https://www.mandai.com/en/curiosity-cove.html",
-                "Description": "4,600 sqm nature playground for ages 3\u201312. Opened Nov 2025.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "L1",
-                "Place Name": "Geylang Road",
-                "Area": "L",
-                "Area Name": "Geylang\u2013Joo Chiat\u2013Katong",
-                "Categories": "Food, Heritage",
-                "New?": null,
-                "Website": "https://www.visitsingapore.com/see-do-singapore/places-to-see/geylang-serai/",
-                "Description": "Cultural corridor with temples, mosques, and street food.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "L2",
-                "Place Name": "Joo Chiat Road",
-                "Area": "L",
-                "Area Name": "Geylang\u2013Joo Chiat\u2013Katong",
-                "Categories": "Heritage, Food",
-                "New?": null,
-                "Website": "https://www.visitsingapore.com/see-do-singapore/places-to-see/joo-chiat/",
-                "Description": "Heritage Peranakan streetscape with colourful shophouses.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "L3",
-                "Place Name": "The Intan Peranakan Museum",
-                "Area": "L",
-                "Area Name": "Geylang\u2013Joo Chiat\u2013Katong",
-                "Categories": "Museum, Heritage",
-                "New?": null,
-                "Website": "https://www.the-intan.com/",
-                "Description": "Private Peranakan home-museum with guided tours by appointment.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "L4",
-                "Place Name": "Lotus at Joo Chiat",
-                "Area": "L",
-                "Area Name": "Geylang\u2013Joo Chiat\u2013Katong",
-                "Categories": "Heritage",
-                "New?": null,
-                "Website": null,
-                "Description": "Heritage spot on Joo Chiat Road.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "L5",
-                "Place Name": "Peranakan Houses @ Koong Seng Rd",
-                "Area": "L",
-                "Area Name": "Geylang\u2013Joo Chiat\u2013Katong",
-                "Categories": "Heritage, Architecture",
-                "New?": null,
-                "Website": null,
-                "Description": "Row of ornate Peranakan terrace houses.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "L6",
-                "Place Name": "Sinpopo Brand",
-                "Area": "L",
-                "Area Name": "Geylang\u2013Joo Chiat\u2013Katong",
-                "Categories": "Food",
-                "New?": null,
-                "Website": "https://www.sinpopo.com/",
-                "Description": "Nostalgic Singaporean cafe with retro vibes.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "L7",
-                "Place Name": "Sri Senpaga Vinayagar Temple",
-                "Area": "L",
-                "Area Name": "Geylang\u2013Joo Chiat\u2013Katong",
-                "Categories": "Heritage",
-                "New?": null,
-                "Website": "https://www.srisenpaga.org.sg/",
-                "Description": "Beautiful Hindu temple in the Katong area.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "L8",
-                "Place Name": "Old Airport Road Food Centre",
-                "Area": "L",
-                "Area Name": "Geylang\u2013Joo Chiat\u2013Katong",
-                "Categories": "Food",
-                "New?": null,
-                "Website": null,
-                "Description": "Legendary hawker centre with some of Singapore's best stalls.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "L9",
-                "Place Name": "Tanjong Pagar Heritage Area",
-                "Area": "L",
-                "Area Name": "Geylang\u2013Joo Chiat\u2013Katong",
-                "Categories": "Heritage, Food, Architecture",
-                "New?": "NEW",
-                "Website": "https://www.visitsingapore.com/see-do-singapore/places-to-see/tanjong-pagar/",
-                "Description": "Heritage shophouses, street art, and vibrant dining in CBD.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "M1",
-                "Place Name": "Jewel @ Changi",
-                "Area": "M",
-                "Area Name": "Changi\u2013Pasir Ris\u2013Bedok",
-                "Categories": "Architecture, Leisure",
-                "New?": null,
-                "Website": "https://www.jewelchangiairport.com/",
-                "Description": "Nature-themed hub with Rain Vortex waterfall.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "M2",
-                "Place Name": "Changi Business Park",
-                "Area": "M",
-                "Area Name": "Changi\u2013Pasir Ris\u2013Bedok",
-                "Categories": "Architecture",
-                "New?": null,
-                "Website": "https://www.capitaland.com/",
-                "Description": "Business park precinct near Changi.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "M3",
-                "Place Name": "Changi Village Hawker Centre",
-                "Area": "M",
-                "Area Name": "Changi\u2013Pasir Ris\u2013Bedok",
-                "Categories": "Food",
-                "New?": null,
-                "Website": null,
-                "Description": "Beloved hawker centre near Changi Beach.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "M4",
-                "Place Name": "Changi Beach Park",
-                "Area": "M",
-                "Area Name": "Changi\u2013Pasir Ris\u2013Bedok",
-                "Categories": "Nature, Heritage",
-                "New?": null,
-                "Website": "https://www.nparks.gov.sg/visit/parks/park-detail/changi-beach-park/",
-                "Description": "Coastal park with WWII history and Ubin views.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "M5",
-                "Place Name": "Changi Point Coastal Walk",
-                "Area": "M",
-                "Area Name": "Changi\u2013Pasir Ris\u2013Bedok",
-                "Categories": "Nature",
-                "New?": null,
-                "Website": "https://www.nparks.gov.sg/visit/parks/park-detail/changi-beach-park/",
-                "Description": "Scenic boardwalk along Changi coast.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "M6",
-                "Place Name": "Changi Boardwalk",
-                "Area": "M",
-                "Area Name": "Changi\u2013Pasir Ris\u2013Bedok",
-                "Categories": "Nature",
-                "New?": null,
-                "Website": "https://www.nparks.gov.sg/visit/parks/park-detail/changi-beach-park/",
-                "Description": "2.2km boardwalk connecting Changi Beach to ferry terminal.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "M7",
-                "Place Name": "Old Changi Hospital",
-                "Area": "M",
-                "Area Name": "Changi\u2013Pasir Ris\u2013Bedok",
-                "Categories": "Heritage",
-                "New?": null,
-                "Website": null,
-                "Description": "Abandoned WWII hospital known for its eerie atmosphere.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "M8",
-                "Place Name": "Pasir Ris Beach",
-                "Area": "M",
-                "Area Name": "Changi\u2013Pasir Ris\u2013Bedok",
-                "Categories": "Nature",
-                "New?": null,
-                "Website": "https://www.nparks.gov.sg/visit/parks/park-detail/pasir-ris-park/",
-                "Description": "Family beach with mangrove boardwalk and playground.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "M9",
-                "Place Name": "Pasir Ris Town Park",
-                "Area": "M",
-                "Area Name": "Changi\u2013Pasir Ris\u2013Bedok",
-                "Categories": "Nature",
-                "New?": null,
-                "Website": "https://www.nparks.gov.sg/visit/parks/park-detail/pasir-ris-town-park/",
-                "Description": "Neighbourhood park in Pasir Ris.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "M10",
-                "Place Name": "Tampines Eco Green",
-                "Area": "M",
-                "Area Name": "Changi\u2013Pasir Ris\u2013Bedok",
-                "Categories": "Nature",
-                "New?": null,
-                "Website": "https://www.nparks.gov.sg/visit/parks/park-detail/tampines-eco-green/",
-                "Description": "Ecological park with grasslands and open habitats.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "M11",
-                "Place Name": "Sun Plaza Park",
-                "Area": "M",
-                "Area Name": "Changi\u2013Pasir Ris\u2013Bedok",
-                "Categories": "Nature",
-                "New?": null,
-                "Website": "https://www.nparks.gov.sg/",
-                "Description": "Park in Tampines with themed gardens.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "M12",
-                "Place Name": "Bedok Reservoir Park",
-                "Area": "M",
-                "Area Name": "Changi\u2013Pasir Ris\u2013Bedok",
-                "Categories": "Nature",
-                "New?": null,
-                "Website": "https://www.nparks.gov.sg/visit/parks/park-detail/bedok-reservoir-park/",
-                "Description": "Popular reservoir park for running and kayaking.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "M13",
-                "Place Name": "Bedok Town Park",
-                "Area": "M",
-                "Area Name": "Changi\u2013Pasir Ris\u2013Bedok",
-                "Categories": "Nature",
-                "New?": null,
-                "Website": "https://www.nparks.gov.sg/visit/parks/park-detail/bedok-town-park/",
-                "Description": "Neighbourhood park in Bedok.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "M14",
-                "Place Name": "The Carbon Gallery",
-                "Area": "M",
-                "Area Name": "Changi\u2013Pasir Ris\u2013Bedok",
-                "Categories": "Museum",
-                "New?": "NEW",
-                "Website": "https://www.terrasg.com/",
-                "Description": "Asia's first carbon-focused experiential hub at Pasir Ris.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "N1",
-                "Place Name": "Pulau Ubin",
-                "Area": "N",
-                "Area Name": "Pulau Ubin",
-                "Categories": "Nature, Heritage",
-                "New?": null,
-                "Website": "https://www.nparks.gov.sg/visit/parks/park-detail/pulau-ubin/",
-                "Description": "Offshore island with kampong heritage and Chek Jawa wetlands.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "O1",
-                "Place Name": "Waterway Point @ Punggol",
-                "Area": "O",
-                "Area Name": "Punggol\u2013Coney Island",
-                "Categories": "Leisure",
-                "New?": null,
-                "Website": "https://www.waterwaypoint.com.sg/",
-                "Description": "Shopping mall by Punggol Waterway.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "O2",
-                "Place Name": "Lorong Halus Bridge",
-                "Area": "O",
-                "Area Name": "Punggol\u2013Coney Island",
-                "Categories": "Nature",
-                "New?": null,
-                "Website": "https://www.nparks.gov.sg/",
-                "Description": "Red bridge over Serangoon Reservoir.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "O3",
-                "Place Name": "Lorong Halus Wetland",
-                "Area": "O",
-                "Area Name": "Punggol\u2013Coney Island",
-                "Categories": "Nature",
-                "New?": null,
-                "Website": "https://www.pub.gov.sg/",
-                "Description": "Constructed wetland for water treatment and nature walks.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "O4",
-                "Place Name": "Serangoon Reservoir Dam",
-                "Area": "O",
-                "Area Name": "Punggol\u2013Coney Island",
-                "Categories": "Nature",
-                "New?": null,
-                "Website": "https://www.pub.gov.sg/",
-                "Description": "Dam with views of Serangoon Reservoir.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "O5",
-                "Place Name": "Coney Island",
-                "Area": "O",
-                "Area Name": "Punggol\u2013Coney Island",
-                "Categories": "Nature",
-                "New?": null,
-                "Website": "https://www.nparks.gov.sg/visit/parks/park-detail/coney-island-park/",
-                "Description": "Rustic island park with beaches and casuarina woodland.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "O6",
-                "Place Name": "The Punggol Settlement",
-                "Area": "O",
-                "Area Name": "Punggol\u2013Coney Island",
-                "Categories": "Food",
-                "New?": null,
-                "Website": "https://www.thepunggolsettlement.com/",
-                "Description": "Waterfront dining village at Punggol Point.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "O7",
-                "Place Name": "Jewel Bridge",
-                "Area": "O",
-                "Area Name": "Punggol\u2013Coney Island",
-                "Categories": "Architecture",
-                "New?": null,
-                "Website": null,
-                "Description": "Pedestrian bridge at Punggol Waterway.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "O8",
-                "Place Name": "Sengkang Riverside Park",
-                "Area": "O",
-                "Area Name": "Punggol\u2013Coney Island",
-                "Categories": "Nature",
-                "New?": null,
-                "Website": "https://www.nparks.gov.sg/visit/parks/park-detail/sengkang-riverside-park/",
-                "Description": "Riverside park with wetland and boardwalks.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "O9",
-                "Place Name": "Kampong Lorong Buangkok",
-                "Area": "O",
-                "Area Name": "Punggol\u2013Coney Island",
-                "Categories": "Heritage",
-                "New?": null,
-                "Website": null,
-                "Description": "Singapore's last surviving kampong (village).",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "O10",
-                "Place Name": "Compassvale Walk Park",
-                "Area": "O",
-                "Area Name": "Punggol\u2013Coney Island",
-                "Categories": "Nature",
-                "New?": "NEW",
-                "Website": "https://www.nparks.gov.sg/",
-                "Description": "Therapeutic garden with play mounds. Opened Jun 2025.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "P1",
-                "Place Name": "East Coast Park",
-                "Area": "P",
-                "Area Name": "East Coast\u2013Marina Bay",
-                "Categories": "Nature, Leisure",
-                "New?": null,
-                "Website": "https://www.nparks.gov.sg/visit/parks/park-detail/east-coast-park/",
-                "Description": "15km coastal park for cycling, skating, and beach.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "P2",
-                "Place Name": "Keppel Desalination Park",
-                "Area": "P",
-                "Area Name": "East Coast\u2013Marina Bay",
-                "Categories": "Nature",
-                "New?": null,
-                "Website": null,
-                "Description": "Educational park about water desalination.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "P3",
-                "Place Name": "Founders Memorial (under construction)",
-                "Area": "P",
-                "Area Name": "East Coast\u2013Marina Bay",
-                "Categories": "Heritage",
-                "New?": null,
-                "Website": "https://www.foundersmemorial.gov.sg/",
-                "Description": "Future national memorial at Bay East Garden. Opening 2028.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "P4",
-                "Place Name": "Bay East Garden",
-                "Area": "P",
-                "Area Name": "East Coast\u2013Marina Bay",
-                "Categories": "Nature",
-                "New?": null,
-                "Website": "https://www.gardensbythebay.com.sg/",
-                "Description": "Waterfront garden with city skyline views across Marina Bay.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "P5",
-                "Place Name": "Marina Barrage",
-                "Area": "P",
-                "Area Name": "East Coast\u2013Marina Bay",
-                "Categories": "Architecture, Nature",
-                "New?": null,
-                "Website": "https://www.pub.gov.sg/marinabarrage",
-                "Description": "Dam, green roof, and kite-flying spot with city views.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "P6",
-                "Place Name": "Gardens by the Bay",
-                "Area": "P",
-                "Area Name": "East Coast\u2013Marina Bay",
-                "Categories": "Nature, Architecture",
-                "New?": null,
-                "Website": "https://www.gardensbythebay.com.sg/",
-                "Description": "Iconic gardens with Supertrees, Cloud Forest, and Flower Dome.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "P7",
-                "Place Name": "ArtScience Museum",
-                "Area": "P",
-                "Area Name": "East Coast\u2013Marina Bay",
-                "Categories": "Museum, Architecture",
-                "New?": null,
-                "Website": "https://www.marinabaysands.com/museum.html",
-                "Description": "Lotus-shaped museum with rotating exhibitions.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "P8",
-                "Place Name": "Marina Bay Sands",
-                "Area": "P",
-                "Area Name": "East Coast\u2013Marina Bay",
-                "Categories": "Architecture, Leisure",
-                "New?": null,
-                "Website": "https://www.marinabaysands.com/",
-                "Description": "Iconic resort with SkyPark observation deck.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "P9",
-                "Place Name": "Jurassic World: The Experience",
-                "Area": "P",
-                "Area Name": "East Coast\u2013Marina Bay",
-                "Categories": "Leisure, Museum",
-                "New?": "NEW",
-                "Website": "https://www.gardensbythebay.com.sg/",
-                "Description": "Animatronic dinosaur exhibition in Cloud Forest.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "P10",
-                "Place Name": "Gardens by the Bay Family Zone",
-                "Area": "P",
-                "Area Name": "East Coast\u2013Marina Bay",
-                "Categories": "Nature, Leisure",
-                "New?": "NEW",
-                "Website": "https://www.gardensbythebay.com.sg/",
-                "Description": "New outdoor playground in the Active Garden area.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "X1",
-                "Place Name": "National Museum of Singapore",
-                "Area": "X",
-                "Area Name": "Cultural Cluster",
-                "Categories": "Museum, Heritage",
-                "New?": null,
-                "Website": "https://www.nhb.gov.sg/nationalmuseum/",
-                "Description": "Singapore's oldest museum with immersive history galleries.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "X2",
-                "Place Name": "Singapore Art Museum",
-                "Area": "X",
-                "Area Name": "Cultural Cluster",
-                "Categories": "Museum",
-                "New?": null,
-                "Website": "https://www.singaporeartmuseum.sg/",
-                "Description": "Contemporary art museum focused on Southeast Asian art.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "X3",
-                "Place Name": "National Gallery Singapore",
-                "Area": "X",
-                "Area Name": "Cultural Cluster",
-                "Categories": "Museum, Architecture, Heritage",
-                "New?": null,
-                "Website": "https://www.nationalgallery.sg/",
-                "Description": "Largest visual arts institution in Southeast Asia.",
-                "YouTube Shorts": []
-        },
-        {
-                "Code": "X4",
-                "Place Name": "Asian Civilisations Museum",
-                "Area": "X",
-                "Area Name": "Cultural Cluster",
-                "Categories": "Museum, Heritage",
-                "New?": null,
-                "Website": "https://www.nhb.gov.sg/acm/",
-                "Description": "Pan-Asian cultures and civilisations on the Singapore River.",
-                "YouTube Shorts": []
-        }
-];
-
-        let allPlaces = placesData;
-        let filteredPlaces = [...allPlaces];
-        let selectedCategories = new Set();
-        let adminMode = false;
-        let expandedCards = new Set();
-
-        // Extract YouTube video ID from URL or embed code
-        function extractYouTubeID(input) {
-            if (!input) return null;
-            
-            input = input.trim();
-            
-            if (input.includes('<iframe') || input.includes('iframe')) {
-                const embedMatch = input.match(/src=["']([^"']+)["']/);
-                if (embedMatch) input = embedMatch[1];
-            }
-            
-            const patterns = [
-                /youtube\.com\/shorts\/([a-zA-Z0-9_-]+)/,
-                /youtu\.be\/([a-zA-Z0-9_-]+)/,
-                /youtube\.com\/watch\?v=([a-zA-Z0-9_-]+)/,
-                /youtube\.com\/embed\/([a-zA-Z0-9_-]+)/,
-                /youtube-nocookie\.com\/embed\/([a-zA-Z0-9_-]+)/,
-                /v=([a-zA-Z0-9_-]+)/
-            ];
-            
-            for (const pattern of patterns) {
-                const match = input.match(pattern);
-                if (match && match[1]) return match[1];
-            }
-            
-            if (/^[a-zA-Z0-9_-]{11}$/.test(input)) return input;
-            return null;
-        }
-
-        // ==========================================
-        // FIREBASE CONFIGURATION
-        // ==========================================
-        const firebaseConfig = {
-            apiKey: "AIzaSyDLQUs1rCK-IE72Sxy2T4lp8c2Rd-Vy0tQ",
-            authDomain: "smu-exchange-app.firebaseapp.com",
-            databaseURL: "https://smu-exchange-app-default-rtdb.asia-southeast1.firebasedatabase.app",
-            projectId: "smu-exchange-app",
-            storageBucket: "smu-exchange-app.firebasestorage.app",
-            messagingSenderId: "380341319402",
-            appId: "1:380341319402:web:67597b41b264ccddc10993"
+        // Global State
+        let appData = {
+            places: [],
+            food: {},
+            active: {},
+            nightlife: {},
+            shopping: {},
+            experiences: {},
+            guide: {}
         };
 
-        // Initialize Firebase
-        let database;
-        try {
-            firebase.initializeApp(firebaseConfig);
-            database = firebase.database();
-            console.log('✅ Firebase initialized successfully');
-        } catch (error) {
-            console.error('❌ Firebase initialization error:', error);
-            alert('Firebase is not configured. Please add your Firebase credentials in the code.');
-        }
+        let firebaseData = {
+            videos: {},
+            userEdits: {},
+            userAdded: {}
+        };
 
-        // Load YouTube data from Firebase
-        function loadYouTubeData() {
-            if (!database) {
-                console.warn('Firebase not initialized, falling back to localStorage');
-                loadYouTubeDataLocal();
-                return;
-            }
+        let editMode = {
+            places: false,
+            food: false,
+            active: false,
+            nightlife: false,
+            shopping: false,
+            experiences: false
+        };
 
-            const youtubeRef = database.ref('youtube');
-            
-            // Listen for real-time updates
-            youtubeRef.on('value', (snapshot) => {
-                const youtubeData = snapshot.val() || {};
-                
-                allPlaces.forEach(place => {
-                    if (youtubeData[place.Code]) {
-                        place['YouTube Shorts'] = youtubeData[place.Code];
-                    } else {
-                        place['YouTube Shorts'] = [];
-                    }
+        let db = null;
+
+        // Firebase Configuration
+        const firebaseConfig = {
+            apiKey: "YOUR_API_KEY",
+            databaseURL: "YOUR_DATABASE_URL",
+            projectId: "YOUR_PROJECT_ID"
+        };
+
+        // Initialize App
+        async function initializeApp() {
+            console.log('🚀 Initializing IE SMU Exchange Guide...');
+
+            try {
+                // Step 1: Load static data from JSON files (parallel)
+                console.log('📦 Loading static data...');
+                const [places, food, active, nightlife, shopping, experiences, guide] = await Promise.all([
+                    fetch('/data/places.json').then(r => r.json()),
+                    fetch('/data/food.json').then(r => r.json()),
+                    fetch('/data/active.json').then(r => r.json()),
+                    fetch('/data/nightlife.json').then(r => r.json()),
+                    fetch('/data/shopping.json').then(r => r.json()),
+                    fetch('/data/experiences.json').then(r => r.json()),
+                    fetch('/data/guide.json').then(r => r.json())
+                ]);
+
+                appData.places = places;
+                appData.food = food;
+                appData.active = active;
+                appData.nightlife = nightlife;
+                appData.shopping = shopping;
+                appData.experiences = experiences;
+                appData.guide = guide;
+
+                console.log('✅ Static data loaded:', {
+                    places: places.length,
+                    food: Object.keys(food).length,
+                    active: Object.keys(active).length,
+                    nightlife: Object.keys(nightlife).length,
+                    shopping: Object.keys(shopping).length,
+                    experiences: Object.keys(experiences).length,
+                    guide: guide.singlish?.length || 0
                 });
-                
-                updateStats();
+
+                // Step 2: Initialize Firebase
+                console.log('🔥 Initializing Firebase...');
+                initializeFirebase();
+
+                // Step 3: Render initial view
+                console.log('🎨 Rendering Places section...');
                 renderPlaces();
-                console.log('📥 YouTube data loaded from Firebase');
-            });
-        }
+                updatePlacesStats();
 
-        // Save YouTube data to Firebase
-        function saveYouTubeData() {
-            if (!database) {
-                console.warn('Firebase not initialized, falling back to localStorage');
-                saveYouTubeDataLocal();
-                return;
-            }
+                // Step 4: Setup event listeners
+                setupEventListeners();
 
-            const youtubeData = {};
-            allPlaces.forEach(place => {
-                if (place['YouTube Shorts'] && place['YouTube Shorts'].some(v => v)) {
-                    // Only save non-null values
-                    youtubeData[place.Code] = place['YouTube Shorts'].filter(v => v);
-                }
-            });
-            
-            database.ref('youtube').set(youtubeData)
-                .then(() => {
-                    console.log('💾 YouTube data saved to Firebase');
-                })
-                .catch((error) => {
-                    console.error('Error saving to Firebase:', error);
-                    // Fallback to localStorage
-                    saveYouTubeDataLocal();
-                });
-        }
+                // Hide loading, show content
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('places-section').classList.add('active');
 
-        // Fallback: Load from localStorage
-        function loadYouTubeDataLocal() {
-            const saved = localStorage.getItem('singaporePlacesYouTube');
-            if (saved) {
-                try {
-                    const youtubeData = JSON.parse(saved);
-                    allPlaces.forEach(place => {
-                        if (youtubeData[place.Code]) {
-                            place['YouTube Shorts'] = youtubeData[place.Code];
-                        }
-                    });
-                    updateStats();
-                    renderPlaces();
-                } catch (e) {
-                    console.error('Error loading YouTube data from localStorage:', e);
-                }
-            }
-        }
+                console.log('✅ App initialized successfully!');
 
-        // Fallback: Save to localStorage
-        function saveYouTubeDataLocal() {
-            const youtubeData = {};
-            allPlaces.forEach(place => {
-                if (place['YouTube Shorts'] && place['YouTube Shorts'].length > 0) {
-                    youtubeData[place.Code] = place['YouTube Shorts'];
-                }
-            });
-            localStorage.setItem('singaporePlacesYouTube', JSON.stringify(youtubeData));
-        }
-
-        // Save user-added place to localStorage (fallback)
-        function saveUserPlaceLocal(newPlace) {
-            const userAddedPlaces = JSON.parse(localStorage.getItem('userAddedPlaces') || '[]');
-            userAddedPlaces.push(newPlace);
-            localStorage.setItem('userAddedPlaces', JSON.stringify(userAddedPlaces));
-        }
-
-        // Load user-added places from Firebase
-        function loadUserAddedPlaces() {
-            if (!database) {
-                loadUserAddedPlacesLocal();
-                return;
-            }
-
-            const userPlacesRef = database.ref('userAddedPlaces');
-            userPlacesRef.once('value', (snapshot) => {
-                const userPlaces = snapshot.val();
-                if (userPlaces) {
-                    Object.values(userPlaces).forEach(place => {
-                        // Check if not already in allPlaces
-                        if (!allPlaces.find(p => p.Code === place.Code)) {
-                            allPlaces.push(place);
-                        }
-                    });
-                }
-                console.log('📥 User-added places loaded from Firebase');
-            });
-        }
-
-        // Load user-added places from localStorage (fallback)
-        function loadUserAddedPlacesLocal() {
-            const userAddedPlaces = JSON.parse(localStorage.getItem('userAddedPlaces') || '[]');
-            userAddedPlaces.forEach(place => {
-                if (!allPlaces.find(p => p.Code === place.Code)) {
-                    allPlaces.push(place);
-                }
-            });
-        }
-
-        // Update YouTube video for a place at specific slot
-        function updateYouTubeSlot(placeCode, slotIndex, url) {
-            const place = allPlaces.find(p => p.Code === placeCode);
-            if (place) {
-                const videoId = extractYouTubeID(url);
-                if (videoId) {
-                    if (!place['YouTube Shorts']) place['YouTube Shorts'] = [];
-                    place['YouTube Shorts'][slotIndex] = videoId;
-                    saveYouTubeData();
-                    updateStats();
-                    renderPlaces();
-                }
-            }
-        }
-
-        // Remove YouTube video from slot
-        function removeYouTubeSlot(placeCode, slotIndex) {
-            const place = allPlaces.find(p => p.Code === placeCode);
-            if (place && place['YouTube Shorts']) {
-                place['YouTube Shorts'][slotIndex] = null;
-                // Clean up nulls at the end
-                while (place['YouTube Shorts'].length > 0 && 
-                       place['YouTube Shorts'][place['YouTube Shorts'].length - 1] === null) {
-                    place['YouTube Shorts'].pop();
-                }
-                saveYouTubeData();
-                updateStats();
-                renderPlaces();
-            }
-        }
-
-        // Toggle video card expansion
-        function toggleVideoCard(placeCode) {
-            console.log('toggleVideoCard called for:', placeCode);
-            console.log('Current expandedCards:', Array.from(expandedCards));
-            
-            if (expandedCards.has(placeCode)) {
-                expandedCards.delete(placeCode);
-                console.log('Collapsed:', placeCode);
-            } else {
-                expandedCards.add(placeCode);
-                console.log('Expanded:', placeCode);
-            }
-            renderPlaces();
-        }
-
-        // Update statistics
-        function updateStats() {
-            const videoCount = allPlaces.filter(p => 
-                p['YouTube Shorts'] && p['YouTube Shorts'].some(v => v)
-            ).length;
-            document.getElementById('total-videos').textContent = videoCount;
-        }
-
-        // Extract unique areas and categories
-        const areas = [...new Set(allPlaces.map(p => p['Area Name']))].sort();
-        const allCategories = new Set();
-        allPlaces.forEach(place => {
-            if (place.Categories) {
-                place.Categories.split(',').forEach(cat => {
-                    allCategories.add(cat.trim());
-                });
-            }
-        });
-        const categories = [...allCategories].sort();
-
-        // Count new places
-        const newPlacesCount = allPlaces.filter(p => p['New?'] === 'NEW').length;
-        document.getElementById('total-new').textContent = newPlacesCount;
-        document.getElementById('total-areas').textContent = areas.length;
-
-        // Load saved YouTube data
-        loadYouTubeData();
-        updateStats();
-
-        // Populate area filter
-        const areaFilter = document.getElementById('area-filter');
-        const areaSelect = document.getElementById('area-select');
-        areas.forEach(area => {
-            const option = document.createElement('option');
-            option.value = area;
-            option.textContent = area;
-            areaFilter.appendChild(option);
-
-            // Also populate modal area select
-            const modalOption = document.createElement('option');
-            modalOption.value = area;
-            modalOption.textContent = area;
-            areaSelect.appendChild(modalOption);
-        });
-
-        // Create category tags
-        const categoryTagsContainer = document.getElementById('category-tags');
-        categories.forEach(category => {
-            const tag = document.createElement('div');
-            tag.className = 'tag';
-            tag.textContent = category;
-            tag.onclick = () => toggleCategory(category);
-            categoryTagsContainer.appendChild(tag);
-        });
-
-        function toggleCategory(category) {
-            if (selectedCategories.has(category)) {
-                selectedCategories.delete(category);
-            } else {
-                selectedCategories.add(category);
-            }
-            updateCategoryTags();
-            filterPlaces();
-        }
-
-        function updateCategoryTags() {
-            const tags = categoryTagsContainer.querySelectorAll('.tag');
-            tags.forEach(tag => {
-                if (selectedCategories.has(tag.textContent)) {
-                    tag.classList.add('active');
-                } else {
-                    tag.classList.remove('active');
-                }
-            });
-        }
-
-        function filterPlaces() {
-            const searchTerm = document.getElementById('search').value.toLowerCase();
-            const selectedArea = document.getElementById('area-filter').value;
-            const newFilter = document.getElementById('new-filter').value;
-            const videoFilter = document.getElementById('video-filter').value;
-
-            filteredPlaces = allPlaces.filter(place => {
-                const matchesSearch = !searchTerm || 
-                    place['Place Name'].toLowerCase().includes(searchTerm) ||
-                    (place.Description && place.Description.toLowerCase().includes(searchTerm)) ||
-                    (place.Categories && place.Categories.toLowerCase().includes(searchTerm)) ||
-                    (place['Area Name'] && place['Area Name'].toLowerCase().includes(searchTerm));
-
-                const matchesArea = !selectedArea || place['Area Name'] === selectedArea;
-
-                const matchesNew = !newFilter || 
-                    (newFilter === 'new' && place['New?'] === 'NEW') ||
-                    (newFilter === 'existing' && place['New?'] !== 'NEW');
-
-                const hasVideos = place['YouTube Shorts'] && place['YouTube Shorts'].some(v => v);
-                const matchesVideo = !videoFilter ||
-                    (videoFilter === 'with-video' && hasVideos) ||
-                    (videoFilter === 'no-video' && !hasVideos);
-
-                const matchesCategory = selectedCategories.size === 0 || 
-                    (place.Categories && [...selectedCategories].some(cat => 
-                        place.Categories.split(',').map(c => c.trim()).includes(cat)
-                    ));
-
-                return matchesSearch && matchesArea && matchesNew && matchesVideo && matchesCategory;
-            });
-
-            renderPlaces();
-        }
-
-        function renderVideoSlot(place, slotIndex) {
-            const videoId = place['YouTube Shorts'] && place['YouTube Shorts'][slotIndex];
-            const hasVideo = !!videoId;
-
-            if (adminMode) {
-                return `
-                    <div class="video-slot ${hasVideo ? 'has-video' : ''}">
-                        <div class="video-slot-header">
-                            <span class="slot-number">Video ${slotIndex + 1}</span>
-                        </div>
-                        ${hasVideo ? `
-                            <div class="youtube-container">
-                                <iframe 
-                                    src="https://www.youtube-nocookie.com/embed/${videoId}?rel=0&modestbranding=1&enablejsapi=1" 
-                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                    referrerpolicy="strict-origin-when-cross-origin"
-                                    allowfullscreen
-                                    loading="lazy"
-                                ></iframe>
-                            </div>
-                        ` : `
-                            <div class="youtube-placeholder">
-                                📹 No video added
-                            </div>
-                        `}
-                        <div class="youtube-input-group">
-                            <label>YouTube URL, ID, or Embed Code:</label>
-                            <input 
-                                type="text" 
-                                class="youtube-input" 
-                                data-code="${place.Code}"
-                                data-slot="${slotIndex}"
-                                value="${videoId || ''}"
-                                placeholder="Paste YouTube Shorts URL or ID"
-                            >
-                            <div class="youtube-hint">Paste URL, embed code, or video ID</div>
-                        </div>
-                        <div class="video-slot-buttons">
-                            <button class="btn-save" onclick="saveYouTubeSlot('${place.Code}', ${slotIndex})">
-                                💾 ${hasVideo ? 'Update' : 'Save'}
-                            </button>
-                            ${hasVideo ? `
-                                <button class="btn-remove" onclick="removeYouTubeSlot('${place.Code}', ${slotIndex})">
-                                    🗑️ Remove
-                                </button>
-                            ` : ''}
-                        </div>
+            } catch (error) {
+                console.error('❌ Error initializing app:', error);
+                document.getElementById('loading').innerHTML = `
+                    <div style="color: #d32f2f; font-size: 1.2em;">
+                        ⚠️ Error loading data. Please refresh the page.
                     </div>
                 `;
-            } else {
-                // View mode - only show if has video
-                if (hasVideo) {
-                    return `
-                        <div class="video-slot has-video">
-                            <div class="youtube-container">
-                                <iframe 
-                                    src="https://www.youtube-nocookie.com/embed/${videoId}?rel=0&modestbranding=1&enablejsapi=1" 
-                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                    referrerpolicy="strict-origin-when-cross-origin"
-                                    allowfullscreen
-                                    loading="lazy"
-                                ></iframe>
-                            </div>
-                        </div>
-                    `;
+            }
+        }
+
+        // Initialize Firebase
+        function initializeFirebase() {
+            try {
+                if (!firebase.apps.length) {
+                    firebase.initializeApp(firebaseConfig);
                 }
-                return '';
+                db = firebase.database();
+                console.log('✅ Firebase initialized');
+
+                // Load Firebase data
+                loadFirebaseData();
+            } catch (error) {
+                console.warn('⚠️ Firebase not configured. Using localStorage fallback.');
+                loadLocalStorageData();
             }
         }
 
-        function renderVideoCard(place) {
-            const videos = place['YouTube Shorts'] || [];
-            const videoCount = videos.filter(v => v).length;
-            const isExpanded = expandedCards.has(place.Code);
+        // Load Firebase Data
+        async function loadFirebaseData() {
+            if (!db) return;
 
-            if (!adminMode && videoCount === 0) {
-                return '';
+            try {
+                // Load videos
+                const videosSnapshot = await db.ref('videos').once('value');
+                firebaseData.videos = videosSnapshot.val() || {};
+
+                // Load user edits
+                const editsSnapshot = await db.ref('userEdits').once('value');
+                firebaseData.userEdits = editsSnapshot.val() || {};
+
+                // Load user added items
+                const addedSnapshot = await db.ref('userAdded').once('value');
+                firebaseData.userAdded = addedSnapshot.val() || {};
+
+                console.log('✅ Firebase data loaded:', firebaseData);
+
+                // Setup real-time listeners
+                db.ref('videos').on('value', (snapshot) => {
+                    firebaseData.videos = snapshot.val() || {};
+                    renderPlaces();
+                });
+
+            } catch (error) {
+                console.error('Error loading Firebase data:', error);
+                loadLocalStorageData();
             }
-
-            return `
-                <div class="video-card ${isExpanded ? 'expanded' : ''}" data-place-code="${place.Code}">
-                    <div class="video-card-header" data-toggle-video="${place.Code}">
-                        <div class="video-card-title">
-                            🎥 Videos
-                            ${videoCount > 0 ? `<span class="video-count">${videoCount}</span>` : ''}
-                        </div>
-                        <span class="expand-icon">▼</span>
-                    </div>
-                    <div class="video-card-content">
-                        <div class="video-slots">
-                            ${renderVideoSlot(place, 0)}
-                            ${renderVideoSlot(place, 1)}
-                            ${renderVideoSlot(place, 2)}
-                        </div>
-                    </div>
-                </div>
-            `;
         }
 
+        // Fallback to localStorage
+        function loadLocalStorageData() {
+            try {
+                firebaseData.videos = JSON.parse(localStorage.getItem('singapore_videos') || '{}');
+                firebaseData.userEdits = JSON.parse(localStorage.getItem('singapore_edits') || '{}');
+                firebaseData.userAdded = JSON.parse(localStorage.getItem('singapore_added') || '{}');
+            } catch (error) {
+                console.error('Error loading localStorage:', error);
+            }
+        }
+
+        // Save to Firebase or localStorage
+        function saveData(path, data) {
+            if (db) {
+                db.ref(path).set(data);
+            } else {
+                // Fallback to localStorage
+                const key = 'singapore_' + path.split('/')[0];
+                const stored = JSON.parse(localStorage.getItem(key) || '{}');
+                const pathParts = path.split('/');
+                let current = stored;
+                for (let i = 1; i < pathParts.length - 1; i++) {
+                    if (!current[pathParts[i]]) current[pathParts[i]] = {};
+                    current = current[pathParts[i]];
+                }
+                current[pathParts[pathParts.length - 1]] = data;
+                localStorage.setItem(key, JSON.stringify(stored));
+            }
+        }
+
+        // Render Places Section
         function renderPlaces() {
             const grid = document.getElementById('places-grid');
-            document.getElementById('showing-count').textContent = filteredPlaces.length;
+            const searchTerm = document.getElementById('places-search').value.toLowerCase();
+            
+            // Merge static data with Firebase videos
+            const placesWithVideos = appData.places.map(place => ({
+                ...place,
+                videos: firebaseData.videos[place.Code] || []
+            }));
 
-            if (filteredPlaces.length === 0) {
-                grid.innerHTML = `
-                    <div class="no-results">
-                        <div class="no-results-icon">🔍</div>
-                        <h2>No places found</h2>
-                        <p>Try adjusting your filters or search terms</p>
-                    </div>
-                `;
-                return;
-            }
+            // Filter by search
+            const filtered = placesWithVideos.filter(place => {
+                const searchText = `${place['Place Name']} ${place.Description} ${place['Area Name']} ${place.Categories}`.toLowerCase();
+                return searchText.includes(searchTerm);
+            });
 
-            grid.innerHTML = filteredPlaces.map(place => {
-                const categories = place.Categories ? 
-                    place.Categories.split(',').map(c => c.trim()) : [];
-                
-                return `
-                    <div class="card">
-                        ${place['New?'] === 'NEW' ? '<div class="new-indicator">New</div>' : ''}
-                        <div class="card-header">
-                            <div class="place-code">${place.Code}</div>
+            grid.innerHTML = filtered.map(place => `
+                <div class="card" data-code="${place.Code}">
+                    <div class="card-header">
+                        <div>
+                            <div class="card-code">${place.Code}</div>
+                            <div class="card-title">${place['Place Name']}</div>
                         </div>
-                        <div class="place-name">${place['Place Name']}</div>
-                        <div class="area-name">📍 ${place['Area Name']}</div>
-                        ${place.Description ? `<div class="description">${place.Description}</div>` : ''}
-                        ${categories.length > 0 ? `
-                            <div class="categories">
-                                ${categories.map(cat => `
-                                    <span class="category-tag">${cat}</span>
+                        ${place['New?'] === 'NEW' ? '<span class="card-badge">NEW</span>' : ''}
+                    </div>
+                    
+                    <div class="card-meta">
+                        <span class="meta-tag">📍 ${place['Area Name']}</span>
+                        ${place.Categories ? `<span class="meta-tag">${place.Categories}</span>` : ''}
+                    </div>
+                    
+                    <div class="card-description">${place.Description || ''}</div>
+                    
+                    ${place.Website ? `<a href="${place.Website}" target="_blank" class="card-link">🔗 Visit Website →</a>` : ''}
+                    
+                    ${editMode.places || place.videos.length > 0 ? `
+                        <div class="video-section">
+                            <div class="video-header" onclick="toggleVideos('${place.Code}')">
+                                <span class="video-count">🎥 Videos (${place.videos.length}/3)</span>
+                                <span class="video-toggle" id="toggle-${place.Code}">▼</span>
+                            </div>
+                            <div class="video-slots" id="videos-${place.Code}">
+                                ${[0, 1, 2].map(i => `
+                                    <div class="video-slot">
+                                        <input 
+                                            type="text" 
+                                            placeholder="YouTube video ID" 
+                                            value="${place.videos[i] || ''}"
+                                            onchange="saveVideo('${place.Code}', ${i}, this.value)"
+                                            ${!editMode.places ? 'readonly' : ''}
+                                        >
+                                        ${place.videos[i] ? `
+                                            <img 
+                                                src="https://img.youtube.com/vi/${place.videos[i]}/default.jpg"
+                                                class="video-thumbnail"
+                                                onclick="window.open('https://youtube.com/shorts/${place.videos[i]}', '_blank')"
+                                                alt="Video thumbnail"
+                                            >
+                                        ` : ''}
+                                    </div>
                                 `).join('')}
                             </div>
-                        ` : ''}
-                        ${renderVideoCard(place)}
-                        ${place.Website ? `
-                            <a href="${place.Website}" target="_blank" class="website-link">
-                                🔗 Visit Website →
-                            </a>
-                        ` : ''}
-                    </div>
-                `;
-            }).join('');
+                        </div>
+                    ` : ''}
+                </div>
+            `).join('');
+
+            updatePlacesStats();
         }
 
-        // Toggle admin mode
-        document.getElementById('admin-toggle').addEventListener('click', function() {
-            adminMode = !adminMode;
-            this.classList.toggle('active');
-            this.textContent = adminMode ? '👁️ View Mode' : '🎬 Edit Mode';
-            renderPlaces();
-        });
+        // Toggle Video Section
+        function toggleVideos(code) {
+            const slots = document.getElementById(`videos-${code}`);
+            const toggle = document.getElementById(`toggle-${code}`);
+            
+            if (slots.classList.contains('visible')) {
+                slots.classList.remove('visible');
+                toggle.classList.remove('expanded');
+            } else {
+                slots.classList.add('visible');
+                toggle.classList.add('expanded');
+            }
+        }
 
-        // Export data
-        document.getElementById('export-btn').addEventListener('click', function() {
-            const youtubeData = {};
-            allPlaces.forEach(place => {
-                if (place['YouTube Shorts'] && place['YouTube Shorts'].some(v => v)) {
-                    youtubeData[place.Code] = {
-                        name: place['Place Name'],
-                        videos: place['YouTube Shorts'].filter(v => v).map(id => ({
-                            id: id,
-                            url: `https://youtube.com/shorts/${id}`
-                        }))
-                    };
-                }
+        // Save Video to Firebase
+        function saveVideo(placeCode, index, videoId) {
+            const currentVideos = firebaseData.videos[placeCode] || [];
+            currentVideos[index] = videoId;
+            
+            // Remove empty slots at the end
+            while (currentVideos.length > 0 && !currentVideos[currentVideos.length - 1]) {
+                currentVideos.pop();
+            }
+            
+            saveData(`videos/${placeCode}`, currentVideos);
+            firebaseData.videos[placeCode] = currentVideos;
+            renderPlaces();
+        }
+
+        // Update Stats
+        function updatePlacesStats() {
+            const totalPlaces = appData.places.length;
+            const areas = new Set(appData.places.map(p => p['Area Name'])).size;
+            const totalVideos = Object.values(firebaseData.videos).reduce((sum, vids) => sum + vids.length, 0);
+
+            document.getElementById('total-places').textContent = totalPlaces;
+            document.getElementById('total-areas').textContent = areas;
+            document.getElementById('total-videos').textContent = totalVideos;
+        }
+
+        // Render Food Section
+        function renderFood() {
+            const grid = document.getElementById('food-grid');
+            const searchTerm = document.getElementById('food-search').value.toLowerCase();
+            
+            const allFood = [
+                ...appData.food.mustEat.map(item => ({ ...item, category: 'Must-Eat' })),
+                ...appData.food.hawkerCentres.map(item => ({ ...item, category: 'Hawker Centre' })),
+                ...appData.food.fineDining.map(item => ({ ...item, category: 'Fine Dining' })),
+                ...appData.food.breakfast.map(item => ({ ...item, category: 'Breakfast' })),
+                ...appData.food.eastCoast.map(item => ({ ...item, category: 'East Coast' })),
+                ...appData.food.nightEats.map(item => ({ ...item, category: 'Night Eats' }))
+            ];
+
+            const filtered = allFood.filter(item => {
+                const searchText = `${item.name} ${item.description || ''} ${item.where || ''} ${item.location || ''}`.toLowerCase();
+                return searchText.includes(searchTerm);
+            });
+
+            grid.innerHTML = filtered.map(item => `
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">${item.icon || ''} ${item.name}</div>
+                        <span class="card-badge">${item.category}</span>
+                    </div>
+                    
+                    <div class="card-description">${item.description || ''}</div>
+                    
+                    <div class="card-meta">
+                        ${item.price ? `<span class="meta-tag">💰 ${item.price}</span>` : ''}
+                        ${item.stars ? `<span class="meta-tag">⭐ ${item.stars}</span>` : ''}
+                        ${item.where || item.location || item.area ? `<span class="meta-tag">📍 ${item.where || item.location || item.area}</span>` : ''}
+                    </div>
+                    
+                    ${editMode.food ? `
+                        <div class="edit-controls">
+                            <input type="text" class="edit-input" placeholder="Add website URL..." />
+                            <button class="btn btn-primary" style="margin-top: 8px; width: 100%;">💾 Save Website</button>
+                        </div>
+                    ` : ''}
+                </div>
+            `).join('');
+        }
+
+        // Render Active Section
+        function renderActive() {
+            const grid = document.getElementById('active-grid');
+            const searchTerm = document.getElementById('active-search').value.toLowerCase();
+            
+            const allActive = [
+                ...appData.active.outdoor.map(item => ({ ...item, category: 'Outdoor' })),
+                ...appData.active.runClubs.map(item => ({ ...item, category: 'Run Club' })),
+                ...appData.active.fitness.map(item => ({ ...item, category: 'Fitness' })),
+                ...appData.active.waterSports.map(item => ({ ...item, category: 'Water Sports' })),
+                ...appData.active.climbing.map(item => ({ ...item, category: 'Climbing' }))
+            ];
+
+            const filtered = allActive.filter(item => {
+                const searchText = `${item.name} ${item.description || ''} ${item.type || ''}`.toLowerCase();
+                return searchText.includes(searchTerm);
+            });
+
+            grid.innerHTML = filtered.map(item => `
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">${item.name}</div>
+                        <span class="card-badge">${item.category}</span>
+                    </div>
+                    
+                    <div class="card-description">${item.description || ''}</div>
+                    
+                    <div class="card-meta">
+                        ${item.type ? `<span class="meta-tag">${item.type}</span>` : ''}
+                        ${item.location ? `<span class="meta-tag">📍 ${item.location}</span>` : ''}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Render Nightlife Section
+        function renderNightlife() {
+            const grid = document.getElementById('nightlife-grid');
+            const searchTerm = document.getElementById('nightlife-search').value.toLowerCase();
+            
+            const allNightlife = [
+                ...appData.nightlife.bars.map(item => ({ ...item, category: 'Bar' })),
+                ...appData.nightlife.clubs.map(item => ({ ...item, category: 'Club' })),
+                ...appData.nightlife.areas.map(item => ({ ...item, category: 'Area' }))
+            ];
+
+            const filtered = allNightlife.filter(item => {
+                const searchText = `${item.name} ${item.description || ''} ${item.vibe || ''}`.toLowerCase();
+                return searchText.includes(searchTerm);
+            });
+
+            grid.innerHTML = filtered.map(item => `
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">${item.name}</div>
+                        <span class="card-badge">${item.category}</span>
+                    </div>
+                    
+                    <div class="card-description">${item.description || item.vibe || ''}</div>
+                    
+                    <div class="card-meta">
+                        ${item.type ? `<span class="meta-tag">${item.type}</span>` : ''}
+                        ${item.location ? `<span class="meta-tag">📍 ${item.location}</span>` : ''}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Render Shopping Section
+        function renderShopping() {
+            const grid = document.getElementById('shopping-grid');
+            const searchTerm = document.getElementById('shopping-search').value.toLowerCase();
+            
+            const allShopping = [
+                ...appData.shopping.localBrands.map(item => ({ ...item, category: 'Local Brand' })),
+                ...appData.shopping.areas.map(item => ({ ...item, category: 'Shopping Area' }))
+            ];
+
+            const filtered = allShopping.filter(item => {
+                const searchText = `${item.name} ${item.description || ''}`.toLowerCase();
+                return searchText.includes(searchTerm);
+            });
+
+            grid.innerHTML = filtered.map(item => `
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">${item.name}</div>
+                        <span class="card-badge">${item.category}</span>
+                    </div>
+                    
+                    <div class="card-description">${item.description || ''}</div>
+                    
+                    <div class="card-meta">
+                        ${item.type ? `<span class="meta-tag">${item.type}</span>` : ''}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Render Experiences Section
+        function renderExperiences() {
+            const grid = document.getElementById('experiences-grid');
+            const searchTerm = document.getElementById('experiences-search').value.toLowerCase();
+            
+            const allExperiences = [
+                ...appData.experiences.museums.map(item => ({ ...item, category: 'Museum' })),
+                ...appData.experiences.nature.map(item => ({ ...item, category: 'Nature' })),
+                ...appData.experiences.golf.map(item => ({ ...item, category: 'Golf' })),
+                ...appData.experiences.socialClubs.map(item => ({ ...item, category: 'Social Club' }))
+            ];
+
+            const filtered = allExperiences.filter(item => {
+                const searchText = `${item.name} ${item.description || ''}`.toLowerCase();
+                return searchText.includes(searchTerm);
+            });
+
+            grid.innerHTML = filtered.map(item => `
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">${item.name}</div>
+                        <span class="card-badge">${item.category}</span>
+                    </div>
+                    
+                    <div class="card-description">${item.description || ''}</div>
+                    
+                    ${item.notes ? `<div class="card-meta"><span class="meta-tag">💡 ${item.notes}</span></div>` : ''}
+                </div>
+            `).join('');
+        }
+
+        // Render Singlish Guide
+        function renderGuide() {
+            const grid = document.getElementById('guide-grid');
+            
+            grid.innerHTML = appData.guide.singlish.map(item => `
+                <div class="card">
+                    <div class="card-title">${item.phrase}</div>
+                    <div class="card-description">${item.meaning}</div>
+                </div>
+            `).join('');
+        }
+
+        // Setup Event Listeners
+        function setupEventListeners() {
+            // Navigation
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.addEventListener('click', () => {
+                    const section = item.dataset.section;
+                    switchSection(section);
+                });
+            });
+
+            // Edit Mode Toggles
+            document.getElementById('edit-mode-toggle').addEventListener('click', () => {
+                toggleEditMode('places');
             });
             
-            const dataStr = JSON.stringify(youtubeData, null, 2);
-            const dataBlob = new Blob([dataStr], {type: 'application/json'});
+            document.getElementById('food-edit-toggle').addEventListener('click', () => {
+                toggleEditMode('food');
+            });
+            
+            document.getElementById('active-edit-toggle').addEventListener('click', () => {
+                toggleEditMode('active');
+            });
+            
+            document.getElementById('nightlife-edit-toggle').addEventListener('click', () => {
+                toggleEditMode('nightlife');
+            });
+            
+            document.getElementById('shopping-edit-toggle').addEventListener('click', () => {
+                toggleEditMode('shopping');
+            });
+            
+            document.getElementById('experiences-edit-toggle').addEventListener('click', () => {
+                toggleEditMode('experiences');
+            });
+
+            // Search
+            document.getElementById('places-search').addEventListener('input', renderPlaces);
+            document.getElementById('food-search').addEventListener('input', renderFood);
+            document.getElementById('active-search').addEventListener('input', renderActive);
+            document.getElementById('nightlife-search').addEventListener('input', renderNightlife);
+            document.getElementById('shopping-search').addEventListener('input', renderShopping);
+            document.getElementById('experiences-search').addEventListener('input', renderExperiences);
+
+            // Export Data
+            document.getElementById('export-data-btn').addEventListener('click', exportData);
+        }
+
+        // Switch Section
+        function switchSection(sectionName) {
+            // Update nav
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            document.querySelector(`[data-section="${sectionName}"]`).classList.add('active');
+
+            // Update content
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.remove('active');
+            });
+            document.getElementById(`${sectionName}-section`).classList.add('active');
+
+            // Render section if needed
+            switch(sectionName) {
+                case 'places':
+                    renderPlaces();
+                    break;
+                case 'food':
+                    renderFood();
+                    break;
+                case 'active':
+                    renderActive();
+                    break;
+                case 'nightlife':
+                    renderNightlife();
+                    break;
+                case 'shopping':
+                    renderShopping();
+                    break;
+                case 'experiences':
+                    renderExperiences();
+                    break;
+                case 'guide':
+                    renderGuide();
+                    break;
+            }
+        }
+
+        // Toggle Edit Mode
+        function toggleEditMode(section) {
+            editMode[section] = !editMode[section];
+            const toggle = document.getElementById(`${section === 'places' ? 'edit-mode' : section + '-edit'}-toggle`);
+            
+            if (editMode[section]) {
+                toggle.classList.add('active');
+            } else {
+                toggle.classList.remove('active');
+            }
+
+            // Re-render section
+            switch(section) {
+                case 'places':
+                    renderPlaces();
+                    break;
+                case 'food':
+                    renderFood();
+                    break;
+                case 'active':
+                    renderActive();
+                    break;
+                case 'nightlife':
+                    renderNightlife();
+                    break;
+                case 'shopping':
+                    renderShopping();
+                    break;
+                case 'experiences':
+                    renderExperiences();
+                    break;
+            }
+        }
+
+        // Export Data
+        function exportData() {
+            const exportData = {
+                places: appData.places.map(p => ({
+                    ...p,
+                    videos: firebaseData.videos[p.Code] || []
+                })),
+                videos: firebaseData.videos,
+                userEdits: firebaseData.userEdits,
+                userAdded: firebaseData.userAdded
+            };
+
+            const dataStr = JSON.stringify(exportData, null, 2);
+            const dataBlob = new Blob([dataStr], { type: 'application/json' });
             const url = URL.createObjectURL(dataBlob);
             const link = document.createElement('a');
             link.href = url;
-            link.download = 'singapore_places_youtube.json';
+            link.download = `ie-smu-exchange-guide-${new Date().toISOString().split('T')[0]}.json`;
             link.click();
-            URL.revokeObjectURL(url);
-        });
-
-        // Event listeners
-        document.getElementById('search').addEventListener('input', filterPlaces);
-        document.getElementById('area-filter').addEventListener('change', filterPlaces);
-        document.getElementById('new-filter').addEventListener('change', filterPlaces);
-        document.getElementById('video-filter').addEventListener('change', filterPlaces);
-        document.getElementById('clear-filters').addEventListener('click', () => {
-            document.getElementById('search').value = '';
-            document.getElementById('area-filter').value = '';
-            document.getElementById('new-filter').value = '';
-            document.getElementById('video-filter').value = '';
-            selectedCategories.clear();
-            updateCategoryTags();
-            filterPlaces();
-        });
-
-        // Save YouTube URL from input
-        window.saveYouTubeSlot = function(placeCode, slotIndex) {
-            const input = document.querySelector(`.youtube-input[data-code="${placeCode}"][data-slot="${slotIndex}"]`);
-            if (input && input.value.trim()) {
-                updateYouTubeSlot(placeCode, slotIndex, input.value.trim());
-            }
-        };
-
-        // Remove YouTube video
-        window.removeYouTubeSlot = function(placeCode, slotIndex) {
-            if (confirm('Remove this video?')) {
-                removeYouTubeSlot(placeCode, slotIndex);
-            }
-        };
-
-        // Toggle video card
-        window.toggleVideoCard = function(placeCode) {
-            console.log('🎬 window.toggleVideoCard called for:', placeCode);
-            toggleVideoCard(placeCode);
-        };
-
-        // Event delegation for video card headers
-        document.getElementById('places-grid').addEventListener('click', function(e) {
-            const toggleElement = e.target.closest('[data-toggle-video]');
-            if (toggleElement) {
-                const placeCode = toggleElement.getAttribute('data-toggle-video');
-                console.log('📹 Click detected on video header for:', placeCode);
-                toggleVideoCard(placeCode);
-            }
-        });
-
-        // Initialize the app
-        // Load user-added places first
-        loadUserAddedPlaces();
-        
-        // Load YouTube data from Firebase (will trigger initial render via listener)
-        loadYouTubeData();
-        
-        // If Firebase fails, do initial render after a delay
-        setTimeout(() => {
-            if (!database) {
-                renderPlaces();
-            }
-        }, 1000);
-
-        // Add Location Modal Functions
-        function openAddLocationModal() {
-            document.getElementById('add-location-modal').classList.add('active');
-            document.body.style.overflow = 'hidden';
         }
 
-        window.closeAddLocationModal = function() {
-            document.getElementById('add-location-modal').classList.remove('active');
-            document.body.style.overflow = 'auto';
-            document.getElementById('add-location-form').reset();
-            document.getElementById('success-message').style.display = 'none';
-        };
-
-        // Close modal when clicking outside
-        document.getElementById('add-location-modal').addEventListener('click', function(e) {
-            if (e.target === this) {
-                closeAddLocationModal();
-            }
-        });
-
-        // Add Location button
-        document.getElementById('add-location-btn').addEventListener('click', openAddLocationModal);
-
-        // Form submission
-        document.getElementById('add-location-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-
-            // Get form values
-            const placeName = document.getElementById('place-name').value.trim();
-            const areaName = document.getElementById('area-select').value;
-            const categories = document.getElementById('categories').value.trim();
-            const description = document.getElementById('description').value.trim();
-            const website = document.getElementById('website').value.trim();
-            const isNew = document.getElementById('is-new').value;
-
-            // Generate a temporary code (user should update in Google Sheet)
-            const tempCode = 'U' + (allPlaces.length + 1);
-
-            // Create new place object
-            const newPlace = {
-                'Code': tempCode,
-                'Place Name': placeName,
-                'Area': areaName.charAt(0), // Just the first letter
-                'Area Name': areaName,
-                'Categories': categories,
-                'New?': isNew,
-                'Website': website,
-                'Description': description,
-                'YouTube Shorts': []
-            };
-
-            // Add to places array
-            allPlaces.push(newPlace);
-
-            // Save to Firebase
-            if (database) {
-                const userPlacesRef = database.ref('userAddedPlaces');
-                userPlacesRef.push(newPlace)
-                    .then(() => {
-                        console.log('💾 User-added place saved to Firebase');
-                    })
-                    .catch((error) => {
-                        console.error('Error saving user place to Firebase:', error);
-                        // Fallback to localStorage
-                        saveUserPlaceLocal(newPlace);
-                    });
-            } else {
-                // Fallback to localStorage
-                saveUserPlaceLocal(newPlace);
-            }
-
-            // Update stats and re-render
-            document.getElementById('total-places').textContent = allPlaces.length;
-            filterPlaces();
-
-            // Show success message
-            const successMsg = document.getElementById('success-message');
-            successMsg.innerHTML = `
-                <div class="success-message">
-                    <h3>✅ Location Added Successfully!</h3>
-                    <p><strong>${placeName}</strong> has been added and synced to all users!</p>
-                    <p style="margin-top: 10px;">
-                        <strong>💡 Tip:</strong> You can also add this to the 
-                        <a href="https://docs.google.com/spreadsheets/d/1tRC8_42qx7pFrECfTMb9NbEsFsFKO4tkaLZ29kn2euM/edit?usp=sharing" 
-                           target="_blank">Google Sheet</a> 
-                        for permanent record-keeping!
-                    </p>
-                </div>
-            `;
-            successMsg.style.display = 'block';
-
-            // Reset form
-            document.getElementById('add-location-form').reset();
-
-            // Scroll to top of modal
-            document.querySelector('.modal-content').scrollTop = 0;
-
-            // Auto-close after 5 seconds (optional)
-            setTimeout(() => {
-                closeAddLocationModal();
-            }, 5000);
-        });
-
-        // Load user-added places on startup
-        function loadUserAddedPlaces() {
-            const userAddedPlaces = JSON.parse(localStorage.getItem('userAddedPlaces') || '[]');
-            if (userAddedPlaces.length > 0) {
-                // Merge with existing places (avoid duplicates by Code)
-                const existingCodes = new Set(allPlaces.map(p => p.Code));
-                userAddedPlaces.forEach(place => {
-                    if (!existingCodes.has(place.Code)) {
-                        allPlaces.push(place);
-                    }
-                });
-                document.getElementById('total-places').textContent = allPlaces.length;
-            }
+        // Initialize app when DOM is ready
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initializeApp);
+        } else {
+            initializeApp();
         }
-
-        loadUserAddedPlaces();
     </script>
 </body>
 </html>
