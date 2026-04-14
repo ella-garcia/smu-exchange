@@ -848,13 +848,13 @@
                 // Step 1: Load static data from JSON files (parallel)
                 console.log('📦 Loading static data...');
                 const [places, food, active, nightlife, shopping, experiences, guide] = await Promise.all([
-                    fetch('/data/places.json').then(r => r.json()),
-                    fetch('/data/food.json').then(r => r.json()),
-                    fetch('/data/active.json').then(r => r.json()),
-                    fetch('/data/nightlife.json').then(r => r.json()),
-                    fetch('/data/shopping.json').then(r => r.json()),
-                    fetch('/data/experiences.json').then(r => r.json()),
-                    fetch('/data/guide.json').then(r => r.json())
+                    fetch('data/places.json').then(r => r.json()),
+                    fetch('data/food.json').then(r => r.json()),
+                    fetch('data/active.json').then(r => r.json()),
+                    fetch('data/nightlife.json').then(r => r.json()),
+                    fetch('data/shopping.json').then(r => r.json()),
+                    fetch('data/experiences.json').then(r => r.json()),
+                    fetch('data/guide.json').then(r => r.json())
                 ]);
 
                 appData.places = places;
