@@ -3,43 +3,51 @@
     {
       "name": "East Coast Park",
       "type": "Cycling/Running",
-      "description": "Coastal ride/run, 15km, great sea breeze"
+      "description": "Coastal ride/run, 15km, great sea breeze",
+      "website": "https://www.nparks.gov.sg/visit/parks/park-detail/east-coast-park"
     },
     {
       "name": "Marina Bay / Esplanade loop",
       "type": "Cycling/Running",
-      "description": "City skyline views"
+      "description": "City skyline views",
+      "website": null
     },
     {
       "name": "Southern Ridges",
       "type": "Hiking",
-      "description": "9km scenic trail connecting parks"
+      "description": "9km scenic trail connecting parks",
+      "website": "https://www.nparks.gov.sg/gardens-parks-and-nature/parks-and-nature-reserves/southern-ridges"
     },
     {
       "name": "Sentosa Eastside Loop",
       "type": "Cycling",
-      "description": "Beach views"
+      "description": "Beach views",
+      "website": null
     }
   ],
   "runClubs": [
     {
       "name": "Kaya Run Club",
-      "type": "Social Running"
+      "type": "Social Running",
+      "website": "https://www.instagram.com/fastandfreerunclub/"
     },
     {
       "name": "The Running Department",
       "type": "Structured Training",
-      "description": "Structured weekly training"
+      "description": "Structured weekly training",
+      "website": "https://www.therunningdept.com/"
     },
     {
       "name": "EP*RC",
       "type": "Social Running",
-      "description": "Chill runs around Marina Bay Sands"
+      "description": "Chill runs around Marina Bay Sands",
+      "website": "https://www.instagram.com/eprc.sg/"
     },
     {
       "name": "Social Running Club",
       "type": "Social Running",
-      "description": "Run then eat hawker food after"
+      "description": "Run then eat hawker food after",
+      "website": "https://www.instagram.com/socialrunningclub.sg/"
     }
   ],
   "fitness": [
@@ -47,70 +55,78 @@
       "name": "H-Kore",
       "type": "Lagree",
       "description": "Singapore's only Lagree studio",
-      "location": "Telok Ayer"
+      "location": "Telok Ayer",
+      "website": "https://h-kore.sg/"
     },
     {
       "name": "Pilates / reformer",
-      "type": "Pilates"
+      "type": "Pilates",
+      "website": null
     },
     {
       "name": "Barry's Bootcamp",
-      "type": "Bootcamp"
+      "type": "Bootcamp",
+      "website": "https://www.barrys.com/location/singapore/"
     },
     {
       "name": "WeBarre",
-      "type": "Barre"
+      "type": "Barre",
+      "website": "https://webarre.com/"
     },
     {
       "name": "Revolution / XYCO",
-      "type": "Spin"
+      "type": "Spin",
+      "website": "https://www.revolution.com.sg/"
     },
     {
       "name": "Trapeze Rec. Club",
       "type": "Multi",
-      "description": "Pilates, yoga, sauna, cold plunge"
+      "description": "Pilates, yoga, sauna, cold plunge",
+      "website": "https://www.trapezerecclub.com/"
     }
   ],
   "waterSports": [
     {
       "name": "Singapore Wake Park",
       "type": "Wakeboarding",
-      "location": "East Coast Park"
+      "location": "East Coast Park",
+      "website": "https://www.singaporewakepark.com/"
     },
     {
       "name": "Ski360",
       "type": "Wakeboarding",
-      "location": "Lower Seletar Reservoir"
+      "location": "Lower Seletar Reservoir",
+      "website": "https://www.ski360.com.sg/"
     },
     {
       "name": "Tanjong Beach Club",
       "type": "Beach Club",
-      "location": "Sentosa"
+      "location": "Sentosa",
+      "website": "https://www.tanjongbeachclub.com/"
     },
     {
-      "name": "Siloso Beach",
-      "type": "Beach",
-      "location": "Sentosa"
-    },
-    {
-      "name": "Kayaking",
+      "name": "East Coast Kayak / SUP",
       "type": "Water Sport",
-      "location": "Sentosa"
+      "location": "East Coast Park",
+      "website": null
     },
     {
       "name": "Stand-up Paddleboarding",
       "type": "Water Sport",
-      "location": "Sentosa"
+      "location": "Sentosa",
+      "website": null
     },
     {
       "name": "Skyline Luge",
       "type": "Activity",
-      "location": "Sentosa"
+      "location": "Sentosa",
+      "website": "https://www.skylineluge.com/en/sentosa/"
     },
     {
       "name": "AJ Hackett Bungy",
       "type": "Extreme",
-      "location": "Sentosa"
+      "location": "Sentosa",
+      "website": "https://www.ajhackett.com/sentosa/"
     }
   ],
   "climbing": [
@@ -119,19 +135,22 @@
       "type": "Bouldering",
       "description": "70+ routes, skyline views, Beta Café on-site",
       "location": "Esplanade Mall Level 2",
-      "hours": "Open until 1:30am Fri/Sat"
+      "hours": "Open until 1:30am Fri/Sat",
+      "website": "https://www.projectsend.sg/"
     },
     {
       "name": "Climb Central Funan",
       "type": "Multi",
       "description": "Tallest walls in civic district up to 16m, top rope + lead + bouldering + auto-belay",
-      "location": "Funan"
+      "location": "Funan",
+      "website": "https://www.climbcentral.sg/funan/"
     },
     {
       "name": "Boulder Movement",
       "type": "Bouldering",
       "description": "Best bouldering-only community gym",
-      "location": "Rochor/Tekka Place"
+      "location": "Rochor/Tekka Place",
+      "website": "https://www.bouldermovement.com/"
     }
   ]
 }
