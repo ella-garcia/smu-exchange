@@ -3106,7 +3106,6 @@
         // ==========================================
         // FIREBASE CONFIGURATION
         // ==========================================
-        // TODO: Replace with your Firebase config from Firebase Console
         const firebaseConfig = {
             apiKey: "AIzaSyDLQUs1rCK-IE72Sxy2T4lp8c2Rd-Vy0tQ",
             authDomain: "smu-exchange-app.firebaseapp.com",
@@ -3285,10 +3284,15 @@
 
         // Toggle video card expansion
         function toggleVideoCard(placeCode) {
+            console.log('toggleVideoCard called for:', placeCode);
+            console.log('Current expandedCards:', Array.from(expandedCards));
+            
             if (expandedCards.has(placeCode)) {
                 expandedCards.delete(placeCode);
+                console.log('Collapsed:', placeCode);
             } else {
                 expandedCards.add(placeCode);
+                console.log('Expanded:', placeCode);
             }
             renderPlaces();
         }
@@ -3484,8 +3488,8 @@
             }
 
             return `
-                <div class="video-card ${isExpanded ? 'expanded' : ''}">
-                    <div class="video-card-header" onclick="window.toggleVideoCard('${place.Code}')">
+                <div class="video-card ${isExpanded ? 'expanded' : ''}" data-place-code="${place.Code}">
+                    <div class="video-card-header" data-toggle-video="${place.Code}">
                         <div class="video-card-title">
                             🎥 Videos
                             ${videoCount > 0 ? `<span class="video-count">${videoCount}</span>` : ''}
@@ -3614,8 +3618,19 @@
 
         // Toggle video card
         window.toggleVideoCard = function(placeCode) {
+            console.log('🎬 window.toggleVideoCard called for:', placeCode);
             toggleVideoCard(placeCode);
         };
+
+        // Event delegation for video card headers
+        document.getElementById('places-grid').addEventListener('click', function(e) {
+            const toggleElement = e.target.closest('[data-toggle-video]');
+            if (toggleElement) {
+                const placeCode = toggleElement.getAttribute('data-toggle-video');
+                console.log('📹 Click detected on video header for:', placeCode);
+                toggleVideoCard(placeCode);
+            }
+        });
 
         // Initialize the app
         // Load user-added places first
