@@ -212,6 +212,9 @@
             cursor: pointer;
             transition: all 0.3s;
             font-family: inherit;
+            display: inline-block;
+            text-decoration: none;
+            text-align: center;
         }
 
         .btn-primary {
@@ -390,6 +393,54 @@
             transform: translateX(4px);
         }
 
+        .website-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 14px;
+            background: var(--marina-blue);
+            color: white;
+            text-decoration: none;
+            font-size: 0.85em;
+            font-weight: 600;
+            border-radius: 8px;
+            margin-top: 12px;
+            transition: all 0.3s;
+        }
+
+        .website-link:hover {
+            background: var(--sg-red);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(238, 39, 55, 0.3);
+        }
+
+        /* Singlish Guide Video Container */
+        .guide-video-container {
+            margin: 32px 0;
+            padding: 24px;
+            background: var(--card-bg);
+            border-radius: 16px;
+            box-shadow: 0 2px 8px var(--shadow);
+        }
+
+        .video-wrapper {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            height: 0;
+            overflow: hidden;
+            border-radius: 12px;
+            background: #000;
+        }
+
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 12px;
+        }
+
         /* Video Section */
         .video-section {
             margin-top: 16px;
@@ -460,6 +511,94 @@
 
         .video-thumbnail:hover {
             transform: scale(1.05);
+        }
+
+        /* Food Image Section */
+        .food-image-section {
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px solid var(--border);
+        }
+
+        .food-image-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            padding: 8px 0;
+        }
+
+        .food-image-count {
+            font-weight: 600;
+            color: var(--text-secondary);
+        }
+
+        .food-image-toggle {
+            transition: transform 0.3s;
+        }
+
+        .food-image-toggle.expanded {
+            transform: rotate(180deg);
+        }
+
+        .food-image-slots {
+            display: none;
+            margin-top: 12px;
+            gap: 12px;
+            flex-direction: column;
+        }
+
+        .food-image-slots.visible {
+            display: flex;
+        }
+
+        .food-image-slot {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .food-image-slot input {
+            flex: 1;
+            padding: 10px 14px;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            font-size: 0.9em;
+            font-family: inherit;
+        }
+
+        .food-image-slot input:focus {
+            outline: none;
+            border-color: var(--sg-red);
+        }
+
+        .food-image-preview {
+            width: 100%;
+            max-height: 200px;
+            border-radius: 12px;
+            object-fit: cover;
+            box-shadow: 0 2px 8px var(--shadow);
+        }
+
+        .food-images-display {
+            margin-top: 16px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 12px;
+        }
+
+        .food-image-display {
+            width: 100%;
+            height: 150px;
+            border-radius: 12px;
+            object-fit: cover;
+            box-shadow: 0 2px 8px var(--shadow);
+            transition: transform 0.3s;
+        }
+
+        .food-image-display:hover {
+            transform: scale(1.05);
+            cursor: pointer;
         }
 
         /* Loading State */
@@ -582,7 +721,7 @@
     <div class="sidebar">
         <div class="sidebar-header">
             <h1>🇸🇬 IE SMU Exchange Explorer</h1>
-            <div class="tagline">Hi! This is a list of places that I usually share. Hope you like it! Ella :)</div>
+            <div class="tagline">Hope you like the list! Let me know if you have any questions - Ella Garcia :)</div>
         </div>
         <nav class="nav-menu">
             <div class="nav-item active" data-section="places">
@@ -667,8 +806,18 @@
                     </div>
                 </div>
 
-                <button class="btn btn-primary" id="add-place-btn">➕ Add Place</button>
-                <button class="btn btn-secondary" id="export-data-btn">📤 Export</button>
+                <!-- Hidden for now -->
+                <button class="btn btn-primary" id="add-place-btn" style="display: none;">➕ Add Place</button>
+                
+                <!-- Google Sheets Export Link -->
+                <a href="https://docs.google.com/spreadsheets/d/1z7IlZ12P4AzRry5sIZHY50Z8e5tlhT7v/edit" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">
+                    📊 Open Google Sheet
+                </a>
+                
+                <!-- Google Maps Link -->
+                <a href="https://www.google.com/maps/d/u/0/edit?mid=1JBogd3Tg33tkeP5DJK_FzkNjv8UEyug&usp=sharing" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+                    🗺️ Open Google Maps
+                </a>
             </div>
 
             <div class="cards-grid" id="places-grid"></div>
@@ -796,6 +945,19 @@
                 <p class="section-subtitle">Learn to speak like a local, lah!</p>
             </div>
 
+            <!-- YouTube Video Embed -->
+            <div class="guide-video-container">
+                <div class="video-wrapper">
+                    <iframe 
+                        src="https://www.youtube.com/embed/dQw4w9WgXcQ" 
+                        title="Singlish Guide Video" 
+                        frameborder="0" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                        allowfullscreen>
+                    </iframe>
+                </div>
+            </div>
+
             <div class="cards-grid" id="guide-grid"></div>
         </div>
     </div>
@@ -814,6 +976,7 @@
 
         let firebaseData = {
             videos: {},
+            foodImages: {},
             userEdits: {},
             userAdded: {}
         };
@@ -839,23 +1002,66 @@
             messagingSenderId: "380341319402",
             appId: "1:380341319402:web:67597b41b264ccddc10993"
         };
+        // Embedded data (fallback for direct file:// access)
+        const EMBEDDED_DATA = null; // Will be populated if loading from file://
 
         // Initialize App
         async function initializeApp() {
-            console.log('🚀 Initializing IE SMU Exchange Guide...');
+            console.log('🚀 Initializing IE SMU Exchange Explorer...');
 
             try {
-                // Step 1: Load static data from JSON files (parallel)
+                let places, food, active, nightlife, shopping, experiences, guide;
+
+                // Try to load from external JSON files first (for deployed version)
                 console.log('📦 Loading static data...');
-                const [places, food, active, nightlife, shopping, experiences, guide] = await Promise.all([
-                    fetch('data/places.json').then(r => r.json()),
-                    fetch('data/food.json').then(r => r.json()),
-                    fetch('data/active.json').then(r => r.json()),
-                    fetch('data/nightlife.json').then(r => r.json()),
-                    fetch('data/shopping.json').then(r => r.json()),
-                    fetch('data/experiences.json').then(r => r.json()),
-                    fetch('data/guide.json').then(r => r.json())
-                ]);
+                try {
+                    [places, food, active, nightlife, shopping, experiences, guide] = await Promise.all([
+                        fetch('./data/places.json').then(r => {
+                            if (!r.ok) throw new Error('404');
+                            return r.json();
+                        }),
+                        fetch('./data/food.json').then(r => {
+                            if (!r.ok) throw new Error('404');
+                            return r.json();
+                        }),
+                        fetch('./data/active.json').then(r => {
+                            if (!r.ok) throw new Error('404');
+                            return r.json();
+                        }),
+                        fetch('./data/nightlife.json').then(r => {
+                            if (!r.ok) throw new Error('404');
+                            return r.json();
+                        }),
+                        fetch('./data/shopping.json').then(r => {
+                            if (!r.ok) throw new Error('404');
+                            return r.json();
+                        }),
+                        fetch('./data/experiences.json').then(r => {
+                            if (!r.ok) throw new Error('404');
+                            return r.json();
+                        }),
+                        fetch('./data/guide.json').then(r => {
+                            if (!r.ok) throw new Error('404');
+                            return r.json();
+                        })
+                    ]);
+                    console.log('✅ Loaded from external JSON files');
+                } catch (fetchError) {
+                    // Fallback: Use embedded data (will be added in standalone version)
+                    console.log('⚠️  External JSON not available, using embedded data...');
+                    if (window.EMBEDDED_DATA) {
+                        places = window.EMBEDDED_DATA.places;
+                        food = window.EMBEDDED_DATA.food;
+                        active = window.EMBEDDED_DATA.active;
+                        nightlife = window.EMBEDDED_DATA.nightlife;
+                        shopping = window.EMBEDDED_DATA.shopping;
+                        experiences = window.EMBEDDED_DATA.experiences;
+                        guide = window.EMBEDDED_DATA.guide;
+                        console.log('✅ Loaded from embedded data');
+                    } else {
+                        throw new Error('No data source available. Please ensure data files are accessible or use the standalone version.');
+                    }
+                }
 
                 appData.places = places;
                 appData.food = food;
@@ -929,6 +1135,10 @@
                 const videosSnapshot = await db.ref('videos').once('value');
                 firebaseData.videos = videosSnapshot.val() || {};
 
+                // Load food images
+                const foodImagesSnapshot = await db.ref('foodImages').once('value');
+                firebaseData.foodImages = foodImagesSnapshot.val() || {};
+
                 // Load user edits
                 const editsSnapshot = await db.ref('userEdits').once('value');
                 firebaseData.userEdits = editsSnapshot.val() || {};
@@ -945,6 +1155,11 @@
                     renderPlaces();
                 });
 
+                db.ref('foodImages').on('value', (snapshot) => {
+                    firebaseData.foodImages = snapshot.val() || {};
+                    renderFood();
+                });
+
             } catch (error) {
                 console.error('Error loading Firebase data:', error);
                 loadLocalStorageData();
@@ -955,6 +1170,7 @@
         function loadLocalStorageData() {
             try {
                 firebaseData.videos = JSON.parse(localStorage.getItem('singapore_videos') || '{}');
+                firebaseData.foodImages = JSON.parse(localStorage.getItem('singapore_foodImages') || '{}');
                 firebaseData.userEdits = JSON.parse(localStorage.getItem('singapore_edits') || '{}');
                 firebaseData.userAdded = JSON.parse(localStorage.getItem('singapore_added') || '{}');
             } catch (error) {
@@ -1081,6 +1297,39 @@
             renderPlaces();
         }
 
+        // Toggle Food Images Section
+        function toggleFoodImages(foodId) {
+            const slots = document.getElementById(`images-${foodId}`);
+            const toggle = document.getElementById(`toggle-images-${foodId}`);
+            
+            if (slots.classList.contains('visible')) {
+                slots.classList.remove('visible');
+                toggle.classList.remove('expanded');
+            } else {
+                slots.classList.add('visible');
+                toggle.classList.add('expanded');
+            }
+        }
+
+        // Save Food Image to Firebase
+        function saveFoodImage(foodId, index, imageUrl) {
+            if (!firebaseData.foodImages) {
+                firebaseData.foodImages = {};
+            }
+            
+            const currentImages = firebaseData.foodImages[foodId] || [];
+            currentImages[index] = imageUrl;
+            
+            // Remove empty slots at the end
+            while (currentImages.length > 0 && !currentImages[currentImages.length - 1]) {
+                currentImages.pop();
+            }
+            
+            saveData(`foodImages/${foodId}`, currentImages);
+            firebaseData.foodImages[foodId] = currentImages;
+            renderFood();
+        }
+
         // Update Stats
         function updatePlacesStats() {
             const totalPlaces = appData.places.length;
@@ -1111,7 +1360,12 @@
                 return searchText.includes(searchTerm);
             });
 
-            grid.innerHTML = filtered.map(item => `
+            grid.innerHTML = filtered.map(item => {
+                // Create a safe ID from the food name
+                const foodId = item.name.toLowerCase().replace(/[^a-z0-9]/g, '-');
+                const foodImages = firebaseData.foodImages?.[foodId] || [];
+                
+                return `
                 <div class="card">
                     <div class="card-header">
                         <div class="card-title">${item.icon || ''} ${item.name}</div>
@@ -1127,13 +1381,47 @@
                     </div>
                     
                     ${editMode.food ? `
-                        <div class="edit-controls">
-                            <input type="text" class="edit-input" placeholder="Add website URL..." />
-                            <button class="btn btn-primary" style="margin-top: 8px; width: 100%;">💾 Save Website</button>
+                        <div class="food-image-section">
+                            <div class="food-image-header" onclick="toggleFoodImages('${foodId}')">
+                                <span class="food-image-count">📸 Images (${foodImages.length}/3)</span>
+                                <span class="food-image-toggle ${foodImages.length > 0 ? 'expanded' : ''}" id="toggle-images-${foodId}">▼</span>
+                            </div>
+                            <div class="food-image-slots ${foodImages.length > 0 ? 'visible' : ''}" id="images-${foodId}">
+                                ${[0, 1, 2].map(i => `
+                                    <div class="food-image-slot">
+                                        <input 
+                                            type="text"
+                                            placeholder="Image URL ${i + 1}"
+                                            value="${foodImages[i] || ''}"
+                                            onchange="saveFoodImage('${foodId}', ${i}, this.value)"
+                                        >
+                                        ${foodImages[i] ? `
+                                            <img 
+                                                src="${foodImages[i]}"
+                                                class="food-image-preview"
+                                                alt="${item.name}"
+                                                onerror="this.style.display='none'"
+                                            >
+                                        ` : ''}
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                    ` : foodImages.length > 0 ? `
+                        <div class="food-images-display">
+                            ${foodImages.map(imgUrl => `
+                                <img 
+                                    src="${imgUrl}" 
+                                    class="food-image-display"
+                                    alt="${item.name}"
+                                    onerror="this.style.display='none'"
+                                >
+                            `).join('')}
                         </div>
                     ` : ''}
                 </div>
-            `).join('');
+            `;
+            }).join('');
         }
 
         // Render Active Section
@@ -1167,6 +1455,8 @@
                         ${item.type ? `<span class="meta-tag">${item.type}</span>` : ''}
                         ${item.location ? `<span class="meta-tag">📍 ${item.location}</span>` : ''}
                     </div>
+                    
+                    ${item.website ? `<a href="${item.website}" target="_blank" rel="noopener noreferrer" class="website-link">🌐 Visit Website</a>` : ''}
                 </div>
             `).join('');
         }
@@ -1200,6 +1490,8 @@
                         ${item.type ? `<span class="meta-tag">${item.type}</span>` : ''}
                         ${item.location ? `<span class="meta-tag">📍 ${item.location}</span>` : ''}
                     </div>
+                    
+                    ${item.website ? `<a href="${item.website}" target="_blank" rel="noopener noreferrer" class="website-link">🌐 Visit Website</a>` : ''}
                 </div>
             `).join('');
         }
@@ -1231,6 +1523,8 @@
                     <div class="card-meta">
                         ${item.type ? `<span class="meta-tag">${item.type}</span>` : ''}
                     </div>
+                    
+                    ${item.website ? `<a href="${item.website}" target="_blank" rel="noopener noreferrer" class="website-link">🌐 Visit Website</a>` : ''}
                 </div>
             `).join('');
         }
@@ -1262,6 +1556,8 @@
                     <div class="card-description">${item.description || ''}</div>
                     
                     ${item.notes ? `<div class="card-meta"><span class="meta-tag">💡 ${item.notes}</span></div>` : ''}
+                    
+                    ${item.website ? `<a href="${item.website}" target="_blank" rel="noopener noreferrer" class="website-link">🌐 Visit Website</a>` : ''}
                 </div>
             `).join('');
         }
@@ -1321,8 +1617,8 @@
             document.getElementById('shopping-search').addEventListener('input', renderShopping);
             document.getElementById('experiences-search').addEventListener('input', renderExperiences);
 
-            // Export Data
-            document.getElementById('export-data-btn').addEventListener('click', exportData);
+            // Export Data - Now using Google Sheets link
+            // document.getElementById('export-data-btn').addEventListener('click', exportData);
         }
 
         // Switch Section
@@ -1416,7 +1712,7 @@
             const url = URL.createObjectURL(dataBlob);
             const link = document.createElement('a');
             link.href = url;
-            link.download = `ie-smu-exchange-guide-${new Date().toISOString().split('T')[0]}.json`;
+            link.download = `ie-smu-exchange-explorer-${new Date().toISOString().split('T')[0]}.json`;
             link.click();
         }
 
