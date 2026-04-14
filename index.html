@@ -3,7 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IE Singapore Place Explorer</title>
+    <title>IE SMU Exchange Placesr</title>
+    
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
+    
     <style>
         * {
             margin: 0;
@@ -786,8 +791,8 @@
 <body>
     <div class="container">
         <header>
-            <h1>🇸🇬 IE Singapore Place Explorer</h1>
-            <div class="subtitle">Hi! I used to share this with friends who would visit me in Singapore. I hope you like this list! - Ella Garcia :)</div>
+            <h1>🇸🇬 IE SMU Exchange Explorer</h1>
+            <div class="subtitle">Hi! This is a list of places that I usually share. Hope you like it! Ella :)</div>
             <div class="stats">
                 <div class="stat">📍 <span id="total-places">194</span> Places</div>
                 <div class="stat">🗺️ <span id="total-areas">17</span> Areas</div>
@@ -852,7 +857,7 @@
                    target="_blank" 
                    class="michelin-guide-btn" 
                    id="michelin-btn">⭐ Michelin Guide</a>
-                <a href="https://www.google.com/maps/d/u/0/edit?mid=1JBogd3Tg33tkeP5DJK_FzkNjv8UEyug&usp=sharing" 
+                <a href="YOUR_GOOGLE_MAPS_LINK_HERE" 
                    target="_blank" 
                    class="google-maps-btn" 
                    id="maps-btn">🗺️ View Map</a>
@@ -3098,8 +3103,88 @@
             return null;
         }
 
-        // Load saved YouTube data from localStorage
+        // ==========================================
+        // FIREBASE CONFIGURATION
+        // ==========================================
+        // TODO: Replace with your Firebase config from Firebase Console
+        const firebaseConfig = {
+            apiKey: "AIzaSyDLQUs1rCK-IE72Sxy2T4lp8c2Rd-Vy0tQ",
+            authDomain: "smu-exchange-app.firebaseapp.com",
+            databaseURL: "https://smu-exchange-app-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "smu-exchange-app",
+            storageBucket: "smu-exchange-app.firebasestorage.app",
+            messagingSenderId: "380341319402",
+            appId: "1:380341319402:web:67597b41b264ccddc10993"
+        };
+
+        // Initialize Firebase
+        let database;
+        try {
+            firebase.initializeApp(firebaseConfig);
+            database = firebase.database();
+            console.log('✅ Firebase initialized successfully');
+        } catch (error) {
+            console.error('❌ Firebase initialization error:', error);
+            alert('Firebase is not configured. Please add your Firebase credentials in the code.');
+        }
+
+        // Load YouTube data from Firebase
         function loadYouTubeData() {
+            if (!database) {
+                console.warn('Firebase not initialized, falling back to localStorage');
+                loadYouTubeDataLocal();
+                return;
+            }
+
+            const youtubeRef = database.ref('youtube');
+            
+            // Listen for real-time updates
+            youtubeRef.on('value', (snapshot) => {
+                const youtubeData = snapshot.val() || {};
+                
+                allPlaces.forEach(place => {
+                    if (youtubeData[place.Code]) {
+                        place['YouTube Shorts'] = youtubeData[place.Code];
+                    } else {
+                        place['YouTube Shorts'] = [];
+                    }
+                });
+                
+                updateStats();
+                renderPlaces();
+                console.log('📥 YouTube data loaded from Firebase');
+            });
+        }
+
+        // Save YouTube data to Firebase
+        function saveYouTubeData() {
+            if (!database) {
+                console.warn('Firebase not initialized, falling back to localStorage');
+                saveYouTubeDataLocal();
+                return;
+            }
+
+            const youtubeData = {};
+            allPlaces.forEach(place => {
+                if (place['YouTube Shorts'] && place['YouTube Shorts'].some(v => v)) {
+                    // Only save non-null values
+                    youtubeData[place.Code] = place['YouTube Shorts'].filter(v => v);
+                }
+            });
+            
+            database.ref('youtube').set(youtubeData)
+                .then(() => {
+                    console.log('💾 YouTube data saved to Firebase');
+                })
+                .catch((error) => {
+                    console.error('Error saving to Firebase:', error);
+                    // Fallback to localStorage
+                    saveYouTubeDataLocal();
+                });
+        }
+
+        // Fallback: Load from localStorage
+        function loadYouTubeDataLocal() {
             const saved = localStorage.getItem('singaporePlacesYouTube');
             if (saved) {
                 try {
@@ -3109,14 +3194,16 @@
                             place['YouTube Shorts'] = youtubeData[place.Code];
                         }
                     });
+                    updateStats();
+                    renderPlaces();
                 } catch (e) {
-                    console.error('Error loading YouTube data:', e);
+                    console.error('Error loading YouTube data from localStorage:', e);
                 }
             }
         }
 
-        // Save YouTube data to localStorage
-        function saveYouTubeData() {
+        // Fallback: Save to localStorage
+        function saveYouTubeDataLocal() {
             const youtubeData = {};
             allPlaces.forEach(place => {
                 if (place['YouTube Shorts'] && place['YouTube Shorts'].length > 0) {
@@ -3124,6 +3211,45 @@
                 }
             });
             localStorage.setItem('singaporePlacesYouTube', JSON.stringify(youtubeData));
+        }
+
+        // Save user-added place to localStorage (fallback)
+        function saveUserPlaceLocal(newPlace) {
+            const userAddedPlaces = JSON.parse(localStorage.getItem('userAddedPlaces') || '[]');
+            userAddedPlaces.push(newPlace);
+            localStorage.setItem('userAddedPlaces', JSON.stringify(userAddedPlaces));
+        }
+
+        // Load user-added places from Firebase
+        function loadUserAddedPlaces() {
+            if (!database) {
+                loadUserAddedPlacesLocal();
+                return;
+            }
+
+            const userPlacesRef = database.ref('userAddedPlaces');
+            userPlacesRef.once('value', (snapshot) => {
+                const userPlaces = snapshot.val();
+                if (userPlaces) {
+                    Object.values(userPlaces).forEach(place => {
+                        // Check if not already in allPlaces
+                        if (!allPlaces.find(p => p.Code === place.Code)) {
+                            allPlaces.push(place);
+                        }
+                    });
+                }
+                console.log('📥 User-added places loaded from Firebase');
+            });
+        }
+
+        // Load user-added places from localStorage (fallback)
+        function loadUserAddedPlacesLocal() {
+            const userAddedPlaces = JSON.parse(localStorage.getItem('userAddedPlaces') || '[]');
+            userAddedPlaces.forEach(place => {
+                if (!allPlaces.find(p => p.Code === place.Code)) {
+                    allPlaces.push(place);
+                }
+            });
         }
 
         // Update YouTube video for a place at specific slot
@@ -3359,7 +3485,7 @@
 
             return `
                 <div class="video-card ${isExpanded ? 'expanded' : ''}">
-                    <div class="video-card-header" onclick="toggleVideoCard('${place.Code}')">
+                    <div class="video-card-header" onclick="window.toggleVideoCard('${place.Code}')">
                         <div class="video-card-title">
                             🎥 Videos
                             ${videoCount > 0 ? `<span class="video-count">${videoCount}</span>` : ''}
@@ -3491,8 +3617,19 @@
             toggleVideoCard(placeCode);
         };
 
-        // Initial render
-        renderPlaces();
+        // Initialize the app
+        // Load user-added places first
+        loadUserAddedPlaces();
+        
+        // Load YouTube data from Firebase (will trigger initial render via listener)
+        loadYouTubeData();
+        
+        // If Firebase fails, do initial render after a delay
+        setTimeout(() => {
+            if (!database) {
+                renderPlaces();
+            }
+        }, 1000);
 
         // Add Location Modal Functions
         function openAddLocationModal() {
@@ -3548,10 +3685,22 @@
             // Add to places array
             allPlaces.push(newPlace);
 
-            // Save to localStorage
-            const userAddedPlaces = JSON.parse(localStorage.getItem('userAddedPlaces') || '[]');
-            userAddedPlaces.push(newPlace);
-            localStorage.setItem('userAddedPlaces', JSON.stringify(userAddedPlaces));
+            // Save to Firebase
+            if (database) {
+                const userPlacesRef = database.ref('userAddedPlaces');
+                userPlacesRef.push(newPlace)
+                    .then(() => {
+                        console.log('💾 User-added place saved to Firebase');
+                    })
+                    .catch((error) => {
+                        console.error('Error saving user place to Firebase:', error);
+                        // Fallback to localStorage
+                        saveUserPlaceLocal(newPlace);
+                    });
+            } else {
+                // Fallback to localStorage
+                saveUserPlaceLocal(newPlace);
+            }
 
             // Update stats and re-render
             document.getElementById('total-places').textContent = allPlaces.length;
@@ -3562,12 +3711,12 @@
             successMsg.innerHTML = `
                 <div class="success-message">
                     <h3>✅ Location Added Successfully!</h3>
-                    <p><strong>${placeName}</strong> has been added to your local list.</p>
+                    <p><strong>${placeName}</strong> has been added and synced to all users!</p>
                     <p style="margin-top: 10px;">
-                        <strong>⚠️ Don't forget:</strong> Please also add this location to the 
+                        <strong>💡 Tip:</strong> You can also add this to the 
                         <a href="https://docs.google.com/spreadsheets/d/1tRC8_42qx7pFrECfTMb9NbEsFsFKO4tkaLZ29kn2euM/edit?usp=sharing" 
                            target="_blank">Google Sheet</a> 
-                        to save it permanently!
+                        for permanent record-keeping!
                     </p>
                 </div>
             `;
