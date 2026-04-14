@@ -1,8 +1,16 @@
 {
   "version": 2,
-  "buildCommand": null,
-  "outputDirectory": ".",
-  "installCommand": null,
-  "framework": null,
-  "public": true
+  "routes": [
+    {
+      "src": "/data/(.*)",
+      "dest": "/data/$1",
+      "headers": {
+        "Cache-Control": "public, max-age=3600"
+      }
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/$1"
+    }
+  ]
 }
