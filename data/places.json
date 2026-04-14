@@ -1332,17 +1332,6 @@
   },
   {
     "Code": "K1",
-    "Place Name": "Senja-Cashew Community Club",
-    "Area": "K",
-    "Area Name": "Northwest–Northeast",
-    "Categories": "Leisure",
-    "New?": null,
-    "Website": "https://www.onepa.gov.sg/",
-    "Description": "Community club in Bukit Panjang.",
-    "YouTube Shorts": []
-  },
-  {
-    "Code": "K2",
     "Place Name": "Zhenghua Park",
     "Area": "K",
     "Area Name": "Northwest–Northeast",
@@ -1353,7 +1342,7 @@
     "YouTube Shorts": []
   },
   {
-    "Code": "K3",
+    "Code": "K2",
     "Place Name": "Chestnut Nature Park",
     "Area": "K",
     "Area Name": "Northwest–Northeast",
@@ -1364,7 +1353,7 @@
     "YouTube Shorts": []
   },
   {
-    "Code": "K4",
+    "Code": "K3",
     "Place Name": "Singapore Zoo",
     "Area": "K",
     "Area Name": "Northwest–Northeast",
@@ -1375,7 +1364,7 @@
     "YouTube Shorts": []
   },
   {
-    "Code": "K5",
+    "Code": "K4",
     "Place Name": "Bird Paradise",
     "Area": "K",
     "Area Name": "Northwest–Northeast",
@@ -1386,7 +1375,7 @@
     "YouTube Shorts": []
   },
   {
-    "Code": "K6",
+    "Code": "K5",
     "Place Name": "Marisiling Park",
     "Area": "K",
     "Area Name": "Northwest–Northeast",
@@ -1397,7 +1386,7 @@
     "YouTube Shorts": []
   },
   {
-    "Code": "K7",
+    "Code": "K6",
     "Place Name": "Woodlands Jetty",
     "Area": "K",
     "Area Name": "Northwest–Northeast",
@@ -1408,7 +1397,7 @@
     "YouTube Shorts": []
   },
   {
-    "Code": "K8",
+    "Code": "K7",
     "Place Name": "Rasa Istimewa Waterfront",
     "Area": "K",
     "Area Name": "Northwest–Northeast",
@@ -1419,7 +1408,7 @@
     "YouTube Shorts": []
   },
   {
-    "Code": "K9",
+    "Code": "K8",
     "Place Name": "Admiralty Park",
     "Area": "K",
     "Area Name": "Northwest–Northeast",
@@ -1430,7 +1419,7 @@
     "YouTube Shorts": []
   },
   {
-    "Code": "K10",
+    "Code": "K9",
     "Place Name": "Marisiling Tunnel",
     "Area": "K",
     "Area Name": "Northwest–Northeast",
@@ -1441,7 +1430,7 @@
     "YouTube Shorts": []
   },
   {
-    "Code": "K11",
+    "Code": "K10",
     "Place Name": "SFA Senoko Fishery Port",
     "Area": "K",
     "Area Name": "Northwest–Northeast",
@@ -1452,7 +1441,7 @@
     "YouTube Shorts": []
   },
   {
-    "Code": "K12",
+    "Code": "K11",
     "Place Name": "Sembawang Park Fishing Pier",
     "Area": "K",
     "Area Name": "Northwest–Northeast",
@@ -1463,7 +1452,7 @@
     "YouTube Shorts": []
   },
   {
-    "Code": "K13",
+    "Code": "K12",
     "Place Name": "The Japanese Theater",
     "Area": "K",
     "Area Name": "Northwest–Northeast",
@@ -1474,7 +1463,7 @@
     "YouTube Shorts": []
   },
   {
-    "Code": "K14",
+    "Code": "K13",
     "Place Name": "Sembawang Hot Spring Park",
     "Area": "K",
     "Area Name": "Northwest–Northeast",
@@ -1485,7 +1474,7 @@
     "YouTube Shorts": []
   },
   {
-    "Code": "K15",
+    "Code": "K14",
     "Place Name": "Lower Seletar Reservoir Park",
     "Area": "K",
     "Area Name": "Northwest–Northeast",
@@ -1496,7 +1485,7 @@
     "YouTube Shorts": []
   },
   {
-    "Code": "K16",
+    "Code": "K15",
     "Place Name": "Yishun Dam",
     "Area": "K",
     "Area Name": "Northwest–Northeast",
@@ -1507,7 +1496,7 @@
     "YouTube Shorts": []
   },
   {
-    "Code": "K17",
+    "Code": "K16",
     "Place Name": "Singapore Last Fishing Village",
     "Area": "K",
     "Area Name": "Northwest–Northeast",
@@ -1518,7 +1507,7 @@
     "YouTube Shorts": []
   },
   {
-    "Code": "K18",
+    "Code": "K17",
     "Place Name": "Rower's Bay Park",
     "Area": "K",
     "Area Name": "Northwest–Northeast",
@@ -1529,7 +1518,7 @@
     "YouTube Shorts": []
   },
   {
-    "Code": "K19",
+    "Code": "K18",
     "Place Name": "Wheeler's Estate",
     "Area": "K",
     "Area Name": "Northwest–Northeast",
@@ -1540,7 +1529,7 @@
     "YouTube Shorts": []
   },
   {
-    "Code": "K20",
+    "Code": "K19",
     "Place Name": "Rainforest Wild Asia",
     "Area": "K",
     "Area Name": "Northwest–Northeast",
@@ -1551,7 +1540,7 @@
     "YouTube Shorts": []
   },
   {
-    "Code": "K21",
+    "Code": "K20",
     "Place Name": "Mandai Boardwalk",
     "Area": "K",
     "Area Name": "Northwest–Northeast",
@@ -1562,7 +1551,7 @@
     "YouTube Shorts": []
   },
   {
-    "Code": "K22",
+    "Code": "K21",
     "Place Name": "Mandai Rainforest Resort",
     "Area": "K",
     "Area Name": "Northwest–Northeast",
@@ -1573,7 +1562,7 @@
     "YouTube Shorts": []
   },
   {
-    "Code": "K23",
+    "Code": "K22",
     "Place Name": "Colugo Camp",
     "Area": "K",
     "Area Name": "Northwest–Northeast",
@@ -1584,7 +1573,7 @@
     "YouTube Shorts": []
   },
   {
-    "Code": "K24",
+    "Code": "K23",
     "Place Name": "Exploria",
     "Area": "K",
     "Area Name": "Northwest–Northeast",
@@ -1595,7 +1584,7 @@
     "YouTube Shorts": []
   },
   {
-    "Code": "K25",
+    "Code": "K24",
     "Place Name": "Curiosity Cove",
     "Area": "K",
     "Area Name": "Northwest–Northeast",
@@ -2069,17 +2058,6 @@
   },
   {
     "Code": "P9",
-    "Place Name": "Jurassic World: The Experience",
-    "Area": "P",
-    "Area Name": "East Coast–Marina Bay",
-    "Categories": "Leisure, Museum",
-    "New?": "NEW",
-    "Website": "https://www.gardensbythebay.com.sg/",
-    "Description": "Animatronic dinosaur exhibition in Cloud Forest.",
-    "YouTube Shorts": []
-  },
-  {
-    "Code": "P10",
     "Place Name": "Gardens by the Bay Family Zone",
     "Area": "P",
     "Area Name": "East Coast–Marina Bay",
